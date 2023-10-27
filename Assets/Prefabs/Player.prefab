@@ -102,7 +102,7 @@ CapsuleCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4837999170747320377}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 4e3ca95d1fa438d4f8bfd1c3019cd2b9, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -131,7 +131,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 5
-  minTurnSpeed: 1
+  minTurnSpeed: 0.15
   turnSpeed: 5
 --- !u!114 &2583288093186129395
 MonoBehaviour:
