@@ -1,11 +1,14 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Cinemachine;
 using UnityEngine;
 
 public class DialoguesManager : MonoBehaviour
 {
+    public CinemachineVirtualCamera _dialogCam;
     [SerializeField] private List<Dialog> _dialogues;
+    
 
 
     private void Start()
@@ -19,6 +22,8 @@ public class DialoguesManager : MonoBehaviour
     public void ShowDialogue()
     {
         GetPrioritizedDialogue().ShowDialogue();
+        _dialogCam.Priority = 11;
+
     }
   
     private Dialog GetPrioritizedDialogue()

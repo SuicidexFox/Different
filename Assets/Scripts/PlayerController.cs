@@ -11,24 +11,25 @@ using UnityEngine.InputSystem;
 public class PlayerController : MonoBehaviour
 {
     //PlayerInput
-    private PlayerInput _playerInput;
+    public PlayerInput _playerInput;
     private InputAction _moveAction;
     private InputAction _runAction;
-    private InputAction _interactAction;
+    public InputAction _interactAction;
     
     //Move
-    public float _moveSpeed = 2f;
+    public float _walkSpeed = 2f;
+    public float _runSpeed = 3f;
+    private float _moveSpeed;
     public float _minTurnSpeed = 1f;
     public float _turnSpeed = 5f;
-    public float _runSpeed = 3f;
     private Rigidbody _rigidbody;
     private Transform _camTransform;
     
     //Animator
-    private Animator _animator;
+    public Animator _animator;
     
     //Interact
-    public Interactable _currentInteractable;
+    public InteractableManager _currentInteractable;
         
     
     void Start() 
@@ -54,17 +55,29 @@ public class PlayerController : MonoBehaviour
     }
     void Update() 
     {   //Bewegung
-        //Move with Mouse
+        
         Vector2 input = _moveAction.ReadValue<Vector2>();
         float horizontalInput = input.x;
         float verticalInput = input.y;
 
+        //Sprint
+        if (_runAction.ReadValue<float>() == 1f)
+        {
+            _moveSpeed = _runSpeed;
+        }
+        else
+        {
+            _moveSpeed = _walkSpeed;
+        }
+        
+        
+        //Move with Mouse
         Vector3 horizontalVelocity = Vector3.ProjectOnPlane(_camTransform.right, Vector3.up).normalized * horizontalInput; //rechts,links
         Vector3 verticalVelocity = Vector3.ProjectOnPlane(_camTransform.forward, Vector3.up).normalized * verticalInput; //hoch,runter
         Vector3 velocity = Vector3.ClampMagnitude(horizontalVelocity + verticalVelocity, 1); //es wird -2/5, 0-9 = 0-1 berechnet
         
         
-        // Rotation at Mouse
+        //Rotation at Mouse
         if (velocity.magnitude > _minTurnSpeed)
         {
             Quaternion rotation = Quaternion.Lerp(_rigidbody.rotation, Quaternion.LookRotation(velocity), Time.deltaTime * _turnSpeed);
@@ -76,44 +89,40 @@ public class PlayerController : MonoBehaviour
         
         //Animator
         float animatonSpeed = velocity.magnitude;
+        
         if (input == Vector2.zero)
         {
             animatonSpeed = 0.0f;
         }
+        else if (_runAction.inProgress)
+        {
+            
+        }
         _animator.SetFloat("Speed", animatonSpeed);
+        _animator.SetBool("Shift", _runAction.inProgress);
     }
-    
     
     private void OnDisable() //Verhalten Deaktivieren
     {
         _interactAction.performed -= Interact;
     }
-    
-
     private void Interact(InputAction.CallbackContext obj)
     {
-        if (_currentInteractable == null)
-        {
-            return;
-        }
+        if (_currentInteractable == null) { return; }
         _currentInteractable.onInteract.Invoke();
-        GameManager.instance.ShowDialogUI(true);
-        
+        GameManager.instance.ShowUI(true);
     }
     private void OnTriggerEnter(Collider other) //Collider berühren
     {
-        Interactable _newInteractable = other.GetComponent<Interactable>(); //Achte auf die Klasse ganz oben in deinem Script
+        InteractableManager _newInteractable = other.GetComponent<InteractableManager>(); //Achte auf die Klasse ganz oben in deinem Script
 
-        if (_newInteractable == null)
-        {
-            return;
-        }
+        if (_newInteractable == null) { return; }
         _currentInteractable = _newInteractable;
         GameManager.instance.ShowIneractUI(true);
     }
     private void OnTriggerExit(Collider other) //Collider verlassen
     {
-        Interactable _newInteractable = other.GetComponent<Interactable>();
+        InteractableManager _newInteractable = other.GetComponent<InteractableManager>();
 
         if (_currentInteractable == null)
         {
