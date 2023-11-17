@@ -107,14 +107,13 @@ public class GameManager : MonoBehaviour
         _player._animator.SetTrigger("Take");
     }
 
-    public void UpdateCollect()
+    public void OpenKitchen(InteractableManager interactableManager)
     {
-        //_animator.GetComponentInParent<InteractableManager>()._animator.SetBool("Open");
-        if (_takeCollect == 4f)
-        {
-            
-        }
-        
-        
+        interactableManager._animator.SetTrigger("Open");
+        _player._animator.SetTrigger("Take");
+    }
+    public void CloseKitchen(InteractableManager interactableManager)
+    {
+        interactableManager._animator.SetTrigger("Close");
     }
 }
