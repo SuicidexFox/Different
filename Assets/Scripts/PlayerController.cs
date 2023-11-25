@@ -14,7 +14,9 @@ public class PlayerController : MonoBehaviour
     public PlayerInput _playerInput;
     private InputAction _moveAction;
     private InputAction _runAction;
-    public InputAction _interactAction;
+    private InputAction _interactAction;
+    private InputAction _tabAction;
+    
     
     //Move
     public float _walkSpeed = 2f;
@@ -27,6 +29,7 @@ public class PlayerController : MonoBehaviour
     
     //Animator
     public Animator _animator;
+    public Animator _TabUI;
     
     //Interact
     public InteractableManager _currentInteractable;
@@ -52,6 +55,9 @@ public class PlayerController : MonoBehaviour
         
         //MausCursor deaktivieren
         Cursor.lockState = CursorLockMode.Locked;
+        
+        //QuestLog
+        _tabAction = _playerInput.actions.FindAction("Tab");
     }
     void Update() 
     {   //Bewegung
@@ -100,6 +106,18 @@ public class PlayerController : MonoBehaviour
         }
         _animator.SetFloat("Speed", animatonSpeed);
         _animator.SetBool("Shift", _runAction.inProgress);
+        
+        
+        //Tab
+        if (_tabAction.inProgress)
+        {
+            _TabUI.SetBool("Fade", true);
+        }
+        else
+        { 
+            _TabUI.SetBool("Fade", false); 
+        }
+        
     }
     
     private void OnDisable() //Verhalten Deaktivieren
@@ -110,7 +128,6 @@ public class PlayerController : MonoBehaviour
     {
         if (_currentInteractable == null) { return; }
         _currentInteractable.onInteract.Invoke();
-        GameManager.instance.ShowUI(true);
     }
     private void OnTriggerEnter(Collider other) //Collider berühren
     {

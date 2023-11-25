@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
@@ -8,9 +9,16 @@ using UnityEngine.UI;
 [Serializable]
 public class DialoguesLines
 {
-    public GameObject _chatbox;
-    public GameObject _charakter;
-    [TextArea(4, 10)]public string _text;
+    public bool _imageRosie;
+    public bool _talkbox;
+    public bool _thinkbox;
+    [TextArea(3, 8)]public string _text;
+    [TextArea(3, 8)]public string _textNPC;
+    public bool _imageTherapist;
+    public bool _imageErgo;
+    public bool _imageInnerChilde;
+    public bool _button;
+    public bool _buttonNPC;
 }
 
 
@@ -31,3 +39,4 @@ public class Dialog : MonoBehaviour
         priority = newPriority;
     }
 }
+

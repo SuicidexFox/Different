@@ -42,27 +42,9 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "F1",
+                    "name": "Tab",
                     "type": "Button",
-                    "id": "7a1fd0e0-dd51-4c40-8c32-259734e27266",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "F2",
-                    "type": "Button",
-                    "id": "a94a875b-0d63-445e-a221-32c28f960b79",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "F3",
-                    "type": "Button",
-                    "id": "72540dd0-2fdd-4881-8d3b-bb61b7e734d5",
+                    "id": "224f7a3b-0652-4bc3-902a-90729c6226ef",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -281,34 +263,23 @@
                 },
                 {
                     "name": "",
-                    "id": "482bea9a-16b8-4d35-873c-9674c179e78b",
-                    "path": "<Keyboard>/f1",
+                    "id": "4d4150db-5ab6-433c-8b84-be41cb61c66e",
+                    "path": "<Keyboard>/tab",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard&Mouse",
-                    "action": "F1",
+                    "action": "Tab",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "",
-                    "id": "194111b0-2d49-446f-994d-17f66657ae45",
-                    "path": "<Keyboard>/f2",
+                    "id": "afad7e46-73e4-4ba6-8292-0147005ab1d0",
+                    "path": "<Gamepad>/dpad/left",
                     "interactions": "",
                     "processors": "",
-                    "groups": "Keyboard&Mouse",
-                    "action": "F2",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "142a9f59-e623-422c-afca-32e34c943e0d",
-                    "path": "<Keyboard>/f3",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Keyboard&Mouse",
-                    "action": "F3",
+                    "groups": "Gamepad",
+                    "action": "Tab",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
@@ -680,7 +651,18 @@
                     "path": "*/{Submit}",
                     "interactions": "",
                     "processors": "",
-                    "groups": "Keyboard&Mouse;Gamepad;Touch;Joystick;XR",
+                    "groups": "Gamepad;Touch;Joystick;XR",
+                    "action": "Submit",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "b81220c0-d2a4-42c8-a2e9-18b39d96c64b",
+                    "path": "<Keyboard>/f",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
                     "action": "Submit",
                     "isComposite": false,
                     "isPartOfComposite": false

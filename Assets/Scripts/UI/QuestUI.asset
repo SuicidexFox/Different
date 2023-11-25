@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 95e66c6366d904e98bc83428217d4fd7, type: 3}
+  m_Name: QuestUI
+  m_EditorClassIdentifier: 
+  _data:
+    _json: '{"graph":{"variables":{"Kind":"Flow","collection":{"$content":[],"$version":"A"},"$version":"A"},"controlInputDefinitions":[],"controlOutputDefinitions":[],"valueInputDefinitions":[],"valueOutputDefinitions":[],"title":null,"summary":null,"pan":{"x":54.0,"y":21.0},"zoom":1.0,"elements":[{"coroutine":false,"defaultValues":{},"position":{"x":-481.0,"y":-136.0},"guid":"92c2fb1f-73ba-4647-83fc-450283411946","$version":"A","$type":"Unity.VisualScripting.BoltAnimationEvent"},{"chainable":false,"parameterNames":[],"member":{"name":"ActivateInput","parameterTypes":[],"targetType":"UnityEngine.InputSystem.PlayerInput","targetTypeName":"UnityEngine.InputSystem.PlayerInput","$version":"A"},"defaultValues":{"target":null},"position":{"x":-258.0,"y":-136.0},"guid":"9c7d7f68-4752-464b-8158-ad2e9c76b409","$version":"A","$type":"Unity.VisualScripting.InvokeMember","$id":"11"},{"specifyFallback":false,"kind":"Object","defaultValues":{"name":{"$content":"Player","$type":"System.String"},"object":null},"position":{"x":-462.0,"y":42.0},"guid":"052755fb-1642-4531-bfc1-1d8b7e595b8e","$version":"A","$type":"Unity.VisualScripting.GetVariable","$id":"15"},{"sourceUnit":{"$ref":"15"},"sourceKey":"value","destinationUnit":{"$ref":"11"},"destinationKey":"target","guid":"0cb88a73-6dff-4f8a-b665-c24c9fa7bbcd","$type":"Unity.VisualScripting.ValueConnection"}],"$version":"A"}}'
+    _objectReferences: []

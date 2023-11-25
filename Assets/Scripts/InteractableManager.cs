@@ -1,6 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using TMPro.EditorUtilities;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
@@ -8,12 +5,18 @@ using UnityEngine.EventSystems;
 
 public class InteractableManager : MonoBehaviour
 {
-    public GameObject _collectable;
     public Animator _animator;
     public UnityEvent onInteract;
-
-    public void DestroyCollect()
+    
+    
+    public void OpenKitchen()
     {
-        _collectable.SetActive(false);
+        if (_animator == null) { return; }
+        _animator.SetTrigger("Open");
+    }
+    
+    public void CloseKitchen()
+    {
+        _animator.SetTrigger("Close");
     }
 }
