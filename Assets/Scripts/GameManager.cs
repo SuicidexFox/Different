@@ -34,9 +34,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject _ChatboxTalk;
     [SerializeField] private GameObject _ChatboxThink;
     [SerializeField] private TextMeshProUGUI _TextDialog;
-    [SerializeField] private GameObject _Button;
     [SerializeField] private TextMeshProUGUI _TextDialogNPC;
-    [SerializeField] private GameObject _ButtonNPC;
+    [SerializeField] private Button _Button;
     [SerializeField] private GameObject _Therapist;
     [SerializeField] private GameObject _Ergo;
     [SerializeField] private GameObject _InnerChilde;
@@ -44,7 +43,6 @@ public class GameManager : MonoBehaviour
     [Header("ShowQuest")] 
     [SerializeField] private GameObject _QuestUI;
     [SerializeField] private TextMeshProUGUI _TextQuest;
-    public bool _inQuest = false;
 
     [Header("QuestLog")] [Header("Ende")] 
     [SerializeField] private GameObject _EndeUI;
@@ -106,8 +104,6 @@ public class GameManager : MonoBehaviour
         _Therapist.SetActive(dialogueLines._imageTherapist);
         _Ergo.SetActive(dialogueLines._imageErgo);
         _InnerChilde.SetActive(dialogueLines._imageInnerChilde);
-        _Button.SetActive(dialogueLines._button);
-        _ButtonNPC.SetActive(dialogueLines._buttonNPC);
     }
     public void NextDialogLine()
     {
@@ -134,13 +130,10 @@ public class GameManager : MonoBehaviour
     //Quest
     public void ShowQuestUI(bool show)
     {
-        if (_currentQuestLine == null) { return; }
         _QuestUI.SetActive(true);
-        _player._playerInput.SwitchCurrentActionMap("UI");
     }
     public void ShowQuest(Quest quest)
     {
-        _inQuest = true;
         _currentQuestLine = quest;
         _currentQuestLineIndex = 0;
         ShowIneractUI(false);
@@ -155,15 +148,6 @@ public class GameManager : MonoBehaviour
         if (questLines == null) { return; }
         _TextQuest.SetText(questLines._Questtext);
     }
-    
-    public void CloseQuest()
-    {
-        _currentQuestLine.GetComponentInParent<QuestManager>()._questCam.Priority = 0;
-        _QuestUI.SetActive(false);
-        Cursor.lockState = CursorLockMode.Locked;
-        _inQuest = false;
-        _player._playerInput.SwitchCurrentActionMap("Player");
-    }
 
 
     //Ineract
@@ -174,4 +158,6 @@ public class GameManager : MonoBehaviour
             ShowIneractUI(false);
             _player._playerInput.DeactivateInput();
         }
+    public void Ende()
+    {_player._playerInput.SwitchCurrentActionMap("UI");}
 }

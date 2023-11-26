@@ -41,9 +41,4 @@ public class QuestManager : MonoBehaviour
 
         return prioritizedQuests;
     }
-
-    public void CloseQuest()
-    {
-        GameManager.instance.CloseQuest();
-    }
 }

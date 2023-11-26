@@ -17,8 +17,6 @@ public class DialoguesLines
     public bool _imageTherapist;
     public bool _imageErgo;
     public bool _imageInnerChilde;
-    public bool _button;
-    public bool _buttonNPC;
 }
 
 

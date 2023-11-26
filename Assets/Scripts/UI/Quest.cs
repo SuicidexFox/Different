@@ -23,7 +23,7 @@ public class Quest : MonoBehaviour
 
     public void ShowQuest()
     {
-        if (questsLines.Count == 0 || GameManager.instance._inDialogue) { return; }
+        if (questsLines.Count == 0) { return; }
         GameManager.instance.ShowQuest(this);
     }
 
