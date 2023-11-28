@@ -648,21 +648,21 @@
                 {
                     "name": "",
                     "id": "9e92bb26-7e3b-4ec4-b06b-3c8f8e498ddc",
-                    "path": "*/{Submit}",
+                    "path": "<Keyboard>/f",
                     "interactions": "",
                     "processors": "",
-                    "groups": "Gamepad;Touch;Joystick;XR",
+                    "groups": "Gamepad;Touch;Joystick;XR;Keyboard&Mouse",
                     "action": "Submit",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "",
-                    "id": "b81220c0-d2a4-42c8-a2e9-18b39d96c64b",
-                    "path": "<Keyboard>/f",
+                    "id": "044494c6-853d-4efb-a9ad-7bd835e6785d",
+                    "path": "*/{Submit}",
                     "interactions": "",
                     "processors": "",
-                    "groups": "Keyboard&Mouse",
+                    "groups": "Gamepad;Touch;Joystick;XR",
                     "action": "Submit",
                     "isComposite": false,
                     "isPartOfComposite": false

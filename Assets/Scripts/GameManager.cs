@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using Cinemachine;
 using TMPro;
 using UI;
 using Unity.VisualScripting;
@@ -9,6 +10,7 @@ using UnityEditor;
 using UnityEditor.AI;
 using UnityEditor.U2D;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.Experimental.Rendering.RenderGraphModule;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.HID;
@@ -18,41 +20,61 @@ using UnityEngine.UI;
 using UnityEngine.WSA;
 using Cursor = UnityEngine.Cursor;
 
+
+
+
+[Serializable]
+public class Collectabels
+{
+    public GameObject _Collect;
+    public UnityEvent SetActive;
+}
+
+
 public class GameManager : MonoBehaviour
 {
+    public List<GameObject> _collectable;
     public static GameManager instance; //"static" macht es nur einmahlig und kann überall aufgerufen werden
     public PlayerController _player;
+    [SerializeField] private CinemachineInputProvider _playerCamInputProvider;
     private InteractableManager _interactableManager;
+    public bool _inUI = false;
     
 
     [Header("Interact")] 
     [SerializeField] private GameObject _InteractUI;
     public float _takeCollect = 0f;
     [Header("Dialouge")] 
-    [SerializeField] private GameObject _DialogUI;
+    [SerializeField] public GameObject _DialogUI;
     [SerializeField] private GameObject _Rosie;
     [SerializeField] private GameObject _ChatboxTalk;
     [SerializeField] private GameObject _ChatboxThink;
     [SerializeField] private TextMeshProUGUI _TextDialog;
     [SerializeField] private TextMeshProUGUI _TextDialogNPC;
-    [SerializeField] private Button _Button;
+    [SerializeField] private Button _DialogButton;
     [SerializeField] private GameObject _Therapist;
     [SerializeField] private GameObject _Ergo;
     [SerializeField] private GameObject _InnerChilde;
-    public bool _inDialogue = false;
     [Header("ShowQuest")] 
     [SerializeField] private GameObject _QuestUI;
     [SerializeField] private TextMeshProUGUI _TextQuest;
+    [SerializeField] public Animator _aniDialogRosie;
 
-    [Header("QuestLog")] [Header("Ende")] 
+    
+    
+    [Header("Ende")] 
     [SerializeField] private GameObject _EndeUI;
+
+    [SerializeField] private TextMeshProUGUI _TextEnde;
+    [SerializeField] private Button _EndeButton;
     
     //DialogManager
     private Dialog _currentLines;
     private int _currentLineIndex;
     //QuestManager
-    private Quest _currentQuestLine;
+    private QuestManager _currentQuestLine;
     private int _currentQuestLineIndex;
+    
 
     private void Awake() //nur beim ersten Start der gesamten Instanz
     {
@@ -65,6 +87,7 @@ public class GameManager : MonoBehaviour
         _DialogUI.SetActive(false);
         _QuestUI.SetActive(false);
         _EndeUI.SetActive(false);
+        //_quest1.GetComponentInChildren<Collider>(CompareTag("Quest 1")).enabled = false;
     }
 
     //Anzeige der Tasten und Hinweise vllt. Tutorial
@@ -74,23 +97,22 @@ public class GameManager : MonoBehaviour
     }
 
 
+    
     //Dialog
-    public void ShowDialogUI(bool show)
+    public void ShowDialogUI(Dialog dialog)
     {
-        if (_currentLines == null) { return; }
+        //Player
+        _player._playerInput.SwitchCurrentActionMap("UI");
+        _playerCamInputProvider.enabled = false;
+        Cursor.lockState = CursorLockMode.Confined; //Maus
+        //Dialog
         _DialogUI.SetActive(true);
-    }
-    public void ShowDialog(Dialog dialog)
-    {
-        _inDialogue = true;
+        _inUI = true;
+        _TextDialog.SetText("");
         _currentLines = dialog;
         _currentLineIndex = 0;
         ShowIneractUI(false);
-        _player._currentInteractable = null;
-        _TextDialog.SetText("");
-        Cursor.lockState = CursorLockMode.Confined;
         ShowCurrentLine();
-        _player._playerInput.SwitchCurrentActionMap("UI");
     }
     private void ShowCurrentLine()
     {
@@ -105,59 +127,114 @@ public class GameManager : MonoBehaviour
         _Ergo.SetActive(dialogueLines._imageErgo);
         _InnerChilde.SetActive(dialogueLines._imageInnerChilde);
     }
+    //IEnumerator FocusButton()
     public void NextDialogLine()
     {
-        if (!_inDialogue) { return; }
+        if (!_inUI) { return; }
         _currentLineIndex++; //einfach immer eins weiter zählen
         if (_currentLines.dialoguesLines.Count == _currentLineIndex)
         {
-            CloseDialog();
+            CloseDialogUI();
             return;
         }
 
         ShowCurrentLine();
     }
-    public void CloseDialog()
+    public void CloseDialogUI()
     {
+        //Player
+        _player._playerInput.SwitchCurrentActionMap("Player");
+        _playerCamInputProvider.enabled = true;
+        Cursor.lockState = CursorLockMode.Locked;
+        //Dialog
+        _aniDialogRosie.Play("DialogUIRosieScaleLow");
+        _inUI = false;
         _currentLines.dialogEnd.Invoke();
         _currentLines.GetComponentInParent<DialoguesManager>()._dialogCam.Priority = 0;
+    }
+
+    public void AnimationEventCloseDialogUI()
+    {
         _DialogUI.SetActive(false);
-        Cursor.lockState = CursorLockMode.Locked;
-        _inDialogue = false;
-        _player._playerInput.SwitchCurrentActionMap("Player");
     }
     
+    
+    
     //Quest
-    public void ShowQuestUI(bool show)
+    public void ShowQuestUI(QuestManager questManager)
     {
+        //Player
+        _player._playerInput.SwitchCurrentActionMap("UI");
+        _playerCamInputProvider.enabled = false;
+        Cursor.lockState = CursorLockMode.Confined; //Maus
+        //Quest
         _QuestUI.SetActive(true);
-    }
-    public void ShowQuest(Quest quest)
-    {
-        _currentQuestLine = quest;
+        _TextQuest.SetText("");
+        _currentQuestLine = questManager;
         _currentQuestLineIndex = 0;
         ShowIneractUI(false);
-        _player._currentInteractable = null;
-        _TextQuest.SetText("");
-        Cursor.lockState = CursorLockMode.Confined;
         ShowCurrentQuestLine();
     }
     public void ShowCurrentQuestLine()
     {
-        QuestsLines questLines = _currentQuestLine.questsLines[_currentQuestLineIndex];
-        if (questLines == null) { return; }
-        _TextQuest.SetText(questLines._Questtext);
+        Questlines questlines = _currentQuestLine._questlines[_currentQuestLineIndex];
+        if (questlines == null) { return; }
+        _TextQuest.SetText(questlines._Questtext);
+    } 
+    public void CloseQuestUI()
+    {
+        //Player
+        _player._playerInput.SwitchCurrentActionMap("Player");
+        _playerCamInputProvider.enabled = true;
+        Cursor.lockState = CursorLockMode.Locked;
+        //Quest
+        _QuestUI.SetActive(false);
+        _currentQuestLine._questCam.Priority = 0;
     }
-
-
+    
+    
+    
+    //ENDE
+    public void ShowEndUI(Dialog dialog)
+    {
+        //Player
+        _player._playerInput.SwitchCurrentActionMap("UI");
+        _playerCamInputProvider.enabled = false;
+        Cursor.lockState = CursorLockMode.Confined; //Maus
+        //Ende
+        _EndeUI.SetActive(true);
+        _inUI = true;
+        _TextQuest.SetText("");
+        _currentLines = dialog;
+        _currentLineIndex = 0;
+        ShowIneractUI(false);
+        ShowCurrentEndeLine();
+    }
+    public void ShowCurrentEndeLine()
+    {
+        DialoguesLines dialogueLines = _currentLines.dialoguesLines[_currentLineIndex];
+        if (dialogueLines == null) { return; }
+        _TextEnde.SetText(dialogueLines._text);
+    }
+    public void CloseEndeUI()
+    {}
+    
+    
+    
+    
     //Ineract
     public void TakeCollect()
         {
-            _takeCollect++;
             _player._animator.SetTrigger("Take");
             ShowIneractUI(false);
             _player._playerInput.DeactivateInput();
+            _player._currentInteractable = null;
+            if (_takeCollect == 5f)
+            {
+            }
+            else
+            {
+                _takeCollect++;
+            }
         }
-    public void Ende()
-    {_player._playerInput.SwitchCurrentActionMap("UI");}
 }

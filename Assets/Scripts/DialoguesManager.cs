@@ -24,15 +24,25 @@ public class DialoguesManager : MonoBehaviour
     {
         GetPrioritizedDialogue().ShowDialogue();
         _dialogCam.Priority = 11;
-
     }
+    
+    
     private Dialog GetPrioritizedDialogue()
     {
         Dialog prioritizedDialogue = _dialogues[0];
 
         foreach (Dialog d in _dialogues)
         {
-            if (prioritizedDialogue.priority < d.priority)
+            if (d.dialoguesLines != "") //wenn er das Item hat
+                if (GameManager.instance._collectable.Contains(d.dialoguesLines))
+                {
+                    return d;
+                }
+                else
+                {
+                    continue;
+                }
+        if (prioritizedDialogue.priority < d.priority)
             {
                 prioritizedDialogue = d;
             }

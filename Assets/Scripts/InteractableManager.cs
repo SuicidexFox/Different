@@ -3,6 +3,10 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
 
+
+
+
+
 public class InteractableManager : MonoBehaviour
 {
     public Animator _animator;

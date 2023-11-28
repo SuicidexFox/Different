@@ -24,8 +24,6 @@ namespace UI
             Target.StartCoroutine(effect.Run());
             return effect;
         }
-
-        
         private IEnumerator Run()
         {
             _target.text = "";

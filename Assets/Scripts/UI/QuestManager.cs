@@ -2,43 +2,31 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Cinemachine;
+using FMODUnity;
 using UnityEngine;
 using UnityEngine.Events;
 using Unity.VisualScripting;
 
 
+
+[Serializable]
+public class Questlines 
+{
+    [TextArea(3, 8)]public string _Questtext;
+}
+
 public class QuestManager : MonoBehaviour
 {
     public CinemachineVirtualCamera _questCam;
-    [SerializeField] private List<Quest> _quests;
-
-    private void Start()
+    public List<Questlines> _questlines;
+    public Animator _animationQeustUI;
+    
+    
+    public void ShowQuestLine()
     {
-        foreach (Quest d in GetComponentsInChildren<Quest>())
-        {
-            _quests.Add(d);
-        }
-    }
-
-    public void ShowQuest()
-    {
-        GetPrioritizedQuests().ShowQuest();
-        _questCam.Priority = 11;
-
-    }
-
-    private Quest GetPrioritizedQuests()
-    {
-        Quest prioritizedQuests = _quests[0];
-
-        foreach (Quest d in _quests)
-        {
-            if (prioritizedQuests.priority < d.priority)
-            {
-                prioritizedQuests = d;
-            }
-        }
-
-        return prioritizedQuests;
+         {
+             GameManager.instance.ShowQuestUI(this);
+             _questCam.Priority = 11;
+         }
     }
 }
