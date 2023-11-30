@@ -18,7 +18,6 @@ public class InteractableManager : MonoBehaviour
         if (_animator == null) { return; }
         _animator.SetTrigger("Open");
     }
-    
     public void CloseKitchen()
     {
         _animator.SetTrigger("Close");

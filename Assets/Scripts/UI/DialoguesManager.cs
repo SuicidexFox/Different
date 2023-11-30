@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Cinemachine;
 using UnityEngine;
 using UnityEngine.Events;
@@ -33,8 +34,8 @@ public class DialoguesManager : MonoBehaviour
 
         foreach (Dialog d in _dialogues)
         {
-            if (d.dialoguesLines != "") //wenn er das Item hat
-                if (GameManager.instance._collectable.Contains(d.dialoguesLines))
+            if (d._needImportantItem != null) //wenn er das Item hat
+                if (GameManager.instance._importantItems.Contains(d._needImportantItem))
                 {
                     return d;
                 }

@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Dynamic;
 using Cinemachine;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Assertions.Must;
@@ -24,7 +25,7 @@ public class PlayerController : MonoBehaviour
     private float _moveSpeed;
     public float _minTurnSpeed = 1f;
     public float _turnSpeed = 5f;
-    private Rigidbody _rigidbody;
+    private CharacterController _characterController;
     private Transform _camTransform;
     
     //Animator
@@ -38,7 +39,7 @@ public class PlayerController : MonoBehaviour
     void Start() 
     {   //Walk
         _playerInput = GetComponent<PlayerInput>();
-        _rigidbody = GetComponent<Rigidbody>();
+        _characterController = GetComponent<CharacterController>();
         _camTransform = Camera.main.transform;
         
         
@@ -86,11 +87,11 @@ public class PlayerController : MonoBehaviour
         //Rotation at Mouse
         if (velocity.magnitude > _minTurnSpeed)
         {
-            Quaternion rotation = Quaternion.Lerp(_rigidbody.rotation, Quaternion.LookRotation(velocity), Time.deltaTime * _turnSpeed);
-            _rigidbody.rotation = rotation; // DeltaTime passt Frames von unterschiedlichen PC`s an 
+            Quaternion rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(velocity), Time.deltaTime * _turnSpeed);
+            transform.rotation = rotation; // DeltaTime passt Frames von unterschiedlichen PC`s an 
         }
         // Gravity
-        _rigidbody.velocity = velocity = new Vector3(velocity.x * _moveSpeed, _rigidbody.velocity.y, velocity.z * _moveSpeed);
+        _characterController.SimpleMove(new Vector3(velocity.x * _moveSpeed, 0, velocity.z * _moveSpeed));
              
         
         //Animator
@@ -111,13 +112,12 @@ public class PlayerController : MonoBehaviour
         //Tab
         if (_tabAction.inProgress)
         {
-            _TabUI.SetBool("Fade", true);
+            _TabUI.SetBool("Tab", true);
         }
         else
         { 
-            _TabUI.SetBool("Fade", false); 
+            _TabUI.SetBool("Tab", false); 
         }
-        
     }
     
     private void OnDisable() //Verhalten Deaktivieren

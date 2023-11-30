@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using Cinemachine;
+using FMOD.Studio;
+using FMODUnity;
 using TMPro;
 using UI;
 using Unity.VisualScripting;
@@ -16,35 +18,27 @@ using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.HID;
 using UnityEngine.SceneManagement;
 using UnityEngine.U2D;
-using UnityEngine.UI;
+using UnityEngine.UIElements;
 using UnityEngine.WSA;
+using Button = UnityEngine.UI.Button;
 using Cursor = UnityEngine.Cursor;
 
 
 
-
-[Serializable]
-public class Collectabels
-{
-    public GameObject _Collect;
-    public UnityEvent SetActive;
-}
-
-
 public class GameManager : MonoBehaviour
 {
-    public List<GameObject> _collectable;
     public static GameManager instance; //"static" macht es nur einmahlig und kann überall aufgerufen werden
     public PlayerController _player;
     [SerializeField] private CinemachineInputProvider _playerCamInputProvider;
     private InteractableManager _interactableManager;
-    public bool _inUI = false;
-    
+    public EventReference _musicEventReference;
+    private EventInstance _musicEventInstance;
 
     [Header("Interact")] 
     [SerializeField] private GameObject _InteractUI;
     public float _takeCollect = 0f;
-    [Header("Dialouge")] 
+    [Header("Dialouge")]
+    public bool _inUI = false;
     [SerializeField] public GameObject _DialogUI;
     [SerializeField] private GameObject _Rosie;
     [SerializeField] private GameObject _ChatboxTalk;
@@ -55,25 +49,35 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject _Therapist;
     [SerializeField] private GameObject _Ergo;
     [SerializeField] private GameObject _InnerChilde;
+    [Header("Buttons for Dialog")]
+    [SerializeField] private GameObject _buttonGroup;
+    [SerializeField] private GameObject _buttonCurrent;
     [Header("ShowQuest")] 
     [SerializeField] private GameObject _QuestUI;
     [SerializeField] private TextMeshProUGUI _TextQuest;
+    [SerializeField] private Button _QuestButton;
     [SerializeField] public Animator _aniDialogRosie;
-
-    
-    
     [Header("Ende")] 
     [SerializeField] private GameObject _EndeUI;
-
-    [SerializeField] private TextMeshProUGUI _TextEnde;
     [SerializeField] private Button _EndeButton;
+    [Header("Tab")] 
+    public List<string> _importantItems;
+    [SerializeField] private GameObject _Quest1;
+    [SerializeField] private TextMeshProUGUI _Tabtext1;
+    [SerializeField] private GameObject _Quest2;
+    [SerializeField] private GameObject _Quest3;
+    [SerializeField] private GameObject _Quest4;
+    [SerializeField] private GameObject _Quest5;
+    [SerializeField] private GameObject _Quest6;
+
+    
     
     //DialogManager
     private Dialog _currentLines;
     private int _currentLineIndex;
     //QuestManager
-    private QuestManager _currentQuestLine;
-    private int _currentQuestLineIndex;
+    private QuestManagerLine _currentLineQuest;
+    private QuestManager _questManager;
     
 
     private void Awake() //nur beim ersten Start der gesamten Instanz
@@ -87,18 +91,26 @@ public class GameManager : MonoBehaviour
         _DialogUI.SetActive(false);
         _QuestUI.SetActive(false);
         _EndeUI.SetActive(false);
-        //_quest1.GetComponentInChildren<Collider>(CompareTag("Quest 1")).enabled = false;
     }
 
-    //Anzeige der Tasten und Hinweise vllt. Tutorial
+    private void Update()
+    {
+        if (_takeCollect == 5f) 
+        { 
+            _Quest1.GetComponentInChildren<Collider>(CompareTag("Quest 1")).enabled = false; 
+            _Quest1.GetComponentInChildren<GameObject>(CompareTag("Emission")).SetActive(false);
+            _importantItems.Add("ReadyQuest1");
+        }
+    }
+
+    //InteractUI
     public void ShowIneractUI(bool show)
     {
         _InteractUI.SetActive(show);
     }
-
-
     
-    //Dialog
+    
+    //DialogUI
     public void ShowDialogUI(Dialog dialog)
     {
         //Player
@@ -112,6 +124,7 @@ public class GameManager : MonoBehaviour
         _currentLines = dialog;
         _currentLineIndex = 0;
         ShowIneractUI(false);
+        ClearButton();
         ShowCurrentLine();
     }
     private void ShowCurrentLine()
@@ -126,8 +139,30 @@ public class GameManager : MonoBehaviour
         _Therapist.SetActive(dialogueLines._imageTherapist);
         _Ergo.SetActive(dialogueLines._imageErgo);
         _InnerChilde.SetActive(dialogueLines._imageInnerChilde);
+        dialogueLines._lineEvent.Invoke();
+        foreach (Buttons buttons in dialogueLines._Buttons)
+        {
+            GameObject buttonInstance = Instantiate(_buttonCurrent, _buttonGroup.transform);
+            buttonInstance.GetComponent<ButtonManager>().Setup(buttons._text, buttons._buttonEvent);
+        }
+        StartCoroutine(FocusButton(dialogueLines));
     }
-    //IEnumerator FocusButton()
+    IEnumerator FocusButton(DialoguesLines dialoguesLines)
+    {
+       yield return new WaitForEndOfFrame();
+       //first Dialog Button
+       if (dialoguesLines._Buttons.Count > 0)
+       {
+           GameObject firstButtom = _buttonGroup.transform.GetChild(0).gameObject;
+           firstButtom.GetComponent<Button>().Select();
+           _DialogButton.gameObject.SetActive(false);
+       }
+       else 
+       {
+           _DialogButton.gameObject.SetActive(true);
+           _DialogButton.Select();
+       }
+    }
     public void NextDialogLine()
     {
         if (!_inUI) { return; }
@@ -142,45 +177,52 @@ public class GameManager : MonoBehaviour
     }
     public void CloseDialogUI()
     {
-        //Player
-        _player._playerInput.SwitchCurrentActionMap("Player");
-        _playerCamInputProvider.enabled = true;
-        Cursor.lockState = CursorLockMode.Locked;
-        //Dialog
         _aniDialogRosie.Play("DialogUIRosieScaleLow");
+    } 
+    public void AnimationEventCloseDialogUI()
+    { 
+        //Player
+        _player._playerInput.SwitchCurrentActionMap("Player"); 
+        _playerCamInputProvider.enabled = true; 
+        Cursor.lockState = CursorLockMode.Locked;
+        //GameManager
+        _DialogUI.SetActive(false);
         _inUI = false;
         _currentLines.dialogEnd.Invoke();
         _currentLines.GetComponentInParent<DialoguesManager>()._dialogCam.Priority = 0;
+        ClearButton();
+    }
+    private void ClearButton()
+    {
+        foreach (Transform t in _buttonGroup.transform)
+        {
+            Destroy(t.gameObject);
+        }
+    }
+    public void ShowNewDialog(Dialog dialog)
+    {
+        _currentLines = dialog;
+        _currentLineIndex = 0;
+        ShowCurrentLine();
     }
 
-    public void AnimationEventCloseDialogUI()
+    
+    
+    
+    //QuestUI
+    public void ShowQuestUI()
     {
-        _DialogUI.SetActive(false);
-    }
-    
-    
-    
-    //Quest
-    public void ShowQuestUI(QuestManager questManager)
-    {
+        ShowIneractUI(false);
         //Player
         _player._playerInput.SwitchCurrentActionMap("UI");
         _playerCamInputProvider.enabled = false;
         Cursor.lockState = CursorLockMode.Confined; //Maus
-        //Quest
+        //GameManager
         _QuestUI.SetActive(true);
-        _TextQuest.SetText("");
-        _currentQuestLine = questManager;
-        _currentQuestLineIndex = 0;
-        ShowIneractUI(false);
-        ShowCurrentQuestLine();
+        QuestManagerLine questManagerLine = _currentLineQuest;
+        _TextQuest.SetText(questManagerLine._Questtext);
+        _QuestButton.Select();
     }
-    public void ShowCurrentQuestLine()
-    {
-        Questlines questlines = _currentQuestLine._questlines[_currentQuestLineIndex];
-        if (questlines == null) { return; }
-        _TextQuest.SetText(questlines._Questtext);
-    } 
     public void CloseQuestUI()
     {
         //Player
@@ -189,13 +231,14 @@ public class GameManager : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         //Quest
         _QuestUI.SetActive(false);
-        _currentQuestLine._questCam.Priority = 0;
+        _Tabtext1.SetText(_currentLineQuest._Questtext);
+        _questManager._questCam.Priority = 0;
     }
     
     
     
     //ENDE
-    public void ShowEndUI(Dialog dialog)
+    public void ShowEndUI()
     {
         //Player
         _player._playerInput.SwitchCurrentActionMap("UI");
@@ -204,37 +247,54 @@ public class GameManager : MonoBehaviour
         //Ende
         _EndeUI.SetActive(true);
         _inUI = true;
-        _TextQuest.SetText("");
-        _currentLines = dialog;
-        _currentLineIndex = 0;
         ShowIneractUI(false);
-        ShowCurrentEndeLine();
-    }
-    public void ShowCurrentEndeLine()
-    {
-        DialoguesLines dialogueLines = _currentLines.dialoguesLines[_currentLineIndex];
-        if (dialogueLines == null) { return; }
-        _TextEnde.SetText(dialogueLines._text);
+        _EndeButton.Select();
     }
     public void CloseEndeUI()
-    {}
+    {
+        SceneManager.LoadScene("Paychatrie");
+    }
     
     
     
-    
-    //Ineract
-    public void TakeCollect()
+    //Quest1
+    public void TakeCollectQuest1()
         {
+            //Player
             _player._animator.SetTrigger("Take");
+            _player._playerInput.SwitchCurrentActionMap("UI");
+            _playerCamInputProvider.enabled = false;
+            Cursor.lockState = CursorLockMode.Locked;
+            //GameManager
+            _Tabtext1.SetText("[0]/5)", _takeCollect);
             ShowIneractUI(false);
-            _player._playerInput.DeactivateInput();
-            _player._currentInteractable = null;
-            if (_takeCollect == 5f)
-            {
-            }
-            else
-            {
-                _takeCollect++;
-            }
+            _takeCollect++;
         }
+    
+    public void DestroyCollect()
+    {
+        foreach (Transform t in _player._currentInteractable.transform);
+        Debug.Log(gameObject);
+        {
+            
+        }
+        _Quest1.GetComponentInChildren<InteractableManager>(CompareTag("Quest 1")).enabled = false; 
+        _Quest1.GetComponentInChildren<InteractableManager>(CompareTag("Emission")).enabled = (false);
+        //foreach (Transform t in _Quest1.transform) { Destroy(t.gameObject); }
+       
+        
+        //_player._playerInput.SwitchCurrentActionMap("Player");
+    } 
+    
+    
+    
+    //ImportantItem
+    public void AddItem(string id)
+    { 
+        _importantItems.Add(id); 
+    }
+    public void RemoveItem(string id)
+    { 
+        _importantItems.Remove(id);
+    }
 }

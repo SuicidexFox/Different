@@ -13,10 +13,6 @@ public class Buttons
     public UnityEvent _buttonEvent;
 }
 
-
-
-
-
 [Serializable]
 public class DialoguesLines
 {
@@ -36,6 +32,7 @@ public class DialoguesLines
 
 public class Dialog : MonoBehaviour
 {
+    public string _needImportantItem;
     public int priority = -1;
     public List<DialoguesLines> dialoguesLines;
     public UnityEvent dialogEnd;

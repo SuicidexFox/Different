@@ -9,20 +9,11 @@ public class AnimationEvents : MonoBehaviour
     {
         RuntimeManager.PlayOneShot(soundPath);
     }
-    public void Footstep()
-    {
-        RuntimeManager.PlayOneShot("event:/SFX/Footstep_Stone");
-    }
-
-    public void TriggerQuestClose()
-    {
-        GameManager.instance.CloseQuestUI();
-    }
-
-    public void AnimationCollect()
-    {
-        GameManager.instance.TakeCollect();
-    }
+    
+    
+    //Player
+    public void Footstep() { RuntimeManager.PlayOneShot("event:/SFX/Footstep_Stone"); }
+    public void Take() { GameManager.instance.DestroyCollect();  }
     
     
     
@@ -30,5 +21,9 @@ public class AnimationEvents : MonoBehaviour
     public void CloseDialogUI()
     {
         GameManager.instance.AnimationEventCloseDialogUI();
+    } 
+    public void TriggerQuestClose() 
+    { 
+        GameManager.instance.CloseQuestUI();
     }
 }
