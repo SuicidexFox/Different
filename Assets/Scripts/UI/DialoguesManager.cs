@@ -1,11 +1,8 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using Cinemachine;
 using UnityEngine;
-using UnityEngine.Events;
-using UnityEngine.UIElements;
+
 
 
 public class DialoguesManager : MonoBehaviour

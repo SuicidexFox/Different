@@ -1,3 +1,5 @@
+using System.Collections;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
@@ -12,6 +14,7 @@ public class ButtonManager : MonoBehaviour
     public void Setup(string text, UnityEvent buttonEvent)
     {
         this.text = text;
+        this.buttonEvent = buttonEvent;
         _buttonTextUI.SetText(text);
     }
     public void OnClick()

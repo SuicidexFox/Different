@@ -26,4 +26,9 @@ public class AnimationEvents : MonoBehaviour
     { 
         GameManager.instance.CloseQuestUI();
     }
+
+    public void CloseEndUI()
+    {
+        GameManager.instance.CloseEndeUI();
+    }
 }

@@ -1,28 +1,14 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 using Cinemachine;
 using FMOD.Studio;
 using FMODUnity;
 using TMPro;
-using UI;
 using Unity.VisualScripting;
-using UnityEditor;
-using UnityEditor.AI;
-using UnityEditor.U2D;
 using UnityEngine;
-using UnityEngine.Events;
-using UnityEngine.Experimental.Rendering.RenderGraphModule;
-using UnityEngine.InputSystem;
-using UnityEngine.InputSystem.HID;
 using UnityEngine.SceneManagement;
-using UnityEngine.U2D;
-using UnityEngine.UIElements;
-using UnityEngine.WSA;
-using Button = UnityEngine.UI.Button;
-using Cursor = UnityEngine.Cursor;
-
+using UnityEngine.UI;
 
 
 public class GameManager : MonoBehaviour
@@ -45,39 +31,26 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject _ChatboxThink;
     [SerializeField] private TextMeshProUGUI _TextDialog;
     [SerializeField] private TextMeshProUGUI _TextDialogNPC;
-    [SerializeField] private Button _DialogButton;
+    [SerializeField] private Button _ButtonDialog;
     [SerializeField] private GameObject _Therapist;
     [SerializeField] private GameObject _Ergo;
     [SerializeField] private GameObject _InnerChilde;
+    [SerializeField] private Animator _animationCloseDialog;
     [Header("Buttons for Dialog")]
     [SerializeField] private GameObject _buttonGroup;
     [SerializeField] private GameObject _buttonCurrent;
     [Header("ShowQuest")] 
     [SerializeField] private GameObject _QuestUI;
-    [SerializeField] private TextMeshProUGUI _TextQuest;
-    [SerializeField] private Button _QuestButton;
-    [SerializeField] public Animator _aniDialogRosie;
     [Header("Ende")] 
     [SerializeField] private GameObject _EndeUI;
-    [SerializeField] private Button _EndeButton;
     [Header("Tab")] 
     public List<string> _importantItems;
-    [SerializeField] private GameObject _Quest1;
-    [SerializeField] private TextMeshProUGUI _Tabtext1;
-    [SerializeField] private GameObject _Quest2;
-    [SerializeField] private GameObject _Quest3;
-    [SerializeField] private GameObject _Quest4;
-    [SerializeField] private GameObject _Quest5;
-    [SerializeField] private GameObject _Quest6;
 
     
     
     //DialogManager
     private Dialog _currentLines;
     private int _currentLineIndex;
-    //QuestManager
-    private QuestManagerLine _currentLineQuest;
-    private QuestManager _questManager;
     
 
     private void Awake() //nur beim ersten Start der gesamten Instanz
@@ -91,15 +64,16 @@ public class GameManager : MonoBehaviour
         _DialogUI.SetActive(false);
         _QuestUI.SetActive(false);
         _EndeUI.SetActive(false);
+        _musicEventInstance = RuntimeManager.CreateInstance(_musicEventReference);
+        _musicEventInstance.start();
+        _musicEventInstance.setParameterByName("MusicStage", 2);
     }
 
     private void Update()
     {
-        if (_takeCollect == 5f) 
-        { 
-            _Quest1.GetComponentInChildren<Collider>(CompareTag("Quest 1")).enabled = false; 
-            _Quest1.GetComponentInChildren<GameObject>(CompareTag("Emission")).SetActive(false);
-            _importantItems.Add("ReadyQuest1");
+        if (_takeCollect == 5f)
+        {
+            ShowEndUI();
         }
     }
 
@@ -123,6 +97,7 @@ public class GameManager : MonoBehaviour
         _TextDialog.SetText("");
         _currentLines = dialog;
         _currentLineIndex = 0;
+        _musicEventInstance.setParameterByName("MusicStage", 1);
         ShowIneractUI(false);
         ClearButton();
         ShowCurrentLine();
@@ -153,14 +128,14 @@ public class GameManager : MonoBehaviour
        //first Dialog Button
        if (dialoguesLines._Buttons.Count > 0)
        {
+           _ButtonDialog.gameObject.SetActive(false);
            GameObject firstButtom = _buttonGroup.transform.GetChild(0).gameObject;
            firstButtom.GetComponent<Button>().Select();
-           _DialogButton.gameObject.SetActive(false);
        }
        else 
        {
-           _DialogButton.gameObject.SetActive(true);
-           _DialogButton.Select();
+           _ButtonDialog.gameObject.SetActive(true);
+           _ButtonDialog.Select();
        }
     }
     public void NextDialogLine()
@@ -177,7 +152,7 @@ public class GameManager : MonoBehaviour
     }
     public void CloseDialogUI()
     {
-        _aniDialogRosie.Play("DialogUIRosieScaleLow");
+        _animationCloseDialog.Play("DialogUIScaleLow");
     } 
     public void AnimationEventCloseDialogUI()
     { 
@@ -190,6 +165,7 @@ public class GameManager : MonoBehaviour
         _inUI = false;
         _currentLines.dialogEnd.Invoke();
         _currentLines.GetComponentInParent<DialoguesManager>()._dialogCam.Priority = 0;
+        _musicEventInstance.setParameterByName("MusicStage", 2);
         ClearButton();
     }
     private void ClearButton()
@@ -215,24 +191,18 @@ public class GameManager : MonoBehaviour
         ShowIneractUI(false);
         //Player
         _player._playerInput.SwitchCurrentActionMap("UI");
-        _playerCamInputProvider.enabled = false;
-        Cursor.lockState = CursorLockMode.Confined; //Maus
+        _playerCamInputProvider.enabled = false; //Maus
         //GameManager
         _QuestUI.SetActive(true);
-        QuestManagerLine questManagerLine = _currentLineQuest;
-        _TextQuest.SetText(questManagerLine._Questtext);
-        _QuestButton.Select();
     }
     public void CloseQuestUI()
     {
         //Player
         _player._playerInput.SwitchCurrentActionMap("Player");
         _playerCamInputProvider.enabled = true;
-        Cursor.lockState = CursorLockMode.Locked;
         //Quest
         _QuestUI.SetActive(false);
-        _Tabtext1.SetText(_currentLineQuest._Questtext);
-        _questManager._questCam.Priority = 0;
+        _player._currentInteractable = null;
     }
     
     
@@ -243,17 +213,14 @@ public class GameManager : MonoBehaviour
         //Player
         _player._playerInput.SwitchCurrentActionMap("UI");
         _playerCamInputProvider.enabled = false;
-        Cursor.lockState = CursorLockMode.Confined; //Maus
         //Ende
         _EndeUI.SetActive(true);
-        _inUI = true;
         ShowIneractUI(false);
-        _EndeButton.Select();
     }
-    public void CloseEndeUI()
-    {
-        SceneManager.LoadScene("Paychatrie");
-    }
+    public void CloseEndeUI() { SceneManager.LoadScene("Psychatrie"); }
+    public void SavePlace() { SceneManager.LoadScene("Save Place"); }
+    public void Kitchen() { SceneManager.LoadScene("Kitchen"); }
+    public void Quit() { Application.Quit();}
     
     
     
@@ -264,30 +231,24 @@ public class GameManager : MonoBehaviour
             _player._animator.SetTrigger("Take");
             _player._playerInput.SwitchCurrentActionMap("UI");
             _playerCamInputProvider.enabled = false;
-            Cursor.lockState = CursorLockMode.Locked;
             //GameManager
-            _Tabtext1.SetText("[0]/5)", _takeCollect);
             ShowIneractUI(false);
             _takeCollect++;
         }
-    
     public void DestroyCollect()
     {
-        foreach (Transform t in _player._currentInteractable.transform);
-        Debug.Log(gameObject);
+        if (_player._currentInteractable != null)
         {
-            
+            Destroy(_player._currentInteractable.GameObject());
         }
-        _Quest1.GetComponentInChildren<InteractableManager>(CompareTag("Quest 1")).enabled = false; 
-        _Quest1.GetComponentInChildren<InteractableManager>(CompareTag("Emission")).enabled = (false);
-        //foreach (Transform t in _Quest1.transform) { Destroy(t.gameObject); }
-       
-        
-        //_player._playerInput.SwitchCurrentActionMap("Player");
-    } 
+        _player._playerInput.SwitchCurrentActionMap("Player");
+        _playerCamInputProvider.enabled = true;
+    }
     
+    //Quest2
     
-    
+
+
     //ImportantItem
     public void AddItem(string id)
     { 
