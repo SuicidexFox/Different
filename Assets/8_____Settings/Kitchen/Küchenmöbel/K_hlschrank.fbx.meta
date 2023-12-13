@@ -3,22 +3,7 @@ guid: cd0e7e013aea34342a97cb0782f64a3f
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects:
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Glas
-    second: {fileID: 2100000, guid: 8894643b2dfd7a1478886befc9c221ba, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Grau Metallic
-    second: {fileID: 2100000, guid: d4c303a8a0437884696a4bce9520f336, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Withe
-    second: {fileID: 2100000, guid: cd0e2dde055565048a8c7f25f9da1724, type: 2}
+  externalObjects: {}
   materials:
     materialImportMode: 2
     materialName: 0

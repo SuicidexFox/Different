@@ -22,7 +22,11 @@ public class GameManager : MonoBehaviour
 
     [Header("Interact")] 
     [SerializeField] private GameObject _InteractUI;
-    public float _takeCollect = 0f;
+    public float _dishes = 0f;
+    public float _rorschach = 0f;
+    public float _skillbag = 0f;
+    public float _letter = 0f;
+    public List<string> _importantItems;
     [Header("Dialouge")]
     public bool _inUI = false;
     [SerializeField] public GameObject _DialogUI;
@@ -41,11 +45,10 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject _buttonCurrent;
     [Header("ShowQuest")] 
     [SerializeField] private GameObject _QuestUI;
+    [SerializeField] private Button _ButtonQuestUI;
     [SerializeField] private GameObject _TabUI;
-    [Header("Ende")] 
-    [SerializeField] private GameObject _EndeUI;
-    [Header("Tab")] 
-    public List<string> _importantItems;
+    [Header("Fade")] 
+    [SerializeField] private GameObject _FadeOut;
 
     
     
@@ -64,18 +67,10 @@ public class GameManager : MonoBehaviour
         _InteractUI.SetActive(false);
         _DialogUI.SetActive(false);
         _QuestUI.SetActive(false);
-        _EndeUI.SetActive(false);
+        _FadeOut.SetActive(false);
         _musicEventInstance = RuntimeManager.CreateInstance(_musicEventReference);
         _musicEventInstance.start();
         _musicEventInstance.setParameterByName("MusicStage", 2);
-    }
-
-    private void Update()
-    {
-        if (_takeCollect == 5f)
-        {
-            ShowEndUI();
-        }
     }
 
     //InteractUI
@@ -126,13 +121,13 @@ public class GameManager : MonoBehaviour
     }
     IEnumerator FocusButton(DialoguesLines dialoguesLines)
     {
+        
        yield return new WaitForEndOfFrame();
-       //first Dialog Button
-       if (dialoguesLines._Buttons.Count > 0)
+       if (dialoguesLines._Buttons.Count > 0) //first Dialog Button
        {
-           _ButtonDialog.gameObject.SetActive(false);
            GameObject firstButtom = _buttonGroup.transform.GetChild(0).gameObject;
            firstButtom.GetComponent<Button>().Select();
+           _ButtonDialog.gameObject.SetActive(false);
        }
        else 
        {
@@ -186,8 +181,6 @@ public class GameManager : MonoBehaviour
     }
 
     
-    
-    
     //QuestUI
     public void ShowQuestUI()
     {
@@ -197,6 +190,7 @@ public class GameManager : MonoBehaviour
         _playerCamInputProvider.enabled = false; //Maus
         //GameManager
         _QuestUI.SetActive(true);
+        _ButtonQuestUI.Select();
         _TabUI.SetActive(false);
     }
     public void CloseQuestUI()
@@ -212,22 +206,21 @@ public class GameManager : MonoBehaviour
     
     
     
-    //ENDE
-    public void ShowEndUI()
+    //FadeOut
+    public void ShowFadeOut()
     {
         //Player
         _player._playerInput.SwitchCurrentActionMap("UI");
         _playerCamInputProvider.enabled = false;
         //Ende
-        _EndeUI.SetActive(true);
+        _FadeOut.SetActive(true);
         _TabUI.SetActive(false);
         ShowIneractUI(false);
     }
-    public void CloseEndeUI() { SceneManager.LoadScene("Psychatrie"); }
+    public void CloseFadeOut() { SceneManager.LoadScene("Psychatrie"); }
 
     public void SavePlace()
     { SceneManager.LoadScene("Save Place"); }
-    public void Kitchen() { SceneManager.LoadScene("Kitchen"); }
 
     IEnumerator Quit()
     {
@@ -236,19 +229,24 @@ public class GameManager : MonoBehaviour
     }
     
     
-    
     //Quest1
-    public void TakeCollectQuest1()
+    public void QuestInteractables(InteractableManager interactableManager)
         {
             //Player
-            _player._animator.SetTrigger("Take");
+            _player._animator.SetTrigger("Take");  
             _player._playerInput.SwitchCurrentActionMap("UI");
             _playerCamInputProvider.enabled = false;
             //GameManager
             ShowIneractUI(false);
-            _takeCollect++;
+            
+            //Abfrage der Interactables
+            if (interactableManager._dishes == true) { _dishes++; }
+            if (interactableManager._rorschach == true) { _rorschach++; }
+            if (interactableManager._skillbag == true) { _skillbag++; }
+            if (interactableManager._letter == true) { _letter++; }
+            else {return;}
         }
-    public void DestroyCollect()
+    public void DestroyInteractable()
     {
         if (_player._currentInteractable != null)
         {
@@ -257,12 +255,8 @@ public class GameManager : MonoBehaviour
         _player._playerInput.SwitchCurrentActionMap("Player");
         _playerCamInputProvider.enabled = true;
     }
-    
-    //Quest2
-    
 
-
-    //ImportantItem
+//ImportantItem
     public void AddItem(string id)
     { 
         _importantItems.Add(id); 

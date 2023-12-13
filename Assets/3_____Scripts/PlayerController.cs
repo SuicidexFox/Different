@@ -18,6 +18,8 @@ public class PlayerController : MonoBehaviour
     private InputAction _runAction;
     private InputAction _interactAction;
     private InputAction _tabAction;
+    private InputAction _hallo;
+    private InputAction _cry;
     
     
     //Move
@@ -50,6 +52,8 @@ public class PlayerController : MonoBehaviour
         
         //Animator
         _animator = GetComponentInChildren<Animator>(); //InChildren sucht er alle Unterordner ab
+        _hallo = _playerInput.actions.FindAction("Hallo");
+        _cry = _playerInput.actions.FindAction("Cry");
         
         //Interact
         _interactAction = _playerInput.actions.FindAction("Interact");
@@ -98,6 +102,8 @@ public class PlayerController : MonoBehaviour
         { }
         _animator.SetFloat("Speed", animatonSpeed);
         _animator.SetBool("Shift", _runAction.inProgress);
+        if (_hallo.inProgress) { _animator.Play("RigRosie|Hallo"); }
+        if (_cry.inProgress) { _animator.Play("RigRosie|Cry"); }
         
         //Tab
         if (_tabAction.inProgress)
@@ -137,4 +143,25 @@ public class PlayerController : MonoBehaviour
             GameManager.instance.ShowIneractUI(false);
         }
     }
+
+
+
+
+    //Animations
+    public void AnimationSee() { _animator.Play("See"); }
+    public void AnimationSeeClose() { _animator.Play("SeeClose"); }
+    
+    //public void AnimationHello() 
+    
+        //Player
+        //_playerInput.SwitchCurrentActionMap("UI");
+        //Cursor.lockState = CursorLockMode.Confined; //Maus
+        //_animator.Play("RigRosie|Hallo");
+    
+    //public void AnimationHelloClose() 
+    
+        //_playerInput.SwitchCurrentActionMap("Player");
+        //Cursor.lockState = CursorLockMode.Locked; //Maus
+    
+    
 }

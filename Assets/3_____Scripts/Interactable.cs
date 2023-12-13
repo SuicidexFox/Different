@@ -9,7 +9,10 @@ using UnityEngine.EventSystems;
 
 public class InteractableManager : MonoBehaviour
 {
-    public bool Quest1;
+    public bool _dishes;
+    public bool _rorschach;
+    public bool _skillbag;
+    public bool _letter;
     public Animator _animator;
     public UnityEvent onInteract;
     

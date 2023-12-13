@@ -14,13 +14,12 @@ public class AnimationEvents : MonoBehaviour
     
     //Player
     public void Footstep()
-    {
-            RuntimeManager.PlayOneShot("Assets/Sounds/Footstep Wood 1.wav");
-    }
-    public void Take() { GameManager.instance.DestroyCollect();  }
-    
-    
-    
+    { RuntimeManager.PlayOneShot("Assets/Sounds/Footstep Wood 1.wav"); }
+    public void Take() { GameManager.instance.DestroyInteractable(); }
+    //public void AnimationHalloEnd() { _player.AnimationHelloClose(); }
+
+
+
     //UI Animator
     public void CloseDialogUI()
     {
@@ -33,6 +32,6 @@ public class AnimationEvents : MonoBehaviour
 
     public void CloseEndUI()
     {
-        GameManager.instance.CloseEndeUI();
+        GameManager.instance.CloseFadeOut();
     }
 }

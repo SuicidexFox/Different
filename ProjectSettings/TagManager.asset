@@ -8,6 +8,7 @@ TagManager:
   - Emission
   - Destroy
   - Ground
+  - Stove
   layers:
   - Default
   - TransparentFX
