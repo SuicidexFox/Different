@@ -6,15 +6,17 @@ TagManager:
   tags:
   - Quest 1
   - Emission
+  - Destroy
+  - Ground
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - Ground
+  - Floor
   - Water
   - UI
-  - 
-  - 
+  - Stone
+  - Grass
   - 
   - 
   - 
