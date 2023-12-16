@@ -80,7 +80,7 @@ public class GameManager : MonoBehaviour
         //Player
         _player._playerInput.SwitchCurrentActionMap("UI");
         _player._playerCamInputProvider.enabled = false;
-        Cursor.lockState = CursorLockMode.Confined; //Maus
+        //Cursor.lockState = CursorLockMode.Confined; //Maus
         //Dialog
         _dialogUI.SetActive(true);
         _inUI = true;
@@ -149,7 +149,7 @@ public class GameManager : MonoBehaviour
         //Player
         _player._playerInput.SwitchCurrentActionMap("Player"); 
         _player._playerCamInputProvider.enabled = true; 
-        Cursor.lockState = CursorLockMode.Locked;
+        //Cursor.lockState = CursorLockMode.Locked;
         //GameManager
         _dialogUI.SetActive(false);
         _inUI = false;

@@ -21,9 +21,20 @@ public class QuestManager : MonoBehaviour
         //Canvas
         public void ShowQuestUI()
         { 
-            GameManager.instance.ShowIneractUI(false);
+            player._playerInput.SwitchCurrentActionMap("UI");
+            player._playerCamInputProvider.enabled = false;
             questUI.SetActive(true);
             _questCam.Priority = 11;
+            GameManager.instance.ShowIneractUI(false);
+            player.DeactivateInput();
+            
+            
+            StartCoroutine(FocusButton());
+        }
+        IEnumerator FocusButton()
+        {
+            yield return new WaitForEndOfFrame();
+            button.Select();   
         }
         public void Animation()
         { _animator.Play("QuestUIScaleSmal");}
