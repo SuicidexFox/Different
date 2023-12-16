@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8954512872440191489}
   - component: {fileID: 4809578477693926839}
   m_Layer: 0
-  m_Name: Noch mehr Geschirr finden
+  m_Name: Dialog
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -50,7 +50,7 @@ MonoBehaviour:
   - _imageRosie: 1
     _talkbox: 0
     _thinkbox: 1
-    _text: Ich muss noch mehr Geschirr finden.
+    _text: Test
     _textNPC: 
     _imageTherapist: 0
     _imageErgo: 0
@@ -61,19 +61,7 @@ MonoBehaviour:
     _Buttons: []
   dialogEnd:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: InteractableManager, Assembly-CSharp
-        m_MethodName: CloseKitchen
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!1 &5160290538274030492
 GameObject:
   m_ObjectHideFlags: 0
@@ -180,7 +168,7 @@ GameObject:
   - component: {fileID: 4839262928323161220}
   - component: {fileID: 556402916813784191}
   m_Layer: 0
-  m_Name: "CamSp\xFCle"
+  m_Name: CamDialog
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -194,9 +182,9 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7021650071259949874}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.7793628, y: -0.29469016, z: -0.19556567, w: 0.5172093}
-  m_LocalPosition: {x: -10.127061, y: 5.291583, z: 18.992111}
-  m_LocalScale: {x: 0.02, y: 0.025000006, z: 0.030769242}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3869977860220442665}
@@ -241,80 +229,6 @@ MonoBehaviour:
         m_Calls: []
   m_LegacyBlendHint: 0
   m_ComponentOwner: {fileID: 3869977860220442665}
---- !u!1 &8088876386157596652
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 6236608593454407642}
-  - component: {fileID: 8967970727762282193}
-  m_Layer: 0
-  m_Name: Fertig!
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &6236608593454407642
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8088876386157596652}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 4595423997808644434}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8967970727762282193
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8088876386157596652}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7fc2000b2c7f17f4885d3f1511ffa546, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _needImportantItem: ReadyQuest1
-  priority: 3
-  dialoguesLines:
-  - _imageRosie: 1
-    _talkbox: 1
-    _thinkbox: 0
-    _text: Mama, ich bin fertig!
-    _textNPC: 
-    _imageTherapist: 0
-    _imageErgo: 0
-    _imageInnerChilde: 0
-    _lineEvent:
-      m_PersistentCalls:
-        m_Calls: []
-    _Buttons: []
-  dialogEnd:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
-        m_MethodName: ShowEndUI
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
 --- !u!1 &9081817467070920606
 GameObject:
   m_ObjectHideFlags: 0
@@ -346,7 +260,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8954512872440191489}
-  - {fileID: 6236608593454407642}
   - {fileID: 4839262928323161220}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

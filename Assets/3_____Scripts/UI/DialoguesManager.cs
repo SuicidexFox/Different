@@ -23,22 +23,21 @@ public class DialoguesManager : MonoBehaviour
         GetPrioritizedDialogue().ShowDialogue();
         _dialogCam.Priority = 11;
     }
-    
-    
+     
     private Dialog GetPrioritizedDialogue()
     {
         Dialog prioritizedDialogue = _dialogues[0];
 
         foreach (Dialog d in _dialogues)
         {
-            if (d._needImportantItem != null) //wenn er das Item hat
+            if (d._needImportantItem == null) //wenn er das Item nicht hat
                 if (GameManager.instance._importantItems.Contains(d._needImportantItem))
                 {
-                    return d;
+                    continue;
                 }
                 else
                 {
-                    continue;
+                    return d;
                 }
         if (prioritizedDialogue.priority < d.priority)
             {
