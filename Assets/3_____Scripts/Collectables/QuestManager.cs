@@ -15,20 +15,16 @@ public class QuestManager : MonoBehaviour
         public CinemachineVirtualCamera _questCam;
         
         //Player
-        private PlayerController player;
+        public PlayerController _player;
         
         
         //Canvas
         public void ShowQuestUI()
         { 
-            player._playerInput.SwitchCurrentActionMap("UI");
-            player._playerCamInputProvider.enabled = false;
+            _player.DeactivateInput();
             questUI.SetActive(true);
             _questCam.Priority = 11;
             GameManager.instance.ShowIneractUI(false);
-            player.DeactivateInput();
-            
-            
             StartCoroutine(FocusButton());
         }
         IEnumerator FocusButton()
@@ -40,8 +36,8 @@ public class QuestManager : MonoBehaviour
         { _animator.Play("QuestUIScaleSmal");}
         public void CloseQuestUI()
         {
-            player.ActivateInput();
+            _player.ActivateInput();
             _questCam.Priority = 0;
-            Destroy(this);
+            Destroy(gameObject);
         }
     }

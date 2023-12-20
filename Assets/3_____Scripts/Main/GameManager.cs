@@ -44,6 +44,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject buttonCurrent;
     [Header("Fade")] 
     [SerializeField] private GameObject fadeOut;
+    [SerializeField] private Button buttonFadeOut;
 
     
     
@@ -77,9 +78,7 @@ public class GameManager : MonoBehaviour
     //DialogUI
     public void ShowDialogUI(Dialog dialog)
     {
-        //Player
-        _player._playerInput.SwitchCurrentActionMap("UI");
-        _player._playerCamInputProvider.enabled = false;
+        _player.DeactivateInput();
         //Cursor.lockState = CursorLockMode.Confined; //Maus
         //Dialog
         _dialogUI.SetActive(true);
@@ -87,7 +86,6 @@ public class GameManager : MonoBehaviour
         textDialog.SetText("");
         currentLines = dialog;
         currentLineIndex = 0;
-        musicEventInstance.setParameterByName("MusicStage", 1);
         ShowIneractUI(false);
         ClearButton();
         ShowCurrentLine();
@@ -96,6 +94,7 @@ public class GameManager : MonoBehaviour
     {
         DialoguesLines dialogueLines = currentLines.dialoguesLines[currentLineIndex];
         if (dialogueLines == null) { return; }
+        ClearButton();
         rosie.SetActive(dialogueLines._imageRosie);
         chatboxTalk.SetActive(dialogueLines._talkbox);
         chatboxThink.SetActive(dialogueLines._thinkbox); 
@@ -146,16 +145,13 @@ public class GameManager : MonoBehaviour
     } 
     public void AnimationEventCloseDialogUI()
     { 
-        //Player
-        _player._playerInput.SwitchCurrentActionMap("Player"); 
-        _player._playerCamInputProvider.enabled = true; 
+        _player.ActivateInput(); 
         //Cursor.lockState = CursorLockMode.Locked;
         //GameManager
         _dialogUI.SetActive(false);
         _inUI = false;
         currentLines.dialogEnd.Invoke();
         currentLines.GetComponentInParent<DialoguesManager>()._dialogCam.Priority = 0;
-        musicEventInstance.setParameterByName("MusicStage", 2);
         ClearButton();
     }
     private void ClearButton()
@@ -171,8 +167,7 @@ public class GameManager : MonoBehaviour
         currentLineIndex = 0;
         ShowCurrentLine();
     }
-    
-    
+
     
     //Quest
     public void QuestInteractables(InteractableManager interactableManager)
@@ -189,7 +184,6 @@ public class GameManager : MonoBehaviour
             if (interactableManager._rorschach == true) { _rorschach++; }
             if (interactableManager._skillbag == true) { _skillbag++; }
             if (interactableManager._letter == true) { _letter++; }
-            else {return;}
         }
     public void DestroyInteractable()
     {
@@ -200,6 +194,29 @@ public class GameManager : MonoBehaviour
         _player._playerInput.SwitchCurrentActionMap("Player");
         _player._playerCamInputProvider.enabled = true;
     }
+
+    public void Update()
+    {
+        if (_dishes == 5f)
+        {
+            _importantItems.Add("Dishes");
+        }
+        if (_rorschach == 4f)
+        {
+            _importantItems.Add("Rorschach");
+        }
+        if (_skillbag == 3f)
+        {
+            _importantItems.Add("Skillbag");
+        }
+        if (_letter == 2f)
+        {
+            _importantItems.Add("Letter");
+        }
+    }
+    
+    
+    /*
 //ImportantItem
     public void AddItem(string id)
     { 
@@ -209,6 +226,7 @@ public class GameManager : MonoBehaviour
     { 
         _importantItems.Remove(id);
     }
+    */
     
     
     
@@ -223,6 +241,13 @@ public class GameManager : MonoBehaviour
         //Ende
         fadeOut.SetActive(true);
         ShowIneractUI(false);
+        StartCoroutine(FocusFadeButton());
     }
-    public void CloseFadeOut() { SceneManager.LoadScene("Psychatrie"); }
+    IEnumerator FocusFadeButton()
+    {
+        yield return new WaitForEndOfFrame();
+        buttonFadeOut.Select();   
+    }
+    public void CloseFadeOut() 
+    { SceneManager.LoadScene("Psychatrie"); }
 }

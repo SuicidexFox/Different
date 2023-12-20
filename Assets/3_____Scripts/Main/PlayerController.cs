@@ -29,8 +29,8 @@ public class PlayerController : MonoBehaviour
     private float moveSpeed;
     private float minTurnSpeed = 0.2f;
     private float turnSpeed = 5f;
-    private CharacterController _characterController;
-    private Transform _camTransform;
+    private CharacterController characterController;
+    private Transform camTransform;
     
     //Animator
     public Animator _animator;
@@ -47,8 +47,8 @@ public class PlayerController : MonoBehaviour
     void Start()
     {   //Walk
         _playerInput = GetComponent<PlayerInput>();
-        _characterController = GetComponent<CharacterController>();
-        _camTransform = Camera.main.transform;
+        characterController = GetComponent<CharacterController>();
+        camTransform = Camera.main.transform;
         
         
         //Walk & Run
@@ -84,8 +84,8 @@ public class PlayerController : MonoBehaviour
         { moveSpeed = walkSpeed; }
         
         //Move with Mouse
-        Vector3 horizontalVelocity = Vector3.ProjectOnPlane(_camTransform.right, Vector3.up).normalized * horizontalInput; //rechts,links
-        Vector3 verticalVelocity = Vector3.ProjectOnPlane(_camTransform.forward, Vector3.up).normalized * verticalInput; //hoch,runter
+        Vector3 horizontalVelocity = Vector3.ProjectOnPlane(camTransform.right, Vector3.up).normalized * horizontalInput; //rechts,links
+        Vector3 verticalVelocity = Vector3.ProjectOnPlane(camTransform.forward, Vector3.up).normalized * verticalInput; //hoch,runter
         Vector3 velocity = Vector3.ClampMagnitude(horizontalVelocity + verticalVelocity, 1); //es wird -2/5, 0-9 = 0-1 berechnet
         
         //Rotation at Mouse
@@ -96,7 +96,7 @@ public class PlayerController : MonoBehaviour
         }
         
         // Gravity
-        _characterController.SimpleMove(new Vector3(velocity.x * moveSpeed, 0, velocity.z * moveSpeed));
+        characterController.SimpleMove(new Vector3(velocity.x * moveSpeed, 0, velocity.z * moveSpeed));
         
         //Animator
         float animatonSpeed = velocity.magnitude;
@@ -147,9 +147,8 @@ public class PlayerController : MonoBehaviour
             GameManager.instance.ShowIneractUI(false);
         }
     }
-    
-    
-    
+
+
     //Inputs
     public void DeactivateInput()
     {
@@ -167,9 +166,6 @@ public class PlayerController : MonoBehaviour
     
 
     
-    //AnimationsEvents
-    public void AnimationSee() { _animator.Play("See"); }
-    public void AnimationSeeClose() { _animator.Play("SeeClose"); }
     
     //public void AnimationHello() 
         //Player
