@@ -30,14 +30,14 @@ public class DialoguesManager : MonoBehaviour
 
         foreach (Dialog d in _dialogues)
         {
-            if (d._needImportantItem == null) //wenn er das Item nicht hat
+            if (d._needImportantItem != "") //wenn er das Item nicht hat
                 if (GameManager.instance._importantItems.Contains(d._needImportantItem))
                 {
-                    continue;
+                    return d;
                 }
                 else
                 {
-                    return d;
+                    continue;
                 }
         if (prioritizedDialogue.priority < d.priority)
             {

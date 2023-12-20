@@ -17,7 +17,7 @@ public class AnimationEvents : MonoBehaviour
     //Player
     public void PlayerFootstep()
     { 
-        RuntimeManager.PlayOneShot("Assets/Sounds/Footstep Wood 1.wav");
+        RuntimeManager.PlayOneShot("event:/SFX/Footstep_Wood");
     }
     public void PlayerTake() 
     { GameManager.instance.DestroyInteractable(); }

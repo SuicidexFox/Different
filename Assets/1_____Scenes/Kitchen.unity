@@ -1440,7 +1440,7 @@ BoxCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 1
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Size: {x: 0.292154, y: 0.047963787, z: 0.5813316}
   m_Center: {x: 0.00000025331974, y: 0.023981897, z: 0.14458877}
@@ -3459,7 +3459,7 @@ BoxCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 1
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Size: {x: 0.292154, y: 0.047963787, z: 0.5813316}
   m_Center: {x: 0.00000025331974, y: 0.023981897, z: 0.14458877}
@@ -5614,7 +5614,7 @@ BoxCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 1
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Size: {x: 0.292154, y: 0.047963787, z: 0.5813316}
   m_Center: {x: 0.00000025331974, y: 0.023981897, z: 0.14458877}
@@ -5846,7 +5846,7 @@ BoxCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 1
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Size: {x: 0.292154, y: 0.047963787, z: 0.5813316}
   m_Center: {x: 0.00000025331974, y: 0.023981897, z: 0.14458877}
@@ -6473,35 +6473,30 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1421305052}
-  - component: {fileID: 1421305051}
-  - component: {fileID: 1421305050}
+  - component: {fileID: 1421305053}
   m_Layer: 0
   m_Name: Music
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!114 &1421305050
-MonoBehaviour:
+  m_IsActive: 1
+--- !u!4 &1421305052
+Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1421305049}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 744a208c85da6d04c861d81b992e4ead, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  CollisionTag: Player
-  Emitters:
-  - Target: {fileID: 1421305051}
-    Params:
-    - Name: MusicStage
-      Value: 2
-  TriggerEvent: 3
---- !u!114 &1421305051
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 133576164}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1421305053
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -6522,8 +6517,8 @@ MonoBehaviour:
       Data4: -1290906020
     Path: event:/Music/Song
   Event: 
-  PlayEvent: 11
-  StopEvent: 12
+  PlayEvent: 1
+  StopEvent: 0
   AllowFadeout: 1
   TriggerOnce: 0
   Preload: 0
@@ -6532,21 +6527,6 @@ MonoBehaviour:
   OverrideAttenuation: 0
   OverrideMinDistance: 1
   OverrideMaxDistance: 20
---- !u!4 &1421305052
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1421305049}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 133576164}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1424321411
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9615,7 +9595,7 @@ BoxCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 1
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Size: {x: 0.292154, y: 0.047963787, z: 0.5813316}
   m_Center: {x: 0.00000025331974, y: 0.023981897, z: 0.14458877}
@@ -10142,7 +10122,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7fc2000b2c7f17f4885d3f1511ffa546, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _needImportantItem: Ready
+  _needImportantItem: Dishes
   priority: 1
   dialoguesLines:
   - _imageRosie: 1

@@ -200,6 +200,7 @@ public class GameManager : MonoBehaviour
         if (_dishes == 5f)
         {
             _importantItems.Add("Dishes");
+            _dishes = 6f;
         }
         if (_rorschach == 4f)
         {

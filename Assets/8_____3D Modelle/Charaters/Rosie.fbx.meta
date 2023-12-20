@@ -259,14 +259,14 @@ ModelImporter:
       curves: []
       events:
       - time: 0.14666666
-        functionName: Footstep
+        functionName: PlayerFootsteps
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
       - time: 0.56333333
-        functionName: Footstep
+        functionName: PlayerFootsteps
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
@@ -396,14 +396,14 @@ ModelImporter:
       curves: []
       events:
       - time: 0.175
-        functionName: Footstep
+        functionName: PlayerFootsteps
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
       - time: 0.70500004
-        functionName: Footstep
+        functionName: PlayerFootsteps
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
