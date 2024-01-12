@@ -19,7 +19,7 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: {x: 0, y: 0, z: 40}
+        value: {x: 0, y: 65, z: 0}
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
         tangentMode: 0
@@ -38,13 +38,13 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: "Icebox|T\xFCr L|Dupli|1"
+    path: "T\xFCr L"
   - curve:
       serializedVersion: 2
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: {x: 0, y: 0, z: -60}
+        value: {x: 0, y: -70, z: 0}
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
         tangentMode: 0
@@ -63,7 +63,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: "Icebox|T\xFCr R|Dupli|2"
+    path: "T\xFCr R"
   m_PositionCurves: []
   m_ScaleCurves: []
   m_FloatCurves: []
@@ -76,7 +76,7 @@ AnimationClip:
   m_ClipBindingConstant:
     genericBindings:
     - serializedVersion: 2
-      path: 1362986857
+      path: 1649876300
       attribute: 4
       script: {fileID: 0}
       typeID: 4
@@ -85,7 +85,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 2889240368
+      path: 2555912239
       attribute: 4
       script: {fileID: 0}
       typeID: 4
@@ -141,7 +141,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: localEulerAnglesRaw.x
-    path: "Icebox|T\xFCr L|Dupli|1"
+    path: "T\xFCr L"
     classID: 4
     script: {fileID: 0}
     flags: 16
@@ -151,7 +151,7 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 0
+        value: 65
         inSlope: 0
         outSlope: 0
         tangentMode: 136
@@ -171,7 +171,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: localEulerAnglesRaw.y
-    path: "Icebox|T\xFCr L|Dupli|1"
+    path: "T\xFCr L"
     classID: 4
     script: {fileID: 0}
     flags: 16
@@ -181,7 +181,7 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 40
+        value: 0
         inSlope: 0
         outSlope: 0
         tangentMode: 136
@@ -201,7 +201,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: localEulerAnglesRaw.z
-    path: "Icebox|T\xFCr L|Dupli|1"
+    path: "T\xFCr L"
     classID: 4
     script: {fileID: 0}
     flags: 16
@@ -231,7 +231,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: localEulerAnglesRaw.x
-    path: "Icebox|T\xFCr R|Dupli|2"
+    path: "T\xFCr R"
     classID: 4
     script: {fileID: 0}
     flags: 16
@@ -241,7 +241,7 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 0
+        value: -70
         inSlope: 0
         outSlope: 0
         tangentMode: 136
@@ -261,7 +261,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: localEulerAnglesRaw.y
-    path: "Icebox|T\xFCr R|Dupli|2"
+    path: "T\xFCr R"
     classID: 4
     script: {fileID: 0}
     flags: 16
@@ -271,7 +271,7 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: -60
+        value: 0
         inSlope: 0
         outSlope: 0
         tangentMode: 136
@@ -291,7 +291,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: localEulerAnglesRaw.z
-    path: "Icebox|T\xFCr R|Dupli|2"
+    path: "T\xFCr R"
     classID: 4
     script: {fileID: 0}
     flags: 16
@@ -304,7 +304,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.z
-    path: "Icebox|T\xFCr L|Dupli|1"
+    path: "T\xFCr L"
     classID: 4
     script: {fileID: 0}
     flags: 0
@@ -316,7 +316,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.y
-    path: "Icebox|T\xFCr L|Dupli|1"
+    path: "T\xFCr L"
     classID: 4
     script: {fileID: 0}
     flags: 0
@@ -328,7 +328,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.x
-    path: "Icebox|T\xFCr L|Dupli|1"
+    path: "T\xFCr L"
     classID: 4
     script: {fileID: 0}
     flags: 0
@@ -340,7 +340,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.x
-    path: "Icebox|T\xFCr R|Dupli|2"
+    path: "T\xFCr R"
     classID: 4
     script: {fileID: 0}
     flags: 0
@@ -352,7 +352,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.y
-    path: "Icebox|T\xFCr R|Dupli|2"
+    path: "T\xFCr R"
     classID: 4
     script: {fileID: 0}
     flags: 0
@@ -364,7 +364,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.z
-    path: "Icebox|T\xFCr R|Dupli|2"
+    path: "T\xFCr R"
     classID: 4
     script: {fileID: 0}
     flags: 0

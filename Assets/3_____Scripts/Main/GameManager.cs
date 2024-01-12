@@ -7,6 +7,8 @@ using FMODUnity;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.InputSystem;
+using UnityEngine.Rendering;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -18,6 +20,14 @@ public class GameManager : MonoBehaviour
     private InteractableManager interactableManager;
     public EventReference _musicEventReference;
     private EventInstance musicEventInstance;
+    private bool _pause = false;
+    
+    
+    [Header("Pause")] 
+    [SerializeField] private GameObject pauseUI;
+    [SerializeField] private GameObject settings;
+    [SerializeField] private GameObject controls;
+    [SerializeField] private Button firstSelectButton;
 
     [Header("Interact")] 
     [SerializeField] private GameObject interactUI;
@@ -63,11 +73,13 @@ public class GameManager : MonoBehaviour
         interactUI.SetActive(false);
         _dialogUI.SetActive(false);
         fadeOut.SetActive(false);
+        pauseUI.SetActive(false);
         musicEventInstance = RuntimeManager.CreateInstance(_musicEventReference);
         musicEventInstance.start();
         musicEventInstance.setParameterByName("MusicStage", 2);
     }
-
+    
+  
     //InteractUI
     public void ShowIneractUI(bool show)
     {
@@ -108,6 +120,7 @@ public class GameManager : MonoBehaviour
         {
             GameObject buttonInstance = Instantiate(buttonCurrent, buttonGroup.transform);
             buttonInstance.GetComponent<ButtonManager>().Setup(buttons._text, buttons._buttonEvent);
+            buttonDialog.gameObject.SetActive(false);
         }
         StartCoroutine(FocusButton(dialogueLines));
     }
@@ -228,8 +241,26 @@ public class GameManager : MonoBehaviour
         _importantItems.Remove(id);
     }
     */
-    
-    
+
+    //Pause
+    public void TogglePause() 
+    {
+            if (_inUI == true) { return; }
+            _pause = !_pause;
+            pauseUI.SetActive(_pause);
+            
+            if (_pause)
+            {
+                _player.DeactivateInput();
+                Time.timeScale = 0.0f;
+                firstSelectButton.Select();
+            }
+            else
+            {
+                _player.ActivateInput();
+                Time.timeScale = 1.0f;
+            } 
+    }
     
     
     

@@ -26,6 +26,7 @@ public class QuestManager : MonoBehaviour
             _questCam.Priority = 11;
             GameManager.instance.ShowIneractUI(false);
             StartCoroutine(FocusButton());
+            GameManager.instance._inUI = true;
         }
         IEnumerator FocusButton()
         {
@@ -39,5 +40,6 @@ public class QuestManager : MonoBehaviour
             _player.ActivateInput();
             _questCam.Priority = 0;
             Destroy(gameObject);
+            GameManager.instance._inUI = false;
         }
     }

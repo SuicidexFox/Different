@@ -5,6 +5,11 @@ TagManager:
   serializedVersion: 2
   tags:
   - Dishes
+  - Wood
+  - Stone
+  - Grass
+  - Carpet
+  - ' Tiles'
   layers:
   - Default
   - TransparentFX

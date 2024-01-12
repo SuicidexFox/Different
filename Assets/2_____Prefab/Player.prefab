@@ -1895,7 +1895,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _playerCamInputProvider: {fileID: 4600098127420191408}
   _playerInput: {fileID: 8270974815088577557}
-  _animator: {fileID: 0}
+  _animator: {fileID: 2601918579271185167}
   _tabUI: {fileID: 8313347655724060473}
   _animatorTabUI: {fileID: 3400324179071947481}
   _currentInteractable: {fileID: 0}

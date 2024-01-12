@@ -21,14 +21,17 @@ public class PlayerController : MonoBehaviour
     private InputAction tabAction;
     private InputAction hallo;
     private InputAction cry;
+    private InputAction pauseAction;
     
     
     //Move
-    private float walkSpeed = 2f;
+    private float walkSpeed = 1f;
     private float runSpeed = 3f;
     private float moveSpeed;
     private float minTurnSpeed = 0.2f;
     private float turnSpeed = 5f;
+    //private float acceleration = 0,1;
+    
     private CharacterController characterController;
     private Transform camTransform;
     
@@ -61,8 +64,11 @@ public class PlayerController : MonoBehaviour
         cry = _playerInput.actions.FindAction("Cry");
         
         //Interact
-        interactAction = _playerInput.actions.FindAction("Interact");
+        interactAction = _playerInput.actions.FindAction("Submit");
         interactAction.performed += Interact;
+
+        pauseAction = _playerInput.actions.FindAction("Pause");
+        pauseAction.performed += Pause;
         
         //MausCursor deaktivieren
         Cursor.lockState = CursorLockMode.Locked;
@@ -107,8 +113,6 @@ public class PlayerController : MonoBehaviour
         { }
         _animator.SetFloat("Speed", animatonSpeed);
         _animator.SetBool("Shift", runAction.inProgress);
-        if (hallo.inProgress) { _animator.Play("RigRosie|Hallo"); }
-        if (cry.inProgress) { _animator.Play("RigRosie|Cry"); }
         
         //Tab
         if (tabAction.inProgress)
@@ -119,6 +123,7 @@ public class PlayerController : MonoBehaviour
     private void OnDisable() //Verhalten Deaktivieren
     {
         interactAction.performed -= Interact;
+        pauseAction.performed -= Pause;
     }
     private void Interact(InputAction.CallbackContext obj)
     {
@@ -148,17 +153,23 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    private void Pause(InputAction.CallbackContext obj)
+    {
+        GameManager.instance.TogglePause();
+    }
 
     //Inputs
     public void DeactivateInput()
     {
-       _playerInput.SwitchCurrentActionMap("UI"); 
+       _playerInput.SwitchCurrentActionMap("UI");
+       Cursor.lockState = CursorLockMode.Confined;
        _playerCamInputProvider.enabled = false; //Maus
        _currentInteractable = null;
     }
     public void ActivateInput()
     {
-        _playerInput.SwitchCurrentActionMap("Player"); 
+        _playerInput.SwitchCurrentActionMap("Player");
+        Cursor.lockState = CursorLockMode.Locked;
         _playerCamInputProvider.enabled = true; //Maus
     }
     
