@@ -1,7 +1,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using FMODUnity;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
@@ -16,6 +18,7 @@ public class Buttons
 [Serializable]
 public class DialoguesLines
 {
+    public EventReference _sound;
     public bool _imageRosie;
     public bool _talkbox;
     public bool _thinkbox;
@@ -26,7 +29,7 @@ public class DialoguesLines
     public bool _imageInnerChilde;
 
     public UnityEvent _lineEvent;
-    public List<Buttons> _Buttons;
+    public List<Buttons> _Buttons; 
 }
 
 

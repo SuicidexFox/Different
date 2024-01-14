@@ -23,7 +23,11 @@ public class QuestManager : MonoBehaviour
         { 
             _player.DeactivateInput();
             questUI.SetActive(true);
-            _questCam.Priority = 11;
+            if (questUI != null)
+            {
+             _questCam.Priority = 11;   
+            }
+            
             GameManager.instance.ShowIneractUI(false);
             StartCoroutine(FocusButton());
             GameManager.instance._inUI = true;
@@ -38,7 +42,10 @@ public class QuestManager : MonoBehaviour
         public void CloseQuestUI()
         {
             _player.ActivateInput();
-            _questCam.Priority = 0;
+            if (questUI != null)
+            {
+                _questCam.Priority = 0;   
+            }
             Destroy(gameObject);
             GameManager.instance._inUI = false;
         }

@@ -8,9 +8,11 @@ using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.UI;
 using UnityEngine.Rendering;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using Cursor = UnityEngine.WSA.Cursor;
 
 
 public class GameManager : MonoBehaviour
@@ -20,10 +22,10 @@ public class GameManager : MonoBehaviour
     private InteractableManager interactableManager;
     public EventReference _musicEventReference;
     private EventInstance musicEventInstance;
-    private bool _pause = false;
     
     
     [Header("Pause")] 
+    private bool _pause = false;
     [SerializeField] private GameObject pauseUI;
     [SerializeField] private GameObject settings;
     [SerializeField] private GameObject controls;
@@ -76,7 +78,7 @@ public class GameManager : MonoBehaviour
         pauseUI.SetActive(false);
         musicEventInstance = RuntimeManager.CreateInstance(_musicEventReference);
         musicEventInstance.start();
-        musicEventInstance.setParameterByName("MusicStage", 2);
+        musicEventInstance.setParameterByName("MusicStage", 0);
     }
     
   
@@ -107,6 +109,7 @@ public class GameManager : MonoBehaviour
         DialoguesLines dialogueLines = currentLines.dialoguesLines[currentLineIndex];
         if (dialogueLines == null) { return; }
         ClearButton();
+        RuntimeManager.PlayOneShot(dialogueLines._sound);
         rosie.SetActive(dialogueLines._imageRosie);
         chatboxTalk.SetActive(dialogueLines._talkbox);
         chatboxThink.SetActive(dialogueLines._thinkbox); 

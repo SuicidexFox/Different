@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Dynamic;
+using System.Security.Cryptography.X509Certificates;
 using Cinemachine;
 using TMPro;
 using Unity.VisualScripting;
@@ -10,8 +11,11 @@ using UnityEngine;
 using UnityEngine.Assertions.Must;
 using UnityEngine.InputSystem;
 
+
 public class PlayerController : MonoBehaviour
 {
+    public Texture2D _Cursor;
+    public Texture2D _CursorNull;
     [SerializeField] public CinemachineInputProvider _playerCamInputProvider;
     //PlayerInput
     public PlayerInput _playerInput;
@@ -45,10 +49,12 @@ public class PlayerController : MonoBehaviour
         
     
     
-    
-    //Events
     void Start()
-    {   //Walk
+    {
+        Cursor.lockState = CursorLockMode.Locked;
+        UnityEngine.Cursor.SetCursor(_CursorNull, Vector2.zero, CursorMode.ForceSoftware);
+        
+        //Walk
         _playerInput = GetComponent<PlayerInput>();
         characterController = GetComponent<CharacterController>();
         camTransform = Camera.main.transform;
@@ -125,6 +131,9 @@ public class PlayerController : MonoBehaviour
         interactAction.performed -= Interact;
         pauseAction.performed -= Pause;
     }
+    
+    
+    //Interact
     private void Interact(InputAction.CallbackContext obj)
     {
         if (_currentInteractable == null) { return; }
@@ -153,16 +162,20 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    //Pause
     private void Pause(InputAction.CallbackContext obj)
     {
         GameManager.instance.TogglePause();
     }
 
-    //Inputs
+    
+    
+    //Inputs De- und Aktivieren
     public void DeactivateInput()
     {
        _playerInput.SwitchCurrentActionMap("UI");
        Cursor.lockState = CursorLockMode.Confined;
+       UnityEngine.Cursor.SetCursor(_Cursor, Vector2.zero, CursorMode.ForceSoftware);
        _playerCamInputProvider.enabled = false; //Maus
        _currentInteractable = null;
     }
@@ -170,6 +183,7 @@ public class PlayerController : MonoBehaviour
     {
         _playerInput.SwitchCurrentActionMap("Player");
         Cursor.lockState = CursorLockMode.Locked;
+        UnityEngine.Cursor.SetCursor(_CursorNull, Vector2.zero, CursorMode.ForceSoftware);
         _playerCamInputProvider.enabled = true; //Maus
     }
     

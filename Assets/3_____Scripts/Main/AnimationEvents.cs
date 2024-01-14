@@ -55,7 +55,7 @@ public class AnimationEvents : MonoBehaviour
     //Therapist
     public void TherapistMote()
     {
-        RuntimeManager.PlayOneShot("event:/SFX/Therapist/Voice");
+        //RuntimeManager.PlayOneShot("event:/SFX/Therapist/Voice");
     }
     
     
