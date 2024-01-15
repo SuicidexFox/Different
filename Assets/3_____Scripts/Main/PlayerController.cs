@@ -10,6 +10,7 @@ using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.Assertions.Must;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 
 public class PlayerController : MonoBehaviour
@@ -51,9 +52,6 @@ public class PlayerController : MonoBehaviour
     
     void Start()
     {
-        Cursor.lockState = CursorLockMode.Locked;
-        UnityEngine.Cursor.SetCursor(_CursorNull, Vector2.zero, CursorMode.ForceSoftware);
-        
         //Walk
         _playerInput = GetComponent<PlayerInput>();
         characterController = GetComponent<CharacterController>();
@@ -78,6 +76,7 @@ public class PlayerController : MonoBehaviour
         
         //MausCursor deaktivieren
         Cursor.lockState = CursorLockMode.Locked;
+        UnityEngine.Cursor.SetCursor(_CursorNull, Vector2.zero, CursorMode.ForceSoftware);
         
         //QuestLog
         tabAction = _playerInput.actions.FindAction("Tab");

@@ -18,15 +18,15 @@ public class AnimationEvents : MonoBehaviour
     public void PlayerFootstep()
     {
         string ground = GetGround();
-        string soundPath = "event:/SFX/RosieFootsteps/Footstep_Tile"; 
+        string soundPath = "event:/SFX/Rosie/RosieFootsteps/Footstep_Tile"; 
         //Kitchen
-        if (ground == "Tiles") { soundPath = "event:/SFX/RosieFootsteps/Footstep_Tile"; }
+        if (ground == "Tiles") { soundPath = "event:/SFX/Rosie/RosieFootsteps/Footstep_Tile"; }
         //Psychatrie
-        if (ground == "Wood") { soundPath = "event:/SFX/RosieFootsteps/Footstep_Wood"; }
-        if (ground == "Carpet") { soundPath = "event:/SFX/RosieFootsteps/Footstep_Capet"; }
+        if (ground == "Wood") { soundPath = "event:/SFX/Rosie/RosieFootsteps/Footstep_Wood"; }
+        if (ground == "Carpet") { soundPath = "event:/SFX/Rosie/RosieFootsteps/Footstep_Capet"; }
         //Save Place
-        if (ground == "Stone") { soundPath = "event:/SFX/RosieFootsteps/Footstep_Stone"; }
-        if (ground == "Grass") { soundPath = "event:/SFX/RosieFootsteps/Footstep_Grass"; }
+        if (ground == "Stone") { soundPath = "event:/SFX/Rosie/RosieFootsteps/Footstep_Stone"; }
+        if (ground == "Grass") { soundPath = "event:/SFX/Rosie/RosieFootsteps/Footstep_Grass"; }
         RuntimeManager.PlayOneShot(soundPath);
     }
     private string GetGround()
@@ -49,14 +49,6 @@ public class AnimationEvents : MonoBehaviour
     { GameManager.instance.DestroyInteractable(); }
     
     
-    
-    
-    
-    //Therapist
-    public void TherapistMote()
-    {
-        //RuntimeManager.PlayOneShot("event:/SFX/Therapist/Voice");
-    }
     
     
     //UI
