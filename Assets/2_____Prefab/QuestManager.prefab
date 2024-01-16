@@ -433,7 +433,13 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "Sp\xFClmahine einr\xE4ume.\n\nSammle 5 Mal schmutziges\nGeschirr/Besteck."
+  m_text: 'Load the dishwasher.
+
+    
+
+    Collect 5 times dirty
+
+    dishes.'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: c206289d10453274da1244b6bc22432b, type: 2}
   m_sharedMaterial: {fileID: 6750516613988080199, guid: c206289d10453274da1244b6bc22432b,

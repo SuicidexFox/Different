@@ -19,17 +19,13 @@ public class Buttons
 public class DialoguesLines
 {
     public EventReference _sound;
-    public bool _imageRosie;
-    public bool _talkbox;
-    public bool _thinkbox;
+    public Sprite _character;
+    public Sprite _textbox;
     [TextArea(3, 8)]public string _text;
     [TextArea(3, 8)]public string _textNPC;
-    public bool _imageTherapist;
-    public bool _imageErgo;
-    public bool _imageInnerChilde;
 
     public UnityEvent _lineEvent;
-    public List<Buttons> _Buttons; 
+    public List<Buttons> _Buttons;
 }
 
 
@@ -52,4 +48,3 @@ public class Dialog : MonoBehaviour
         priority = newPriority;
     }
 }
-

@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Net;
+using FMOD;
 using FMOD.Studio;
 using FMODUnity;
 using TMPro;
@@ -21,16 +22,11 @@ public class GameManager : MonoBehaviour
     private string sceneManager;
     public PlayerController _player;
     private InteractableManager interactableManager;
-    public EventReference _musicEventReference;
     private EventInstance musicEventInstance;
-    
     
     [Header("Pause")] 
     public bool _pause = false;
     [SerializeField] private GameObject pauseUI;
-    [SerializeField] private GameObject settings;
-    [SerializeField] private GameObject controls;
-    [SerializeField] private Button firstSelectButton;
 
     [Header("Interact")] 
     [SerializeField] private GameObject interactUI;
@@ -42,17 +38,13 @@ public class GameManager : MonoBehaviour
     [Header("Dialouge")]
     public bool _inUI = false;
     [SerializeField] public GameObject _dialogUI;
-    [SerializeField] private GameObject rosie;
-    [SerializeField] private GameObject chatboxTalk;
-    [SerializeField] private GameObject chatboxThink;
+    [SerializeField] private Image character;
+    [SerializeField] private Image textbox;
     [SerializeField] private TextMeshProUGUI textDialog;
     [SerializeField] private TextMeshProUGUI textDialogNPC;
-    [SerializeField] private Button buttonDialog;
-    [SerializeField] private GameObject therapist;
-    [SerializeField] private GameObject ergo;
-    [SerializeField] private GameObject innerChilde;
     [SerializeField] private Animator animationCloseDialog;
     [Header("Buttons for Dialog")]
+    [SerializeField] private Button buttonDialog;
     [SerializeField] private GameObject buttonGroup;
     [SerializeField] private GameObject buttonCurrent;
     [Header("Fade")] 
@@ -79,8 +71,7 @@ public class GameManager : MonoBehaviour
         _dialogUI.SetActive(false);
         fadeOut.SetActive(false);
         pauseUI.SetActive(false);
-        musicEventInstance = RuntimeManager.CreateInstance(_musicEventReference);
-        musicEventInstance.start();
+        musicEventInstance.setParameterByName("event:/Music/Kitchen", 2);
     }
     
   
@@ -88,6 +79,62 @@ public class GameManager : MonoBehaviour
     public void ShowIneractUI(bool show)
     {
         interactUI.SetActive(show);
+    }
+    //Quest
+    public void QuestInteractables()
+    {
+        //Player
+        _player._animator.SetTrigger("Take");  
+        _player._playerInput.SwitchCurrentActionMap("UI");
+        _player._playerCamInputProvider.enabled = false;
+        //GameManager
+        ShowIneractUI(false);
+        //Abfrage der Interactables
+        if (_player._currentInteractable.CompareTag("Dishes"))
+        {
+            _dishes++;
+            if (_dishes == 5f)
+            {
+                _importantItems.Add("Dishes");
+                _dishes = 6f;
+            }
+        }
+        if (_player._currentInteractable.CompareTag("Rorschachtest"))
+        {
+            _rorschach++;
+            if (_rorschach == 4f)
+            {
+                _importantItems.Add("Rorschach");
+                _rorschach = 5f;
+            }
+        }
+        if (_player._currentInteractable.CompareTag("Skillkit"))
+        {
+            _skillkit++;
+            if (_skillkit == 3f)
+            {
+                _importantItems.Add("Skillbag");
+                _skillkit = 4f;
+            }
+        }
+        if (_player._currentInteractable.CompareTag("Letter"))
+        { 
+            _letter++; 
+            if (_letter == 2f) 
+            { 
+                _importantItems.Add("Letter"); 
+                _letter = 3f;
+            }
+        }
+    }
+    public void DestroyInteractable()
+    {
+        if (_player._currentInteractable != null)
+        {
+                Destroy(_player._currentInteractable.GameObject());
+        }
+        _player._playerInput.SwitchCurrentActionMap("Player");
+        _player._playerCamInputProvider.enabled = true;
     }
     
     
@@ -100,6 +147,7 @@ public class GameManager : MonoBehaviour
         _dialogUI.SetActive(true);
         _inUI = true;
         textDialog.SetText("");
+        textDialogNPC.SetText("");
         currentLines = dialog;
         currentLineIndex = 0;
         ShowIneractUI(false);
@@ -112,14 +160,10 @@ public class GameManager : MonoBehaviour
         if (dialogueLines == null) { return; }
         ClearButton();
         RuntimeManager.PlayOneShot(dialogueLines._sound);
-        rosie.SetActive(dialogueLines._imageRosie);
-        chatboxTalk.SetActive(dialogueLines._talkbox);
-        chatboxThink.SetActive(dialogueLines._thinkbox); 
+        character.sprite = dialogueLines._character;
+        textbox.sprite = dialogueLines._textbox;
         textDialog.SetText(dialogueLines._text);
         textDialogNPC.SetText(dialogueLines._textNPC);
-        therapist.SetActive(dialogueLines._imageTherapist);
-        ergo.SetActive(dialogueLines._imageErgo);
-        innerChilde.SetActive(dialogueLines._imageInnerChilde);
         dialogueLines._lineEvent.Invoke();
         foreach (Buttons buttons in dialogueLines._Buttons)
         {
@@ -127,11 +171,10 @@ public class GameManager : MonoBehaviour
             buttonInstance.GetComponent<ButtonManager>().Setup(buttons._text, buttons._buttonEvent);
             buttonDialog.gameObject.SetActive(false);
         }
-        StartCoroutine(FocusButton(dialogueLines));
+        StartCoroutine(DialogeLines(dialogueLines));
     }
-    IEnumerator FocusButton(DialoguesLines dialoguesLines)
+    IEnumerator DialogeLines(DialoguesLines dialoguesLines)
     {
-        
        yield return new WaitForEndOfFrame();
        if (dialoguesLines._Buttons.Count > 0) //first Dialog Button
        {
@@ -163,8 +206,7 @@ public class GameManager : MonoBehaviour
     } 
     public void AnimationEventCloseDialogUI()
     { 
-        _player.ActivateInput(); 
-        //Cursor.lockState = CursorLockMode.Locked;
+        _player.ActivateInput();
         //GameManager
         _dialogUI.SetActive(false);
         _inUI = false;
@@ -185,80 +227,7 @@ public class GameManager : MonoBehaviour
         currentLineIndex = 0;
         ShowCurrentLine();
     }
-
     
-    //Quest
-    public void QuestInteractables()
-        {
-            //Player
-            _player._animator.SetTrigger("Take");  
-            _player._playerInput.SwitchCurrentActionMap("UI");
-            _player._playerCamInputProvider.enabled = false;
-            //GameManager
-            ShowIneractUI(false);
-            //Abfrage der Interactables
-            if (_player._currentInteractable.CompareTag("Dishes")) { _dishes++; }
-            if (_player._currentInteractable.CompareTag("Rorschachtest")) { _rorschach++; }
-            if (_player._currentInteractable.CompareTag("Skillkit")) { _skillkit++; }
-            if (_player._currentInteractable.CompareTag("Letter")) { _letter++; }
-        }
-    public void DestroyInteractable()
-    {
-        if (_player._currentInteractable != null)
-        {
-            Destroy(_player._currentInteractable.GameObject());
-        }
-        _player._playerInput.SwitchCurrentActionMap("Player");
-        _player._playerCamInputProvider.enabled = true;
-    }
-
-    
-    public void Update()
-    {
-        if (sceneManager == "Kitchen")
-        {
-            musicEventInstance.setParameterByName("event:/Music/Kitchen", 0);
-            if (_inUI == true)
-            {
-                musicEventInstance.setParameterByName("event:/Music/Kitchen", 1);
-            }
-        }
-        
-        //Quests
-        if (_dishes == 5f)
-        {
-            _importantItems.Add("Dishes");
-            _dishes = 6f;
-        }
-        if (_rorschach == 4f)
-        {
-            _importantItems.Add("Rorschach");
-            _rorschach = 5f;
-        }
-        if (_skillkit == 3f)
-        {
-            _importantItems.Add("Skillbag");
-            _skillkit = 4f;
-        }
-        if (_letter == 2f)
-        {
-            _importantItems.Add("Letter");
-            _letter = 3f;
-        }
-    }
-    
-    
-    /*
-//ImportantItem
-    public void AddItem(string id)
-    { 
-        _importantItems.Add(id); 
-    }
-    public void RemoveItem(string id)
-    { 
-        _importantItems.Remove(id);
-    }
-    */
 
     //Pause
     public void TogglePause() 
@@ -270,16 +239,14 @@ public class GameManager : MonoBehaviour
         if (_pause)
         {
             _player.DeactivateInput();
-            Time.timeScale = 0.0f;
-            firstSelectButton.Select();
+            //Time.timeScale = 0.0f;
         }
         else
         { 
             _player.ActivateInput(); 
-            Time.timeScale = 1.0f;
+            //Time.timeScale = 1.0f;
         } 
     }
-    
     
     
     //FadeOut - Lade die nächste Scene
@@ -308,14 +275,22 @@ public class GameManager : MonoBehaviour
     }
     public void CloseFadeOut()
     {
-        if (pauseUI == true)
-        {
-            SceneManager.LoadScene("MainMenu");
-            return;
-        }
         if (sceneManager == "Kitchen") { SceneManager.LoadScene("Psychatrie"); }
         if (sceneManager == "Psychatrie") { SceneManager.LoadScene("Save Place"); }
         if (sceneManager == "Save Place") { SceneManager.LoadScene("Abspann"); }
         if (sceneManager == "Abspann") { SceneManager.LoadScene("MainMenu"); }
     }
+    
+    
+    /*
+//ImportantItem
+    public void AddItem(string id)
+    {
+        _importantItems.Add(id);
+    }
+    public void RemoveItem(string id)
+    {
+        _importantItems.Remove(id);
+    }
+    */
 }

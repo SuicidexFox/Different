@@ -272,10 +272,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da0c22cb3c2a1c746a9ae6509a85fc2e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _dishes: 0
-  _rorschach: 0
-  _skillbag: 0
-  _letter: 0
   _onInteract:
     m_PersistentCalls:
       m_Calls:
@@ -337,7 +333,8 @@ Transform:
   - {fileID: 1124840505}
   - {fileID: 1799314798}
   - {fileID: 1937116903}
-  - {fileID: 1468009604}
+  - {fileID: 965115911}
+  - {fileID: 881513965}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &166995134
@@ -1516,6 +1513,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: QuestManager
       objectReference: {fileID: 0}
+    - target: {fileID: 8055199884880561108, guid: fde1575ef1a5c1149885e7edae87e255,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 5999850119280342697, guid: fde1575ef1a5c1149885e7edae87e255, type: 3}
     m_RemovedGameObjects:
@@ -1635,16 +1637,12 @@ MonoBehaviour:
         Data3: 0
         Data4: 0
       Path: 
-    _imageRosie: 0
-    _talkbox: 0
-    _thinkbox: 0
+    _character: {fileID: 0}
+    _textbox: {fileID: 0}
     _text: 
     _textNPC: 'Oh, it seems you''re not on my
 
       list yet. Come back later.'
-    _imageTherapist: 0
-    _imageErgo: 1
-    _imageInnerChilde: 0
     _lineEvent:
       m_PersistentCalls:
         m_Calls: []
@@ -3580,17 +3578,13 @@ MonoBehaviour:
         Data3: 0
         Data4: 0
       Path: 
-    _imageRosie: 0
-    _talkbox: 0
-    _thinkbox: 0
+    _character: {fileID: 0}
+    _textbox: {fileID: 0}
     _text: 
     _textNPC: 'We need things for crafting first. Scissors,
 
       cardboard and
       glue.'
-    _imageTherapist: 0
-    _imageErgo: 1
-    _imageInnerChilde: 0
     _lineEvent:
       m_PersistentCalls:
         m_Calls: []
@@ -3602,14 +3596,10 @@ MonoBehaviour:
         Data3: 0
         Data4: 0
       Path: 
-    _imageRosie: 0
-    _talkbox: 0
-    _thinkbox: 0
+    _character: {fileID: 0}
+    _textbox: {fileID: 0}
     _text: 
     _textNPC: See you later.
-    _imageTherapist: 0
-    _imageErgo: 1
-    _imageInnerChilde: 0
     _lineEvent:
       m_PersistentCalls:
         m_Calls: []
@@ -3704,6 +3694,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b11e7ff921e79a4aad298f21284313f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!4 &881513965 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8943371327577493844, guid: 14e34d603e87fbb4da01272502f240ea,
+    type: 3}
+  m_PrefabInstance: {fileID: 2003194035}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &927018741
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3915,6 +3911,12 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: ea7f72b28dfc00441be3c9e41558d21a,
     type: 3}
   m_PrefabInstance: {fileID: 955755627}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &965115911 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5952966794999470461, guid: 3b8413b9e07d53e45adf504811a4a9f5,
+    type: 3}
+  m_PrefabInstance: {fileID: 5971225313570698296}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &978777987
 PrefabInstance:
@@ -4166,8 +4168,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 992512020}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.09590979, y: 0.08675097, z: -0.008391026, w: 0.9915671}
-  m_LocalPosition: {x: -7.268263, y: 6.4615116, z: 13.7221985}
+  m_LocalRotation: {x: 0.095909774, y: 0.086750984, z: -0.008391027, w: 0.9915671}
+  m_LocalPosition: {x: -7.2682624, y: 6.4615116, z: 13.722198}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -4658,71 +4660,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1073551097}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1104097591
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1104097592}
-  - component: {fileID: 1104097593}
-  m_Layer: 0
-  m_Name: DialogSound
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1104097592
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1104097591}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1468009604}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1104097593
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1104097591}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  CollisionTag: Player
-  EventReference:
-    Guid:
-      Data1: -292163454
-      Data2: 1251571586
-      Data3: -1611079268
-      Data4: 645118456
-    Path: event:/Music/Psychatrie
-  Event: 
-  PlayEvent: 3
-  StopEvent: 4
-  AllowFadeout: 0
-  TriggerOnce: 0
-  Preload: 0
-  AllowNonRigidbodyDoppler: 0
-  Params:
-  - Name: MusicStage
-    Value: 1
-  OverrideAttenuation: 0
-  OverrideMinDistance: 1
-  OverrideMaxDistance: 20
 --- !u!1001 &1107238569
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5081,14 +5018,10 @@ MonoBehaviour:
         Data3: 0
         Data4: 0
       Path: 
-    _imageRosie: 0
-    _talkbox: 0
-    _thinkbox: 0
+    _character: {fileID: 0}
+    _textbox: {fileID: 0}
     _text: 
     _textNPC: Hello, cann i help you?
-    _imageTherapist: 0
-    _imageErgo: 1
-    _imageInnerChilde: 0
     _lineEvent:
       m_PersistentCalls:
         m_Calls: []
@@ -5120,16 +5053,12 @@ MonoBehaviour:
         Data3: 0
         Data4: 0
       Path: 
-    _imageRosie: 0
-    _talkbox: 0
-    _thinkbox: 0
+    _character: {fileID: 0}
+    _textbox: {fileID: 0}
     _text: 
     _textNPC: 'Oh, you were qa bit shy.
 
       That''s oka. I''m Mrs. Flow.'
-    _imageTherapist: 0
-    _imageErgo: 1
-    _imageInnerChilde: 0
     _lineEvent:
       m_PersistentCalls:
         m_Calls: []
@@ -5141,14 +5070,10 @@ MonoBehaviour:
         Data3: 0
         Data4: 0
       Path: 
-    _imageRosie: 0
-    _talkbox: 0
-    _thinkbox: 0
+    _character: {fileID: 0}
+    _textbox: {fileID: 0}
     _text: 
     _textNPC: We're building your Skillkit together.
-    _imageTherapist: 0
-    _imageErgo: 1
-    _imageInnerChilde: 0
     _lineEvent:
       m_PersistentCalls:
         m_Calls: []
@@ -5160,14 +5085,10 @@ MonoBehaviour:
         Data3: 0
         Data4: 0
       Path: 
-    _imageRosie: 1
-    _talkbox: 1
-    _thinkbox: 0
+    _character: {fileID: 0}
+    _textbox: {fileID: 0}
     _text: What is a Skillkit?
     _textNPC: 
-    _imageTherapist: 0
-    _imageErgo: 0
-    _imageInnerChilde: 0
     _lineEvent:
       m_PersistentCalls:
         m_Calls: []
@@ -5179,9 +5100,8 @@ MonoBehaviour:
         Data3: 0
         Data4: 0
       Path: 
-    _imageRosie: 0
-    _talkbox: 0
-    _thinkbox: 0
+    _character: {fileID: 0}
+    _textbox: {fileID: 0}
     _text: 
     _textNPC: 'Instead of hurting yourself,
 
@@ -5189,9 +5109,6 @@ MonoBehaviour:
       you
 
       regulate your tensions.'
-    _imageTherapist: 0
-    _imageErgo: 1
-    _imageInnerChilde: 0
     _lineEvent:
       m_PersistentCalls:
         m_Calls: []
@@ -5203,16 +5120,12 @@ MonoBehaviour:
         Data3: 0
         Data4: 0
       Path: 
-    _imageRosie: 0
-    _talkbox: 0
-    _thinkbox: 0
+    _character: {fileID: 0}
+    _textbox: {fileID: 0}
     _text: 
     _textNPC: 'All the kills that help you well,
 
       go into the Skillkit.'
-    _imageTherapist: 0
-    _imageErgo: 1
-    _imageInnerChilde: 0
     _lineEvent:
       m_PersistentCalls:
         m_Calls: []
@@ -5621,72 +5534,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1456970791}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1468009603
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1468009604}
-  - component: {fileID: 1468009605}
-  m_Layer: 0
-  m_Name: Music
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1468009604
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1468009603}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -5.147996, y: 4.761512, z: 15.9541}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 1104097592}
-  m_Father: {fileID: 123911057}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1468009605
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1468009603}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  CollisionTag: 
-  EventReference:
-    Guid:
-      Data1: -292163454
-      Data2: 1251571586
-      Data3: -1611079268
-      Data4: 645118456
-    Path: event:/Music/Psychatrie
-  Event: 
-  PlayEvent: 1
-  StopEvent: 0
-  AllowFadeout: 0
-  TriggerOnce: 0
-  Preload: 0
-  AllowNonRigidbodyDoppler: 0
-  Params:
-  - Name: MusicStage
-    Value: 0
-  OverrideAttenuation: 0
-  OverrideMinDistance: 1
-  OverrideMaxDistance: 20
 --- !u!1 &1468669325
 GameObject:
   m_ObjectHideFlags: 3
@@ -6597,35 +6444,27 @@ MonoBehaviour:
         Data3: 0
         Data4: 0
       Path: 
-    _imageRosie: 0
-    _talkbox: 0
-    _thinkbox: 1
+    _character: {fileID: 0}
+    _textbox: {fileID: 0}
     _text: 
     _textNPC: 'You found an image,
 
       wonderful.'
-    _imageTherapist: 1
-    _imageErgo: 0
-    _imageInnerChilde: 0
     _lineEvent:
       m_PersistentCalls:
         m_Calls: []
     _Buttons: []
   - _sound:
       Guid:
-        Data1: 0
-        Data2: 0
-        Data3: 0
-        Data4: 0
-      Path: 
-    _imageRosie: 0
-    _talkbox: 0
-    _thinkbox: 0
+        Data1: -938413143
+        Data2: 1305648819
+        Data3: 283855785
+        Data4: -500178708
+      Path: event:/SFX/Therapist/Voice
+    _character: {fileID: 21300000, guid: bdf5e2ae536df3d40b5691eb64422b1c, type: 3}
+    _textbox: {fileID: 21300000, guid: 685deb8f60c301b4cb89a94dff556cad, type: 3}
     _text: 
     _textNPC: How does it look for you?
-    _imageTherapist: 1
-    _imageErgo: 0
-    _imageInnerChilde: 0
     _lineEvent:
       m_PersistentCalls:
         m_Calls: []
@@ -6649,14 +6488,10 @@ MonoBehaviour:
         Data3: 0
         Data4: 0
       Path: 
-    _imageRosie: 0
-    _talkbox: 0
-    _thinkbox: 0
+    _character: {fileID: 21300000, guid: bdf5e2ae536df3d40b5691eb64422b1c, type: 3}
+    _textbox: {fileID: 21300000, guid: 685deb8f60c301b4cb89a94dff556cad, type: 3}
     _text: 
     _textNPC: Interesting.....
-    _imageTherapist: 1
-    _imageErgo: 0
-    _imageInnerChilde: 0
     _lineEvent:
       m_PersistentCalls:
         m_Calls: []
@@ -6680,9 +6515,8 @@ MonoBehaviour:
         Data3: 0
         Data4: 0
       Path: 
-    _imageRosie: 0
-    _talkbox: 0
-    _thinkbox: 0
+    _character: {fileID: 21300000, guid: bdf5e2ae536df3d40b5691eb64422b1c, type: 3}
+    _textbox: {fileID: 21300000, guid: 685deb8f60c301b4cb89a94dff556cad, type: 3}
     _text: 
     _textNPC: 'I have something for you for this task.
 
@@ -6690,9 +6524,6 @@ MonoBehaviour:
       you can use it to
 
       create your safe space.'
-    _imageTherapist: 1
-    _imageErgo: 0
-    _imageInnerChilde: 0
     _lineEvent:
       m_PersistentCalls:
         m_Calls: []
@@ -6711,31 +6542,7 @@ MonoBehaviour:
           m_Calls: []
   dialogEnd:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
-      - m_Target: {fileID: 185605736}
-        m_TargetAssemblyTypeName: UnityEngine.Animator, UnityEngine
-        m_MethodName: Play
-        m_Mode: 5
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: Close
-          m_BoolArgument: 1
-        m_CallState: 2
+      m_Calls: []
 --- !u!1001 &1722634868
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8481,7 +8288,7 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 0}
+    m_TransformParent: {fileID: 123911057}
     m_Modifications:
     - target: {fileID: 82237024373311360, guid: 14e34d603e87fbb4da01272502f240ea,
         type: 3}
@@ -8538,22 +8345,22 @@ PrefabInstance:
     - target: {fileID: 4064780110077873718, guid: 14e34d603e87fbb4da01272502f240ea,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.0000026226044
+      value: 0.0000030994415
       objectReference: {fileID: 0}
     - target: {fileID: 4064780110077873718, guid: 14e34d603e87fbb4da01272502f240ea,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.00000047683716
+      value: 0.0000023841858
       objectReference: {fileID: 0}
     - target: {fileID: 4064780110077873718, guid: 14e34d603e87fbb4da01272502f240ea,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.54734176
+      value: 0.5473417
       objectReference: {fileID: 0}
     - target: {fileID: 4064780110077873718, guid: 14e34d603e87fbb4da01272502f240ea,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.06301027
+      value: 0.06301025
       objectReference: {fileID: 0}
     - target: {fileID: 4064780110077873718, guid: 14e34d603e87fbb4da01272502f240ea,
         type: 3}
@@ -8563,7 +8370,7 @@ PrefabInstance:
     - target: {fileID: 4064780110077873718, guid: 14e34d603e87fbb4da01272502f240ea,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.09544163
+      value: 0.09544161
       objectReference: {fileID: 0}
     - target: {fileID: 4263806721132912559, guid: 14e34d603e87fbb4da01272502f240ea,
         type: 3}
@@ -8573,12 +8380,17 @@ PrefabInstance:
     - target: {fileID: 4408276672233722000, guid: 14e34d603e87fbb4da01272502f240ea,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 2.958752
+      value: 2.9587526
+      objectReference: {fileID: 0}
+    - target: {fileID: 4408276672233722000, guid: 14e34d603e87fbb4da01272502f240ea,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.6999998
       objectReference: {fileID: 0}
     - target: {fileID: 4408276672233722000, guid: 14e34d603e87fbb4da01272502f240ea,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 1.1786804
+      value: 1.1786814
       objectReference: {fileID: 0}
     - target: {fileID: 4885402546690540813, guid: 14e34d603e87fbb4da01272502f240ea,
         type: 3}
@@ -8588,7 +8400,7 @@ PrefabInstance:
     - target: {fileID: 4885402546690540813, guid: 14e34d603e87fbb4da01272502f240ea,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.00000023841858
+      value: 0.0000014305115
       objectReference: {fileID: 0}
     - target: {fileID: 4885402546690540813, guid: 14e34d603e87fbb4da01272502f240ea,
         type: 3}
@@ -8598,7 +8410,7 @@ PrefabInstance:
     - target: {fileID: 4885402546690540813, guid: 14e34d603e87fbb4da01272502f240ea,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.053043973
+      value: 0.05304397
       objectReference: {fileID: 0}
     - target: {fileID: 4885402546690540813, guid: 14e34d603e87fbb4da01272502f240ea,
         type: 3}
@@ -8608,7 +8420,7 @@ PrefabInstance:
     - target: {fileID: 4885402546690540813, guid: 14e34d603e87fbb4da01272502f240ea,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.08034569
+      value: 0.08034568
       objectReference: {fileID: 0}
     - target: {fileID: 5416356045619474143, guid: 14e34d603e87fbb4da01272502f240ea,
         type: 3}
@@ -8618,7 +8430,7 @@ PrefabInstance:
     - target: {fileID: 5416356045619474143, guid: 14e34d603e87fbb4da01272502f240ea,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.00000023841858
+      value: 0.0000014305115
       objectReference: {fileID: 0}
     - target: {fileID: 5416356045619474143, guid: 14e34d603e87fbb4da01272502f240ea,
         type: 3}
@@ -8628,7 +8440,7 @@ PrefabInstance:
     - target: {fileID: 5416356045619474143, guid: 14e34d603e87fbb4da01272502f240ea,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.043086525
+      value: 0.04308652
       objectReference: {fileID: 0}
     - target: {fileID: 5416356045619474143, guid: 14e34d603e87fbb4da01272502f240ea,
         type: 3}
@@ -8638,7 +8450,7 @@ PrefabInstance:
     - target: {fileID: 5416356045619474143, guid: 14e34d603e87fbb4da01272502f240ea,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.065263145
+      value: 0.06526314
       objectReference: {fileID: 0}
     - target: {fileID: 5433605295870658588, guid: 14e34d603e87fbb4da01272502f240ea,
         type: 3}
@@ -8693,17 +8505,17 @@ PrefabInstance:
     - target: {fileID: 8943371327577493844, guid: 14e34d603e87fbb4da01272502f240ea,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -1.49
+      value: -6.6379957
       objectReference: {fileID: 0}
     - target: {fileID: 8943371327577493844, guid: 14e34d603e87fbb4da01272502f240ea,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 4.761512
       objectReference: {fileID: 0}
     - target: {fileID: 8943371327577493844, guid: 14e34d603e87fbb4da01272502f240ea,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.89
+      value: 16.844099
       objectReference: {fileID: 0}
     - target: {fileID: 8943371327577493844, guid: 14e34d603e87fbb4da01272502f240ea,
         type: 3}
@@ -8740,7 +8552,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 8381745603625494126, guid: 14e34d603e87fbb4da01272502f240ea, type: 3}
     m_RemovedGameObjects:
     - {fileID: 212087829362749793, guid: 14e34d603e87fbb4da01272502f240ea, type: 3}
     - {fileID: 6933297152944096048, guid: 14e34d603e87fbb4da01272502f240ea, type: 3}
@@ -9029,22 +8842,18 @@ MonoBehaviour:
   dialoguesLines:
   - _sound:
       Guid:
-        Data1: 0
-        Data2: 0
-        Data3: 0
-        Data4: 0
-      Path: 
-    _imageRosie: 0
-    _talkbox: 0
-    _thinkbox: 0
+        Data1: -938413143
+        Data2: 1305648819
+        Data3: 283855785
+        Data4: -500178708
+      Path: event:/SFX/Therapist/Voice
+    _character: {fileID: 21300000, guid: bdf5e2ae536df3d40b5691eb64422b1c, type: 3}
+    _textbox: {fileID: 21300000, guid: 685deb8f60c301b4cb89a94dff556cad, type: 3}
     _text: 
     _textNPC: 'To better understand your feelings,
 
       I''d like to do a Rorschach
       test with you.'
-    _imageTherapist: 1
-    _imageErgo: 0
-    _imageInnerChilde: 0
     _lineEvent:
       m_PersistentCalls:
         m_Calls: []
@@ -9056,17 +8865,13 @@ MonoBehaviour:
         Data3: 0
         Data4: 0
       Path: 
-    _imageRosie: 0
-    _talkbox: 0
-    _thinkbox: 0
+    _character: {fileID: 21300000, guid: bdf5e2ae536df3d40b5691eb64422b1c, type: 3}
+    _textbox: {fileID: 21300000, guid: 685deb8f60c301b4cb89a94dff556cad, type: 3}
     _text: 
     _textNPC: 'Please find a suitable image that best
 
       describes your current
       feelings for me.'
-    _imageTherapist: 1
-    _imageErgo: 0
-    _imageInnerChilde: 0
     _lineEvent:
       m_PersistentCalls:
         m_Calls: []
@@ -47882,16 +47687,12 @@ MonoBehaviour:
         Data3: 283855785
         Data4: -500178708
       Path: event:/SFX/Therapist/Voice
-    _imageRosie: 0
-    _talkbox: 0
-    _thinkbox: 0
+    _character: {fileID: 21300000, guid: bdf5e2ae536df3d40b5691eb64422b1c, type: 3}
+    _textbox: {fileID: 21300000, guid: 685deb8f60c301b4cb89a94dff556cad, type: 3}
     _text: 
     _textNPC: 'You must be Rosie?
 
       Nice to meet you.'
-    _imageTherapist: 1
-    _imageErgo: 0
-    _imageInnerChilde: 0
     _lineEvent:
       m_PersistentCalls:
         m_Calls: []
@@ -47903,33 +47704,25 @@ MonoBehaviour:
         Data3: 0
         Data4: 0
       Path: 
-    _imageRosie: 0
-    _talkbox: 0
-    _thinkbox: 0
+    _character: {fileID: 21300000, guid: bdf5e2ae536df3d40b5691eb64422b1c, type: 3}
+    _textbox: {fileID: 21300000, guid: 685deb8f60c301b4cb89a94dff556cad, type: 3}
     _text: 
     _textNPC: Do you remember anything?
-    _imageTherapist: 1
-    _imageErgo: 0
-    _imageInnerChilde: 0
     _lineEvent:
       m_PersistentCalls:
         m_Calls: []
     _Buttons: []
   - _sound:
       Guid:
-        Data1: 0
-        Data2: 0
-        Data3: 0
-        Data4: 0
-      Path: 
-    _imageRosie: 1
-    _talkbox: 1
-    _thinkbox: 0
+        Data1: 1998765228
+        Data2: 1251470084
+        Data3: -744318294
+        Data4: -919906613
+      Path: event:/SFX/Rosie/Voice/Dialog
+    _character: {fileID: 21300000, guid: b9beb41077e9839439a34333fea8c98b, type: 3}
+    _textbox: {fileID: 21300000, guid: 6cf720adf7347b34fb93d8620eff768f, type: 3}
     _text: I cleaned up the kitchen.
     _textNPC: 
-    _imageTherapist: 0
-    _imageErgo: 0
-    _imageInnerChilde: 0
     _lineEvent:
       m_PersistentCalls:
         m_Calls: []
@@ -47941,16 +47734,12 @@ MonoBehaviour:
         Data3: 0
         Data4: 0
       Path: 
-    _imageRosie: 1
-    _talkbox: 1
-    _thinkbox: 0
+    _character: {fileID: 21300000, guid: b9beb41077e9839439a34333fea8c98b, type: 3}
+    _textbox: {fileID: 21300000, guid: 6cf720adf7347b34fb93d8620eff768f, type: 3}
     _text: 'It wasn''t enough again...
 
       my... parents...'
     _textNPC: 
-    _imageTherapist: 0
-    _imageErgo: 0
-    _imageInnerChilde: 0
     _lineEvent:
       m_PersistentCalls:
         m_Calls: []
@@ -47962,14 +47751,10 @@ MonoBehaviour:
         Data3: 0
         Data4: 0
       Path: 
-    _imageRosie: 1
-    _talkbox: 1
-    _thinkbox: 0
+    _character: {fileID: 21300000, guid: b9beb41077e9839439a34333fea8c98b, type: 3}
+    _textbox: {fileID: 21300000, guid: 6cf720adf7347b34fb93d8620eff768f, type: 3}
     _text: They punished me...
     _textNPC: 
-    _imageTherapist: 0
-    _imageErgo: 0
-    _imageInnerChilde: 0
     _lineEvent:
       m_PersistentCalls:
         m_Calls: []
@@ -47981,9 +47766,8 @@ MonoBehaviour:
         Data3: 283855785
         Data4: -500178708
       Path: event:/SFX/Therapist/Voice
-    _imageRosie: 0
-    _talkbox: 0
-    _thinkbox: 0
+    _character: {fileID: 21300000, guid: bdf5e2ae536df3d40b5691eb64422b1c, type: 3}
+    _textbox: {fileID: 21300000, guid: 685deb8f60c301b4cb89a94dff556cad, type: 3}
     _text: 
     _textNPC: 'We can talk about it later!
 
@@ -47991,9 +47775,6 @@ MonoBehaviour:
 
       feel
       comfortable here.'
-    _imageTherapist: 1
-    _imageErgo: 0
-    _imageInnerChilde: 0
     _lineEvent:
       m_PersistentCalls:
         m_Calls: []
@@ -56691,14 +56472,10 @@ MonoBehaviour:
         Data3: 0
         Data4: 0
       Path: 
-    _imageRosie: 0
-    _talkbox: 0
-    _thinkbox: 0
+    _character: {fileID: 0}
+    _textbox: {fileID: 0}
     _text: 
     _textNPC: Hello, are you Rosie?
-    _imageTherapist: 0
-    _imageErgo: 1
-    _imageInnerChilde: 0
     _lineEvent:
       m_PersistentCalls:
         m_Calls: []
@@ -56754,16 +56531,12 @@ MonoBehaviour:
         Data3: 0
         Data4: 0
       Path: 
-    _imageRosie: 0
-    _talkbox: 0
-    _thinkbox: 0
+    _character: {fileID: 0}
+    _textbox: {fileID: 0}
     _text: 
     _textNPC: 'Wonderful.
 
       I''m Mrs. Flow.'
-    _imageTherapist: 0
-    _imageErgo: 1
-    _imageInnerChilde: 0
     _lineEvent:
       m_PersistentCalls:
         m_Calls: []
@@ -56775,14 +56548,10 @@ MonoBehaviour:
         Data3: 0
         Data4: 0
       Path: 
-    _imageRosie: 0
-    _talkbox: 0
-    _thinkbox: 0
+    _character: {fileID: 0}
+    _textbox: {fileID: 0}
     _text: 
     _textNPC: We're building your Skillkit together.
-    _imageTherapist: 0
-    _imageErgo: 1
-    _imageInnerChilde: 0
     _lineEvent:
       m_PersistentCalls:
         m_Calls: []
@@ -56794,14 +56563,10 @@ MonoBehaviour:
         Data3: 0
         Data4: 0
       Path: 
-    _imageRosie: 1
-    _talkbox: 1
-    _thinkbox: 0
+    _character: {fileID: 0}
+    _textbox: {fileID: 0}
     _text: What is a Skillkit?
     _textNPC: 
-    _imageTherapist: 0
-    _imageErgo: 0
-    _imageInnerChilde: 0
     _lineEvent:
       m_PersistentCalls:
         m_Calls: []
@@ -56813,9 +56578,8 @@ MonoBehaviour:
         Data3: 0
         Data4: 0
       Path: 
-    _imageRosie: 0
-    _talkbox: 0
-    _thinkbox: 0
+    _character: {fileID: 0}
+    _textbox: {fileID: 0}
     _text: 
     _textNPC: 'Instead of hurting yourself,
 
@@ -56823,9 +56587,6 @@ MonoBehaviour:
       you
 
       regulate your tensions.'
-    _imageTherapist: 0
-    _imageErgo: 1
-    _imageInnerChilde: 0
     _lineEvent:
       m_PersistentCalls:
         m_Calls: []
@@ -56837,16 +56598,12 @@ MonoBehaviour:
         Data3: 0
         Data4: 0
       Path: 
-    _imageRosie: 0
-    _talkbox: 0
-    _thinkbox: 0
+    _character: {fileID: 0}
+    _textbox: {fileID: 0}
     _text: 
     _textNPC: 'All the kills that help you well,
 
       go into the Skillkit.'
-    _imageTherapist: 0
-    _imageErgo: 1
-    _imageInnerChilde: 0
     _lineEvent:
       m_PersistentCalls:
         m_Calls: []
@@ -58217,17 +57974,27 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 0}
+    m_TransformParent: {fileID: 123911057}
     m_Modifications:
+    - target: {fileID: 140038903529498315, guid: 3b8413b9e07d53e45adf504811a4a9f5,
+        type: 3}
+      propertyPath: m_Name
+      value: CanvasUI
+      objectReference: {fileID: 0}
     - target: {fileID: 305028589229041011, guid: 3b8413b9e07d53e45adf504811a4a9f5,
         type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1187060155108023825, guid: 3b8413b9e07d53e45adf504811a4a9f5,
+    - target: {fileID: 366145984512549469, guid: 3b8413b9e07d53e45adf504811a4a9f5,
         type: 3}
-      propertyPath: m_RenderMode
-      value: 0
+      propertyPath: m_Name
+      value: Talkbox
+      objectReference: {fileID: 0}
+    - target: {fileID: 555878083677343076, guid: 3b8413b9e07d53e45adf504811a4a9f5,
+        type: 3}
+      propertyPath: m_Name
+      value: NPC
       objectReference: {fileID: 0}
     - target: {fileID: 1657216949935576896, guid: 3b8413b9e07d53e45adf504811a4a9f5,
         type: 3}
@@ -58447,43 +58214,54 @@ PrefabInstance:
     - target: {fileID: 4885992168856564509, guid: 3b8413b9e07d53e45adf504811a4a9f5,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4885992168856564509, guid: 3b8413b9e07d53e45adf504811a4a9f5,
         type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4885992168856564509, guid: 3b8413b9e07d53e45adf504811a4a9f5,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 388.5
       objectReference: {fileID: 0}
     - target: {fileID: 4885992168856564509, guid: 3b8413b9e07d53e45adf504811a4a9f5,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -659.5
       objectReference: {fileID: 0}
     - target: {fileID: 5010654992540652428, guid: 3b8413b9e07d53e45adf504811a4a9f5,
         type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5178841992328025094, guid: 3b8413b9e07d53e45adf504811a4a9f5,
+        type: 3}
+      propertyPath: m_Name
+      value: Rahmen
+      objectReference: {fileID: 0}
     - target: {fileID: 5952966794999470461, guid: 3b8413b9e07d53e45adf504811a4a9f5,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -5.147996
       objectReference: {fileID: 0}
     - target: {fileID: 5952966794999470461, guid: 3b8413b9e07d53e45adf504811a4a9f5,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 4.761512
       objectReference: {fileID: 0}
     - target: {fileID: 5952966794999470461, guid: 3b8413b9e07d53e45adf504811a4a9f5,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: 15.9541
       objectReference: {fileID: 0}
+    - target: {fileID: 6811747163923671569, guid: 3b8413b9e07d53e45adf504811a4a9f5,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: b9beb41077e9839439a34333fea8c98b,
+        type: 3}
     - target: {fileID: 6893551519171211038, guid: 3b8413b9e07d53e45adf504811a4a9f5,
         type: 3}
       propertyPath: m_AnchorMax.y
@@ -58541,19 +58319,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8263438944589772750, guid: 3b8413b9e07d53e45adf504811a4a9f5,
         type: 3}
-      propertyPath: _player
+      propertyPath: Image
       value: 
-      objectReference: {fileID: 881513962}
+      objectReference: {fileID: 0}
     - target: {fileID: 8263438944589772750, guid: 3b8413b9e07d53e45adf504811a4a9f5,
         type: 3}
       propertyPath: playerInput
       value: 
       objectReference: {fileID: 881513960}
-    - target: {fileID: 8263438944589772750, guid: 3b8413b9e07d53e45adf504811a4a9f5,
-        type: 3}
-      propertyPath: buttonFadeOut
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: 8263438944589772750, guid: 3b8413b9e07d53e45adf504811a4a9f5,
         type: 3}
       propertyPath: _playerCamInputProvider
@@ -58562,41 +58335,51 @@ PrefabInstance:
     - target: {fileID: 8363653655098395808, guid: 3b8413b9e07d53e45adf504811a4a9f5,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8363653655098395808, guid: 3b8413b9e07d53e45adf504811a4a9f5,
         type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8363653655098395808, guid: 3b8413b9e07d53e45adf504811a4a9f5,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 388.5
       objectReference: {fileID: 0}
     - target: {fileID: 8363653655098395808, guid: 3b8413b9e07d53e45adf504811a4a9f5,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -489.5
       objectReference: {fileID: 0}
     - target: {fileID: 8384839698736218918, guid: 3b8413b9e07d53e45adf504811a4a9f5,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8384839698736218918, guid: 3b8413b9e07d53e45adf504811a4a9f5,
         type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8384839698736218918, guid: 3b8413b9e07d53e45adf504811a4a9f5,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 388.5
       objectReference: {fileID: 0}
     - target: {fileID: 8384839698736218918, guid: 3b8413b9e07d53e45adf504811a4a9f5,
         type: 3}
       propertyPath: m_AnchoredPosition.y
+      value: -319.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8530637915797353874, guid: 3b8413b9e07d53e45adf504811a4a9f5,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8941203310634340581, guid: 3b8413b9e07d53e45adf504811a4a9f5,
+        type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9211643049379147066, guid: 3b8413b9e07d53e45adf504811a4a9f5,
@@ -58652,6 +58435,9 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: 7430852463358873392, guid: 3b8413b9e07d53e45adf504811a4a9f5, type: 3}
+    - {fileID: 4820614646788977226, guid: 3b8413b9e07d53e45adf504811a4a9f5, type: 3}
+    - {fileID: 945460965641032080, guid: 3b8413b9e07d53e45adf504811a4a9f5, type: 3}
+    - {fileID: 8696760561593158428, guid: 3b8413b9e07d53e45adf504811a4a9f5, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3b8413b9e07d53e45adf504811a4a9f5, type: 3}
@@ -69080,10 +68866,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da0c22cb3c2a1c746a9ae6509a85fc2e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _dishes: 0
-  _rorschach: 0
-  _skillbag: 0
-  _letter: 0
   _onInteract:
     m_PersistentCalls:
       m_Calls:
@@ -76775,10 +76557,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da0c22cb3c2a1c746a9ae6509a85fc2e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _dishes: 0
-  _rorschach: 0
-  _skillbag: 0
-  _letter: 0
   _onInteract:
     m_PersistentCalls:
       m_Calls:
@@ -77535,10 +77313,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da0c22cb3c2a1c746a9ae6509a85fc2e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _dishes: 0
-  _rorschach: 0
-  _skillbag: 0
-  _letter: 0
   _onInteract:
     m_PersistentCalls:
       m_Calls:
@@ -84848,21 +84622,17 @@ MonoBehaviour:
   dialoguesLines:
   - _sound:
       Guid:
-        Data1: 0
-        Data2: 0
-        Data3: 0
-        Data4: 0
-      Path: 
-    _imageRosie: 0
-    _talkbox: 0
-    _thinkbox: 0
+        Data1: -938413143
+        Data2: 1305648819
+        Data3: 283855785
+        Data4: -500178708
+      Path: event:/SFX/Therapist/Voice
+    _character: {fileID: 21300000, guid: bdf5e2ae536df3d40b5691eb64422b1c, type: 3}
+    _textbox: {fileID: 21300000, guid: 685deb8f60c301b4cb89a94dff556cad, type: 3}
     _text: 
     _textNPC: 'Nice to see you again, Rosie!
 
       Do we want to continue?'
-    _imageTherapist: 1
-    _imageErgo: 0
-    _imageInnerChilde: 0
     _lineEvent:
       m_PersistentCalls:
         m_Calls: []
@@ -87402,5 +87172,3 @@ SceneRoots:
   - {fileID: 123911057}
   - {fileID: 298048949}
   - {fileID: 716565192}
-  - {fileID: 5971225313570698296}
-  - {fileID: 2003194035}
