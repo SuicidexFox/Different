@@ -35,14 +35,14 @@ public class PlayerController : MonoBehaviour
     private float moveSpeed;
     private float minTurnSpeed = 0.2f;
     private float turnSpeed = 5f;
-    //private float acceleration = 0,1;
+    private float acceleration = 0.1f;
     
     private CharacterController characterController;
     private Transform camTransform;
     
     //Animator
     public Animator _animator;
-    public GameObject _tabUI;
+    public GameObject _tabUIGroupe;
     public Animator _animatorTabUI;
     
     //Interact
@@ -161,6 +161,16 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    
+    
+    //Tab
+    private void InstantiateLetter(QuestManager questManager)
+    {
+        _tabUIGroupe = Instantiate(questManager._currentLetter);
+    }
+    
+    
+    
     //Pause
     private void Pause(InputAction.CallbackContext obj)
     {
@@ -185,7 +195,6 @@ public class PlayerController : MonoBehaviour
         UnityEngine.Cursor.SetCursor(_CursorNull, Vector2.zero, CursorMode.ForceSoftware);
         _playerCamInputProvider.enabled = true; //Maus
     }
-    
     
     
 

@@ -1,15 +1,22 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+using FMOD.Studio;
 using FMODUnity;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.InputSystem.HID;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-using Button = UnityEngine.UIElements.Button;
 
 namespace _3_____Scripts.Main
 {
     public class MenuManager : MonoBehaviour
     {
+        public EventInstance musicEventInstance;
+        [SerializeField] private  Texture2D _cursor;
+        [SerializeField] private Button _firstSelect;
         [SerializeField] private Slider _master;
         [SerializeField] private Slider _music;
         [SerializeField] private Slider _sfx;
@@ -23,13 +30,13 @@ namespace _3_____Scripts.Main
         private void Start()
         {
             _scenesManager = SceneManager.GetActiveScene().name;
-            //_firstSelect.Select();
+            
             SetupSlider(_master, "bus:/Master");
             SetupSlider(_music, "bus:/Master/Music");
             SetupSlider(_sfx, "bus:/Master/SFX");
         }
         
-        
+
         //Slider
         private void SetupSlider(Slider slider, string busPath)
         {
@@ -57,7 +64,6 @@ namespace _3_____Scripts.Main
         {
             fade.SetActive(true);
             StartCoroutine(Fade());
-            
         }
         IEnumerator Fade()
         {
@@ -70,10 +76,18 @@ namespace _3_____Scripts.Main
             {
                 SceneManager.LoadScene("MainMenu");  
             }
+
+            musicEventInstance.setVolume(0f);
         }
 
 
 
+        //Animations
+        public void FirstSelectButton()
+        {
+            _firstSelect.Select();
+            Cursor.SetCursor(_cursor, Vector2.zero, CursorMode.ForceSoftware);
+        }
 
         public void Quit()
         {

@@ -22,12 +22,11 @@ public class GameManager : MonoBehaviour
     private string sceneManager;
     public PlayerController _player;
     private InteractableManager interactableManager;
-    private EventInstance musicEventInstance;
+    private Dialog currentLines;
+    private QuestManager questManager;
+    private EventInstance _musicEventInstance;
+    public EventReference musicEventReference;
     
-    [Header("Pause")] 
-    public bool _pause = false;
-    [SerializeField] private GameObject pauseUI;
-
     [Header("Interact")] 
     [SerializeField] private GameObject interactUI;
     public float _dishes = 0f;
@@ -37,7 +36,8 @@ public class GameManager : MonoBehaviour
     public List<string> _importantItems;
     [Header("Dialouge")]
     public bool _inUI = false;
-    [SerializeField] public GameObject _dialogUI;
+    private int currentLineIndex;
+    [SerializeField] private GameObject dialogUI;
     [SerializeField] private Image character;
     [SerializeField] private Image textbox;
     [SerializeField] private TextMeshProUGUI textDialog;
@@ -47,40 +47,44 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Button buttonDialog;
     [SerializeField] private GameObject buttonGroup;
     [SerializeField] private GameObject buttonCurrent;
+    [Header("ShowQuest")] 
+    [SerializeField] private GameObject questUI;
+    [SerializeField] private TextMeshProUGUI textQuest;
+    [SerializeField] private Button buttonQuest;
+    [SerializeField]private Animator animationCloseQuestUI;
     [Header("Fade")] 
-    [SerializeField] private GameObject fadeOut;
+    [SerializeField] private GameObject fadeUI;
     [SerializeField] private GameObject fadeOutLetter;
-    [SerializeField] private Button buttonFadeOut;
-
+    [SerializeField] private Button buttonFade;
+    [SerializeField] private Animator animationFade;
+    [Header("Pause")] 
+    public bool _pause = false;
+    [SerializeField] private GameObject pauseUI;
     
     
-    //DialogManager
-    private Dialog currentLines;
-    private int currentLineIndex;
-    
-
+          ///////////////////////////////////// Start \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
     private void Awake() //nur beim ersten Start der gesamten Instanz
     {
         instance = this;
     }
-
     private void Start()
     {
         sceneManager = SceneManager.GetActiveScene().name;
+        
         interactUI.SetActive(false);
-        _dialogUI.SetActive(false);
-        fadeOut.SetActive(false);
+        dialogUI.SetActive(false);
+        questUI.SetActive(false);
+        fadeUI.SetActive(false);
         pauseUI.SetActive(false);
-        musicEventInstance.setParameterByName("event:/Music/Kitchen", 2);
+        
+        _musicEventInstance.setParameterByName(musicEventReference.Path, 0);
     }
     
-  
-    //InteractUI
+         ///////////////////////////////////// Interact \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
     public void ShowIneractUI(bool show)
     {
         interactUI.SetActive(show);
     }
-    //Quest
     public void QuestInteractables()
     {
         //Player
@@ -137,15 +141,14 @@ public class GameManager : MonoBehaviour
         _player._playerCamInputProvider.enabled = true;
     }
     
-    
+        ///////////////////////////////////// DialogUI \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
     //DialogUI
     public void ShowDialogUI(Dialog dialog)
     {
         _player.DeactivateInput();
-        //Cursor.lockState = CursorLockMode.Confined; //Maus
-        //Dialog
-        _dialogUI.SetActive(true);
+        dialogUI.SetActive(true);
         _inUI = true;
+        
         textDialog.SetText("");
         textDialogNPC.SetText("");
         currentLines = dialog;
@@ -156,6 +159,7 @@ public class GameManager : MonoBehaviour
     }
     private void ShowCurrentLine()
     {
+        _musicEventInstance.setParameterByName("event:/Music/Kitchen", 2);
         DialoguesLines dialogueLines = currentLines.dialoguesLines[currentLineIndex];
         if (dialogueLines == null) { return; }
         ClearButton();
@@ -171,9 +175,9 @@ public class GameManager : MonoBehaviour
             buttonInstance.GetComponent<ButtonManager>().Setup(buttons._text, buttons._buttonEvent);
             buttonDialog.gameObject.SetActive(false);
         }
-        StartCoroutine(DialogeLines(dialogueLines));
+        StartCoroutine(SelectButtonDialogUI(dialogueLines));
     }
-    IEnumerator DialogeLines(DialoguesLines dialoguesLines)
+    IEnumerator SelectButtonDialogUI(DialoguesLines dialoguesLines)
     {
        yield return new WaitForEndOfFrame();
        if (dialoguesLines._Buttons.Count > 0) //first Dialog Button
@@ -200,15 +204,21 @@ public class GameManager : MonoBehaviour
 
         ShowCurrentLine();
     }
+    public void ShowNewDialog(Dialog dialog)
+    {
+        currentLines = dialog;
+        currentLineIndex = 0;
+        ShowCurrentLine();
+    }
     public void CloseDialogUI()
     {
         animationCloseDialog.Play("DialogUIScaleLow");
     } 
-    public void AnimationEventCloseDialogUI()
+    public void AnimationCloseDialogUI()
     { 
         _player.ActivateInput();
         //GameManager
-        _dialogUI.SetActive(false);
+        dialogUI.SetActive(false);
         _inUI = false;
         currentLines.dialogEnd.Invoke();
         currentLines.GetComponentInParent<DialoguesManager>()._dialogCam.Priority = 0;
@@ -221,14 +231,59 @@ public class GameManager : MonoBehaviour
             Destroy(t.gameObject);
         }
     }
-    public void ShowNewDialog(Dialog dialog)
-    {
-        currentLines = dialog;
-        currentLineIndex = 0;
-        ShowCurrentLine();
-    }
     
 
+         ///////////////////////////////////// QuestUI \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+    public void ShowQuestUI(QuestManager questManager)
+    {
+        _player.DeactivateInput();
+        ShowIneractUI(false);
+        _inUI = true;
+        questUI.SetActive(true);
+        textQuest.SetText(questManager._text);
+        Instantiate(questManager._currentLetter, _player._tabUIGroupe.transform);
+    }
+    public void AnimationSelectButtonQuestUI()
+    {
+        buttonQuest.Select();
+    }
+    public void CloseQuestUI()
+    {
+        animationCloseQuestUI.Play("QuestUIScaleSmal");
+    }
+    public void AnimationCloseQuestUI()
+    {
+        _player.ActivateInput();
+        questUI.SetActive(false);
+        _inUI = false;
+    }
+    
+    
+          ///////////////////////////////////// FadeUI \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+    public void ShowFadeOut()
+    { 
+        _player.DeactivateInput();
+        ShowIneractUI(false);
+        fadeUI.SetActive(true); 
+        StartCoroutine(SelectButtonFadeUI());
+    }
+    IEnumerator SelectButtonFadeUI()
+    {
+        yield return new WaitForEndOfFrame();
+        buttonFade.Select();   
+    }
+    public void CloseFadeOut()
+    {
+        if (sceneManager == "Kitchen") { SceneManager.LoadScene("Psychatrie"); }
+        if (sceneManager == "Psychatrie") { SceneManager.LoadScene("Save Place"); }
+        if (sceneManager == "Save Place") { SceneManager.LoadScene("Abspann"); }
+        if (sceneManager == "Abspann") { SceneManager.LoadScene("MainMenu"); }
+    }
+    
+    
+    
+    
+    
     //Pause
     public void TogglePause() 
     {
@@ -249,37 +304,9 @@ public class GameManager : MonoBehaviour
     }
     
     
-    //FadeOut - Lade die nächste Scene
-    public void ShowFadeOut()
-    { 
-        if (pauseUI == true) 
-        {
-            TogglePause();
-            fadeOutLetter.SetActive(false);
-            buttonFadeOut.enabled = false;
-            _player.DeactivateInput(); 
-            fadeOut.SetActive(true);
-        }
-        else
-        { 
-            fadeOut.SetActive(true); 
-            _player.DeactivateInput();
-            ShowIneractUI(false);
-            StartCoroutine(FocusFadeButton());
-        }
-    }
-    IEnumerator FocusFadeButton()
-    {
-        yield return new WaitForEndOfFrame();
-        buttonFadeOut.Select();   
-    }
-    public void CloseFadeOut()
-    {
-        if (sceneManager == "Kitchen") { SceneManager.LoadScene("Psychatrie"); }
-        if (sceneManager == "Psychatrie") { SceneManager.LoadScene("Save Place"); }
-        if (sceneManager == "Save Place") { SceneManager.LoadScene("Abspann"); }
-        if (sceneManager == "Abspann") { SceneManager.LoadScene("MainMenu"); }
-    }
+    
+    
+    
     
     
     /*

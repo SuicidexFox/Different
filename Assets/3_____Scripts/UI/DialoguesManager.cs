@@ -23,7 +23,6 @@ public class DialoguesManager : MonoBehaviour
         GetPrioritizedDialogue().ShowDialogue();
         _dialogCam.Priority = 11;
     }
-     
     private Dialog GetPrioritizedDialogue()
     {
         Dialog prioritizedDialogue = _dialogues[0];

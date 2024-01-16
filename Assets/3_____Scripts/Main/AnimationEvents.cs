@@ -1,20 +1,20 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Net;
+using _3_____Scripts.Main;
 using FMODUnity;
 using UnityEngine;
 
 public class AnimationEvents : MonoBehaviour
 {
     private PlayerController player;
-    private QuestManager questManager;
     public void PlaySound(string soundPath)
     {
         RuntimeManager.PlayOneShot(soundPath);
     }
     
     
-    //Player
+    ///////////////////////////////////// Player \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
     public void PlayerFootstep()
     {
         string ground = GetGround();
@@ -45,15 +45,18 @@ public class AnimationEvents : MonoBehaviour
             return "";
         }
     }
-    public void PlayerTake() 
-    { GameManager.instance.DestroyInteractable(); }
+    public void PlayerTake() { GameManager.instance.DestroyInteractable(); }
     
     
-    
-    
-    //UI
-    public void UIDialogClose()
-    { GameManager.instance.AnimationEventCloseDialogUI(); }
-    public void UIQuestClose() 
-    { GetComponentInParent<QuestManager>().CloseQuestUI(); }
+    ///////////////////////////////////// Menu \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+    public void FirstSelectButton()
+    { GetComponentInChildren<MenuManager>().FirstSelectButton(); }
+
+    ///////////////////////////////////// Canvas \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+    public void CloseUIDialog()
+    { GameManager.instance.AnimationCloseDialogUI(); }
+    public void SelectButton() 
+    { GameManager.instance.AnimationSelectButtonQuestUI(); }
+    public void CloseQuestUI()
+    { GameManager.instance.AnimationCloseQuestUI(); }
 }
