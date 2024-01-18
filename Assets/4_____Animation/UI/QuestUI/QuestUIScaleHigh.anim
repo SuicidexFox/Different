@@ -176,7 +176,7 @@ AnimationClip:
   m_HasMotionFloatCurves: 0
   m_Events:
   - time: 1.1666666
-    functionName: SelectButton
+    functionName: SelectQuestButton
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0

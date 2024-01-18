@@ -52,10 +52,19 @@ public class AnimationEvents : MonoBehaviour
     public void FirstSelectButton()
     { GetComponentInChildren<MenuManager>().FirstSelectButton(); }
 
+    public void TypewriterEffect()
+    {
+        GameManager.instance.RunTypewriterEffect();
+    }
+
     ///////////////////////////////////// Canvas \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-    public void CloseUIDialog()
+    public void Play()
+    { GameManager.instance.AnimationPlay(); }
+    public void SelectFadeOutButton()
+    { GameManager.instance.AnumationSelectButtonFadeOutUI(); }
+    public void CloseDialogUI()
     { GameManager.instance.AnimationCloseDialogUI(); }
-    public void SelectButton() 
+    public void SelectQuestButton() 
     { GameManager.instance.AnimationSelectButtonQuestUI(); }
     public void CloseQuestUI()
     { GameManager.instance.AnimationCloseQuestUI(); }

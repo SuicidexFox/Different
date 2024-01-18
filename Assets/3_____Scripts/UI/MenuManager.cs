@@ -2,24 +2,29 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using FMOD.Studio;
 using FMODUnity;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem.HID;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using Vector3 = UnityEngine.Vector3;
 
 namespace _3_____Scripts.Main
 {
     public class MenuManager : MonoBehaviour
     {
-        public EventInstance musicEventInstance;
-        [SerializeField] private  Texture2D _cursor;
+        [SerializeField] public EventInstance musicEventInstance;
+        [SerializeField] private EventSystem eventSystem;
+        [SerializeField] private GameObject _object;
         [SerializeField] private Button _firstSelect;
         [SerializeField] private Slider _master;
         [SerializeField] private Slider _music;
         [SerializeField] private Slider _sfx;
+        
         
         public GameObject fade;
         
@@ -30,7 +35,6 @@ namespace _3_____Scripts.Main
         private void Start()
         {
             _scenesManager = SceneManager.GetActiveScene().name;
-            
             SetupSlider(_master, "bus:/Master");
             SetupSlider(_music, "bus:/Master/Music");
             SetupSlider(_sfx, "bus:/Master/SFX");
@@ -54,7 +58,6 @@ namespace _3_____Scripts.Main
         public void SetSFXVolume()
         {
             RuntimeManager.GetBus("bus:/Master/SFX").setVolume(_sfx.value);
-            RuntimeManager.PlayOneShot("event:/SFX/UI/ButtonHover");
         }
         
         
@@ -86,7 +89,8 @@ namespace _3_____Scripts.Main
         public void FirstSelectButton()
         {
             _firstSelect.Select();
-            Cursor.SetCursor(_cursor, Vector2.zero, CursorMode.ForceSoftware);
+            _object.SetActive(true);
+            //Cursor.SetCursor(_cursor, Vector2.zero, CursorMode.ForceSoftware);
         }
 
         public void Quit()

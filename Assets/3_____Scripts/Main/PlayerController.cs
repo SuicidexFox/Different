@@ -170,7 +170,6 @@ public class PlayerController : MonoBehaviour
     }
     
     
-    
     //Pause
     private void Pause(InputAction.CallbackContext obj)
     {

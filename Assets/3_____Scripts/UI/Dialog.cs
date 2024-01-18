@@ -42,7 +42,6 @@ public class Dialog : MonoBehaviour
         if (dialoguesLines.Count == 0 || GameManager.instance._inUI) { return; }
         GameManager.instance.ShowDialogUI(this);
     }
-
     public void SetPriority(int newPriority)
     {
         priority = newPriority;

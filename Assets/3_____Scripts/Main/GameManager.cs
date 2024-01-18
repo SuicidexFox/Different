@@ -53,10 +53,12 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Button buttonQuest;
     [SerializeField]private Animator animationCloseQuestUI;
     [Header("Fade")] 
-    [SerializeField] private GameObject fadeUI;
-    [SerializeField] private GameObject fadeOutLetter;
-    [SerializeField] private Button buttonFade;
-    [SerializeField] private Animator animationFade;
+    [SerializeField] private GameObject fadeIn;
+    [SerializeField] private Button buttonFadeIn;
+    [SerializeField] private Animator animationFadeIn;
+    [SerializeField] private GameObject fadeOut;
+    [SerializeField] private Button buttonFadeOut;
+    [SerializeField] private Animator animationFadeOut;
     [Header("Pause")] 
     public bool _pause = false;
     [SerializeField] private GameObject pauseUI;
@@ -66,18 +68,25 @@ public class GameManager : MonoBehaviour
     private void Awake() //nur beim ersten Start der gesamten Instanz
     {
         instance = this;
+        
     }
     private void Start()
     {
         sceneManager = SceneManager.GetActiveScene().name;
+        _musicEventInstance.start();
+        _player.DeactivateInput();
         
-        interactUI.SetActive(false);
-        dialogUI.SetActive(false);
-        questUI.SetActive(false);
-        fadeUI.SetActive(false);
-        pauseUI.SetActive(false);
-        
-        _musicEventInstance.setParameterByName(musicEventReference.Path, 0);
+        fadeIn.SetActive(true);
+        animationFadeIn.SetTrigger("FadeIn");
+    }
+         ///////////////////////////////////// FadeIn \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+    public void AnimationPlay() 
+    { 
+        _player.ActivateInput();
+        if (buttonFadeIn != null)
+        {
+            buttonFadeIn.Select();
+        }
     }
     
          ///////////////////////////////////// Interact \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
@@ -142,9 +151,9 @@ public class GameManager : MonoBehaviour
     }
     
         ///////////////////////////////////// DialogUI \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-    //DialogUI
     public void ShowDialogUI(Dialog dialog)
     {
+        _musicEventInstance.setParameterByName(musicEventReference.Path, 2);
         _player.DeactivateInput();
         dialogUI.SetActive(true);
         _inUI = true;
@@ -159,15 +168,12 @@ public class GameManager : MonoBehaviour
     }
     private void ShowCurrentLine()
     {
-        _musicEventInstance.setParameterByName("event:/Music/Kitchen", 2);
         DialoguesLines dialogueLines = currentLines.dialoguesLines[currentLineIndex];
         if (dialogueLines == null) { return; }
         ClearButton();
         RuntimeManager.PlayOneShot(dialogueLines._sound);
         character.sprite = dialogueLines._character;
         textbox.sprite = dialogueLines._textbox;
-        textDialog.SetText(dialogueLines._text);
-        textDialogNPC.SetText(dialogueLines._textNPC);
         dialogueLines._lineEvent.Invoke();
         foreach (Buttons buttons in dialogueLines._Buttons)
         {
@@ -201,8 +207,8 @@ public class GameManager : MonoBehaviour
             CloseDialogUI();
             return;
         }
-
         ShowCurrentLine();
+        RunTypewriterEffect();
     }
     public void ShowNewDialog(Dialog dialog)
     {
@@ -231,6 +237,35 @@ public class GameManager : MonoBehaviour
             Destroy(t.gameObject);
         }
     }
+    
+    
+    ///////////////////////////////////// TypewriterEffect \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\  
+    private float _speed = 0.05f;
+    private int _currentPosition = -1;
+    private bool _hasFinished { get; set; }
+    public void RunTypewriterEffect()
+    {
+        DialoguesLines dialogueLines = currentLines.dialoguesLines[currentLineIndex];
+        textDialog.SetText(dialogueLines._text);
+        textDialogNPC.SetText(dialogueLines._textNPC);
+        StartCoroutine(TypewriterEffect());
+    }
+    IEnumerator TypewriterEffect()
+    { 
+        var textLenght = textDialog.text.Length;
+        while (!_hasFinished && _currentPosition + 1 < textLenght)
+        {
+            textDialog.text += GetNextToken();
+            yield return new WaitForSeconds(_speed);
+        }
+        _hasFinished = true;
+    }
+    private string GetNextToken()
+    {
+        _currentPosition++;
+        var nextToken = textDialog.text[_currentPosition].ToString();
+        return nextToken;
+    } 
     
 
          ///////////////////////////////////// QuestUI \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
@@ -264,17 +299,21 @@ public class GameManager : MonoBehaviour
     { 
         _player.DeactivateInput();
         ShowIneractUI(false);
-        fadeUI.SetActive(true); 
-        StartCoroutine(SelectButtonFadeUI());
-    }
-    IEnumerator SelectButtonFadeUI()
+        fadeOut.SetActive(true);
+        animationFadeOut.Play("FadeOut");
+    } 
+    public void AnumationSelectButtonFadeOutUI()
     {
-        yield return new WaitForEndOfFrame();
-        buttonFade.Select();   
+            buttonFadeOut.Select();
     }
-    public void CloseFadeOut()
+    public void Scenes()
     {
-        if (sceneManager == "Kitchen") { SceneManager.LoadScene("Psychatrie"); }
+        if (sceneManager == "Kitchen")
+        {
+            SceneManager.LoadScene("Psychatrie");
+            _musicEventInstance.setVolume(0);
+            return;
+        }
         if (sceneManager == "Psychatrie") { SceneManager.LoadScene("Save Place"); }
         if (sceneManager == "Save Place") { SceneManager.LoadScene("Abspann"); }
         if (sceneManager == "Abspann") { SceneManager.LoadScene("MainMenu"); }

@@ -4,12 +4,15 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - Dishes
   - Wood
   - Stone
   - Grass
   - Carpet
   - ' Tiles'
+  - Dishes
+  - Rorschachtest
+  - Skillkit
+  - Letter
   layers:
   - Default
   - TransparentFX
