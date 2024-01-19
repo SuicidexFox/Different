@@ -30,9 +30,4 @@ public class QuestManager : MonoBehaviour
         _questCam.Priority = 11;
         GameManager.instance.ShowQuestUI(this);
     }
-    public void CloseQuestUI()
-    {
-        _questCam.Priority = 0;
-        GameManager.instance.CloseQuestUI();
-    } 
 }
