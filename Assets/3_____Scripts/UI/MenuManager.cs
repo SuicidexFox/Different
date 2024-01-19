@@ -11,36 +11,57 @@ using UnityEngine.EventSystems;
 using UnityEngine.InputSystem.HID;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-using Vector3 = UnityEngine.Vector3;
 
 namespace _3_____Scripts.Main
 {
     public class MenuManager : MonoBehaviour
     {
-        [SerializeField] public EventInstance musicEventInstance;
-        [SerializeField] private EventSystem eventSystem;
-        [SerializeField] private GameObject _object;
+        [SerializeField] private GameObject _mainMenu;
+        [SerializeField] private GameObject _settings;
+        [SerializeField] private GameObject _sound;
+        [SerializeField] private GameObject _controls;
+        [SerializeField] private GameObject _fade;
         [SerializeField] private Button _firstSelect;
         [SerializeField] private Slider _master;
         [SerializeField] private Slider _music;
         [SerializeField] private Slider _sfx;
+        [SerializeField] private bool _firstSoundState;
         
-        
-        public GameObject fade;
-        
-        private bool _firstStart = false;
-        private string _scenesManager;
 
-        
+        private void Awake()
+        {
+            RuntimeManager.GetBus("bus:/Master").setVolume(0.5f);
+            _master.value = 0.5f;
+            RuntimeManager.GetBus("bus:/Master/Music").setVolume(0.5f);
+            _music.value = 0.5f;
+            RuntimeManager.GetBus("bus:/Master/SFX").setVolume(0.5f);
+            _sfx.value = 0.5f;
+            StartCoroutine(FirstSoundState());
+        }
+        IEnumerator FirstSoundState()
+        {
+            yield return new WaitForEndOfFrame();
+            _firstSoundState = true;
+        }
+
         private void Start()
         {
-            _scenesManager = SceneManager.GetActiveScene().name;
-            SetupSlider(_master, "bus:/Master");
-            SetupSlider(_music, "bus:/Master/Music");
-            SetupSlider(_sfx, "bus:/Master/SFX");
+            if (_firstSoundState == true)
+            {
+                SetupSlider(_master, "bus:/Master");
+                SetupSlider(_music, "bus:/Master/Music");
+                SetupSlider(_sfx, "bus:/Master/SFX");
+            }
         }
         
-
+        public void FirstSelectButton()
+        {
+            _firstSelect.Select();
+            //Cursor.SetCursor(_cursor, Vector2.zero, CursorMode.ForceSoftware);
+            _mainMenu.SetActive(true);
+        }
+        
+        
         //Slider
         private void SetupSlider(Slider slider, string busPath)
         {
@@ -59,40 +80,19 @@ namespace _3_____Scripts.Main
         {
             RuntimeManager.GetBus("bus:/Master/SFX").setVolume(_sfx.value);
         }
+
+
         
-        
-        
-       //Scenes
-        public void Scenes()
+        public void StartGame()
         {
-            fade.SetActive(true);
-            StartCoroutine(Fade());
+            _fade.SetActive(true);
+            SceneManager.LoadScene("Kitchen");
         }
-        IEnumerator Fade()
+        public void MainMenu()
         {
-            yield return new WaitForSeconds(5f);
-            if (_scenesManager == "MainMenu")
-            {
-                SceneManager.LoadScene("Kitchen");
-            }
-            else
-            {
-                SceneManager.LoadScene("MainMenu");  
-            }
-
-            musicEventInstance.setVolume(0f);
+            _fade.SetActive(true);
+            SceneManager.LoadScene("MainMenu");
         }
-
-
-
-        //Animations
-        public void FirstSelectButton()
-        {
-            _firstSelect.Select();
-            _object.SetActive(true);
-            //Cursor.SetCursor(_cursor, Vector2.zero, CursorMode.ForceSoftware);
-        }
-
         public void Quit()
         {
             Application.Quit();

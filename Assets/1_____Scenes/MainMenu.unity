@@ -1175,10 +1175,11 @@ GameObject:
   m_Component:
   - component: {fileID: 816369140}
   - component: {fileID: 816369142}
+  - component: {fileID: 816369144}
   - component: {fileID: 816369143}
   - component: {fileID: 816369141}
   m_Layer: 5
-  m_Name: FadeMenu
+  m_Name: Fade
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1262,6 +1263,18 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &816369144
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 816369139}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc8df8dfa8fa25640b7d8849256e333e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &849143206
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2000,12 +2013,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b7a94987c2404ab5803407c740ae0dff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _object: {fileID: 1621876564}
+  _mainMenu: {fileID: 1621876564}
+  _settings: {fileID: 997758332}
+  _sound: {fileID: 1636437441}
+  _controls: {fileID: 1646429120}
+  _fade: {fileID: 816369139}
   _firstSelect: {fileID: 2110423374210242370}
   _master: {fileID: 8510878090663594565}
   _music: {fileID: 616475769}
   _sfx: {fileID: 2141818550}
-  fade: {fileID: 816369139}
+  _firstSoundState: 0
 --- !u!1001 &1512868822
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3237,7 +3254,7 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 1780047123}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1939196498
+--- !u!1 &1902980405
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -3245,8 +3262,8 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 1939196500}
-  - component: {fileID: 1939196499}
+  - component: {fileID: 1902980407}
+  - component: {fileID: 1902980406}
   m_Layer: 0
   m_Name: Music
   m_TagString: Untagged
@@ -3254,13 +3271,13 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1939196499
+--- !u!114 &1902980406
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1939196498}
+  m_GameObject: {fileID: 1902980405}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
@@ -3276,27 +3293,27 @@ MonoBehaviour:
     Path: event:/Music/MainMenu
   Event: 
   PlayEvent: 1
-  StopEvent: 2
+  StopEvent: 0
   AllowFadeout: 1
   TriggerOnce: 0
   Preload: 0
   AllowNonRigidbodyDoppler: 0
   Params:
   - Name: MusicStage
-    Value: 0
+    Value: 2
   OverrideAttenuation: 0
   OverrideMinDistance: 1
   OverrideMaxDistance: 20
---- !u!4 &1939196500
+--- !u!4 &1902980407
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1939196498}
+  m_GameObject: {fileID: 1902980405}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -5.451721, y: 0, z: -1.3808514}
+  m_LocalPosition: {x: 1160, y: 539.97473, z: 0.94644743}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3938,7 +3955,7 @@ PrefabInstance:
     - target: {fileID: 7529941796101006886, guid: c7efb51054cc2e545b1289be244e9a20,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: Scenes
+      value: StartGame
       objectReference: {fileID: 0}
     - target: {fileID: 7529941796101006886, guid: c7efb51054cc2e545b1289be244e9a20,
         type: 3}
@@ -3948,7 +3965,17 @@ PrefabInstance:
     - target: {fileID: 7529941796101006886, guid: c7efb51054cc2e545b1289be244e9a20,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
-      value: _3_____Scripts.Main.MenuManager, Assembly-CSharp
+      value: UnityEngine.GameObject, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 7529941796101006886, guid: c7efb51054cc2e545b1289be244e9a20,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_BoolArgument
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7529941796101006886, guid: c7efb51054cc2e545b1289be244e9a20,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_BoolArgument
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7529941796101006886, guid: c7efb51054cc2e545b1289be244e9a20,
         type: 3}
@@ -5801,6 +5828,6 @@ SceneRoots:
   m_Roots:
   - {fileID: 659860981}
   - {fileID: 809867533}
-  - {fileID: 1939196500}
   - {fileID: 437853015}
   - {fileID: 3388868402706452432}
+  - {fileID: 1902980407}

@@ -8,10 +8,16 @@ namespace _3_____Scripts.Collectables
     {
         private Camera _cam;
         public SpriteRenderer _sprite;
+        public bool NPCBill;
 
         private void Start()
         { 
             _cam = Camera.main;
+            if (NPCBill == true)
+            {
+                _sprite.enabled = true;
+                return;
+            }
             _sprite.enabled = false;
         }
         private void LateUpdate()

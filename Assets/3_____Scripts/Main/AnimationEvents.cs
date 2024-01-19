@@ -8,6 +8,7 @@ using UnityEngine;
 public class AnimationEvents : MonoBehaviour
 {
     private PlayerController player;
+    private MenuManager menuManager;
     public void PlaySound(string soundPath)
     {
         RuntimeManager.PlayOneShot(soundPath);
@@ -51,17 +52,17 @@ public class AnimationEvents : MonoBehaviour
     ///////////////////////////////////// Menu \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
     public void FirstSelectButton()
     { GetComponentInChildren<MenuManager>().FirstSelectButton(); }
-
-    public void TypewriterEffect()
+    public void StartGame()
     {
-        GameManager.instance.RunTypewriterEffect();
+        menuManager.StartGame();
     }
+    
 
     ///////////////////////////////////// Canvas \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
     public void Play()
     { GameManager.instance.AnimationPlay(); }
     public void SelectFadeOutButton()
-    { GameManager.instance.AnumationSelectButtonFadeOutUI(); }
+    { GameManager.instance.AnimationScenes(); }
     public void CloseDialogUI()
     { GameManager.instance.AnimationCloseDialogUI(); }
     public void SelectQuestButton() 

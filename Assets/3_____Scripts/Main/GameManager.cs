@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using FMOD;
 using FMOD.Studio;
@@ -13,7 +14,6 @@ using UnityEngine.InputSystem.UI;
 using UnityEngine.Rendering;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-using Cursor = UnityEngine.WSA.Cursor;
 
 
 public class GameManager : MonoBehaviour
@@ -30,6 +30,7 @@ public class GameManager : MonoBehaviour
     [Header("Interact")] 
     [SerializeField] private GameObject interactUI;
     public float _dishes = 0f;
+    public GameObject _dialog;
     public float _rorschach = 0f;
     public float _skillkit = 0f;
     public float _letter = 0f;
@@ -54,7 +55,6 @@ public class GameManager : MonoBehaviour
     [SerializeField]private Animator animationCloseQuestUI;
     [Header("Fade")] 
     [SerializeField] private GameObject fadeIn;
-    [SerializeField] private Button buttonFadeIn;
     [SerializeField] private Animator animationFadeIn;
     [SerializeField] private GameObject fadeOut;
     [SerializeField] private Button buttonFadeOut;
@@ -68,25 +68,37 @@ public class GameManager : MonoBehaviour
     private void Awake() //nur beim ersten Start der gesamten Instanz
     {
         instance = this;
-        
     }
     private void Start()
     {
-        sceneManager = SceneManager.GetActiveScene().name;
+        _musicEventInstance = RuntimeManager.CreateInstance(musicEventReference);
         _musicEventInstance.start();
+        //_musicEventInstance.setParameterByName(musicEventReference.Path, 0);
+        sceneManager = SceneManager.GetActiveScene().name;
+        
         _player.DeactivateInput();
         
         fadeIn.SetActive(true);
         animationFadeIn.SetTrigger("FadeIn");
+        
+        if (sceneManager == "Psychatrie")
+        {
+            _player.CharacterController.enabled = false;
+            _player._animator.Play("Psychatrie");
+        }
     }
          ///////////////////////////////////// FadeIn \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
     public void AnimationPlay() 
     { 
-        _player.ActivateInput();
-        if (buttonFadeIn != null)
+        if (sceneManager == "Psychatrie")
         {
-            buttonFadeIn.Select();
+            _player._currentInteractable = _dialog.GetComponent<InteractableManager>();
+            _player._currentInteractable._onInteract.Invoke();
+            fadeIn.SetActive(false);
+            return;
         }
+        _player.ActivateInput();
+        fadeIn.SetActive(false);
     }
     
          ///////////////////////////////////// Interact \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
@@ -153,7 +165,7 @@ public class GameManager : MonoBehaviour
         ///////////////////////////////////// DialogUI \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
     public void ShowDialogUI(Dialog dialog)
     {
-        _musicEventInstance.setParameterByName(musicEventReference.Path, 2);
+        //_musicEventInstance.setParameterByName(musicEventReference.Path, 1);
         _player.DeactivateInput();
         dialogUI.SetActive(true);
         _inUI = true;
@@ -182,6 +194,7 @@ public class GameManager : MonoBehaviour
             buttonDialog.gameObject.SetActive(false);
         }
         StartCoroutine(SelectButtonDialogUI(dialogueLines));
+        RunTypewriterEffect();
     }
     IEnumerator SelectButtonDialogUI(DialoguesLines dialoguesLines)
     {
@@ -208,7 +221,6 @@ public class GameManager : MonoBehaviour
             return;
         }
         ShowCurrentLine();
-        RunTypewriterEffect();
     }
     public void ShowNewDialog(Dialog dialog)
     {
@@ -302,28 +314,26 @@ public class GameManager : MonoBehaviour
         fadeOut.SetActive(true);
         animationFadeOut.Play("FadeOut");
     } 
-    public void AnumationSelectButtonFadeOutUI()
-    {
-            buttonFadeOut.Select();
-    }
-    public void Scenes()
+    public void AnimationScenes()
     {
         if (sceneManager == "Kitchen")
         {
-            SceneManager.LoadScene("Psychatrie");
-            _musicEventInstance.setVolume(0);
+            buttonFadeOut.Select();
             return;
         }
         if (sceneManager == "Psychatrie") { SceneManager.LoadScene("Save Place"); }
         if (sceneManager == "Save Place") { SceneManager.LoadScene("Abspann"); }
         if (sceneManager == "Abspann") { SceneManager.LoadScene("MainMenu"); }
+        _musicEventInstance.setVolume(0);
+    }
+    public void Scenes()
+    {
+        if (sceneManager == "Kitchen") { SceneManager.LoadScene("Psychatrie"); }
+        _musicEventInstance.setVolume(0);
     }
     
     
-    
-    
-    
-    //Pause
+    ///////////////////////////////////// Pause \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
     public void TogglePause() 
     {
         if (_inUI == true) { return; }
