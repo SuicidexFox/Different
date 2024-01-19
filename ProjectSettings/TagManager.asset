@@ -8,11 +8,11 @@ TagManager:
   - Stone
   - Grass
   - Carpet
-  - ' Tiles'
   - Dishes
   - Rorschachtest
   - Skillkit
   - Letter
+  - Tiles
   layers:
   - Default
   - TransparentFX

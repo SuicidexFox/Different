@@ -15,7 +15,7 @@ using Vector3 = UnityEngine.Vector3;
 
 namespace _3_____Scripts.Main
 {
-    public class MenuManager : MonoBehaviour
+    public class Manu : MonoBehaviour
     {
         [SerializeField] public EventInstance musicEventInstance;
         [SerializeField] private EventSystem eventSystem;

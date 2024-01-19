@@ -18,6 +18,7 @@ using Cursor = UnityEngine.WSA.Cursor;
 
 public class GameManager : MonoBehaviour
 {
+           ///////////////////////////////////// Variablen \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
     public static GameManager instance; //"static" macht es nur einmahlig und kann überall aufgerufen werden
     private string sceneManager;
     public PlayerController _player;
@@ -54,7 +55,6 @@ public class GameManager : MonoBehaviour
     [SerializeField]private Animator animationCloseQuestUI;
     [Header("Fade")] 
     [SerializeField] private GameObject fadeIn;
-    [SerializeField] private Button buttonFadeIn;
     [SerializeField] private Animator animationFadeIn;
     [SerializeField] private GameObject fadeOut;
     [SerializeField] private Button buttonFadeOut;
@@ -73,7 +73,9 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         sceneManager = SceneManager.GetActiveScene().name;
+        _musicEventInstance = RuntimeManager.CreateInstance(musicEventReference);
         _musicEventInstance.start();
+        _musicEventInstance.setParameterByName("event:/Music/Kitchen", 0);
         _player.DeactivateInput();
         
         fadeIn.SetActive(true);
@@ -83,10 +85,6 @@ public class GameManager : MonoBehaviour
     public void AnimationPlay() 
     { 
         _player.ActivateInput();
-        if (buttonFadeIn != null)
-        {
-            buttonFadeIn.Select();
-        }
     }
     
          ///////////////////////////////////// Interact \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
@@ -153,7 +151,7 @@ public class GameManager : MonoBehaviour
         ///////////////////////////////////// DialogUI \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
     public void ShowDialogUI(Dialog dialog)
     {
-        _musicEventInstance.setParameterByName(musicEventReference.Path, 2);
+        _musicEventInstance.setParameterByName("event:/Music/Kitchen", 2);
         _player.DeactivateInput();
         dialogUI.SetActive(true);
         _inUI = true;
@@ -219,6 +217,7 @@ public class GameManager : MonoBehaviour
     public void CloseDialogUI()
     {
         animationCloseDialog.Play("DialogUIScaleLow");
+        _musicEventInstance.setParameterByName("event:/Music/Kitchen", 0);
     } 
     public void AnimationCloseDialogUI()
     { 
@@ -320,10 +319,7 @@ public class GameManager : MonoBehaviour
     }
     
     
-    
-    
-    
-    //Pause
+    ///////////////////////////////////// Pause \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
     public void TogglePause() 
     {
         if (_inUI == true) { return; }
@@ -333,12 +329,12 @@ public class GameManager : MonoBehaviour
         if (_pause)
         {
             _player.DeactivateInput();
-            //Time.timeScale = 0.0f;
+            Time.timeScale = 0.0f;
         }
         else
         { 
             _player.ActivateInput(); 
-            //Time.timeScale = 1.0f;
+            Time.timeScale = 1.0f;
         } 
     }
     

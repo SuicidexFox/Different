@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Net;
 using _3_____Scripts.Main;
 using FMODUnity;
+using UnityEditor;
 using UnityEngine;
 
 public class AnimationEvents : MonoBehaviour
@@ -41,7 +42,6 @@ public class AnimationEvents : MonoBehaviour
         }
         else
         {
-            Debug.Log("no Ground");
             return "";
         }
     }
@@ -49,13 +49,8 @@ public class AnimationEvents : MonoBehaviour
     
     
     ///////////////////////////////////// Menu \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-    public void FirstSelectButton()
-    { GetComponentInChildren<MenuManager>().FirstSelectButton(); }
-
-    public void TypewriterEffect()
-    {
-        GameManager.instance.RunTypewriterEffect();
-    }
+    
+    
 
     ///////////////////////////////////// Canvas \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
     public void Play()
