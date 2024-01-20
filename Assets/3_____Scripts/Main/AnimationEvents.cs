@@ -7,15 +7,11 @@ using UnityEditor;
 using UnityEngine;
 
 public class AnimationEvents : MonoBehaviour
-{
+{       ///////////////////////////////////// Variablen \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
     private PlayerController player;
-    public void PlaySound(string soundPath)
-    {
-        RuntimeManager.PlayOneShot(soundPath);
-    }
     
-    
-    ///////////////////////////////////// Player \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+        ///////////////////////////////////// Player \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+    public void PlaySound(string soundPath) { RuntimeManager.PlayOneShot(soundPath); }
     public void PlayerFootstep()
     {
         string ground = GetGround();
@@ -47,20 +43,11 @@ public class AnimationEvents : MonoBehaviour
     }
     public void PlayerTake() { GameManager.instance.DestroyInteractable(); }
     
-    
-    ///////////////////////////////////// Menu \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-    
-    
 
-    ///////////////////////////////////// Canvas \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-    public void Play()
-    { GameManager.instance.AnimationPlay(); }
-    public void SelectFadeOutButton()
-    { GameManager.instance.AnumationSelectButtonFadeOutUI(); }
-    public void CloseDialogUI()
-    { GameManager.instance.AnimationCloseDialogUI(); }
-    public void SelectQuestButton() 
-    { GameManager.instance.AnimationSelectButtonQuestUI(); }
-    public void CloseQuestUI()
-    { GameManager.instance.AnimationCloseQuestUI(); }
+        ///////////////////////////////////// Canvas \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+    public void StartInput() { player.ActivateInput(); GameManager.instance.fadeIn.SetActive(false);}
+    public void CloseDialogUI() { GameManager.instance.AnimationCloseDialogUI(); }
+    public void SelectQuestButton() { GameManager.instance.AnimationSelectButtonQuestUI(); }
+    public void CloseQuestUI() { GameManager.instance.AnimationCloseQuestUI(); }
+    public void SelectFadeOutButton() { GameManager.instance.AnumationSelectButtonFadeOutUI(); }
 }

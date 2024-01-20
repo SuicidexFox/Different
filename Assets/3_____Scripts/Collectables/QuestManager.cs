@@ -30,4 +30,11 @@ public class QuestManager : MonoBehaviour
         _questCam.Priority = 11;
         GameManager.instance.ShowQuestUI(this);
     }
+    public void DestroyInteractables()
+    {
+        GetComponentsInChildren<InteractableManager>(gameObject.CompareTag("Dishes"));
+        {
+            gameObject.SetActive(false);
+        }
+    }
 }

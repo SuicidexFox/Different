@@ -772,7 +772,6 @@ GameObject:
   - component: {fileID: 659860981}
   - component: {fileID: 659860980}
   - component: {fileID: 659860983}
-  - component: {fileID: 659860982}
   - component: {fileID: 659860984}
   m_Layer: 0
   m_Name: Main Camera
@@ -847,40 +846,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &659860982
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 659860978}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 72ece51f2901e7445ab60da3685d6b5f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_ShowDebugText: 0
-  m_ShowCameraFrustum: 1
-  m_IgnoreTimeScale: 0
-  m_WorldUpOverride: {fileID: 0}
-  m_UpdateMethod: 2
-  m_BlendUpdateMethod: 1
-  m_DefaultBlend:
-    m_Style: 1
-    m_Time: 2
-    m_CustomCurve:
-      serializedVersion: 2
-      m_Curve: []
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-  m_CustomBlends: {fileID: 0}
-  m_CameraCutEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_CameraActivatedEvent:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!114 &659860983
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1174,9 +1139,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 816369140}
-  - component: {fileID: 816369142}
+  - component: {fileID: 816369144}
   - component: {fileID: 816369143}
   - component: {fileID: 816369141}
+  - component: {fileID: 816369142}
   m_Layer: 5
   m_Name: FadeMenu
   m_TagString: Untagged
@@ -1262,6 +1228,18 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &816369144
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 816369139}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc8df8dfa8fa25640b7d8849256e333e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &849143206
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1461,7 +1439,7 @@ PrefabInstance:
     - target: {fileID: 2488881247796726472, guid: c7efb51054cc2e545b1289be244e9a20,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2488881247796726472, guid: c7efb51054cc2e545b1289be244e9a20,
         type: 3}
@@ -1471,7 +1449,7 @@ PrefabInstance:
     - target: {fileID: 2488881247796726472, guid: c7efb51054cc2e545b1289be244e9a20,
         type: 3}
       propertyPath: m_AnchorMin.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2488881247796726472, guid: c7efb51054cc2e545b1289be244e9a20,
         type: 3}
@@ -1521,12 +1499,12 @@ PrefabInstance:
     - target: {fileID: 2488881247796726472, guid: c7efb51054cc2e545b1289be244e9a20,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 575
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2488881247796726472, guid: c7efb51054cc2e545b1289be244e9a20,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -175
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2488881247796726472, guid: c7efb51054cc2e545b1289be244e9a20,
         type: 3}
@@ -1856,9 +1834,9 @@ GameObject:
   - component: {fileID: 1358764977}
   - component: {fileID: 1358764973}
   - component: {fileID: 1358764972}
+  - component: {fileID: 1358764975}
   - component: {fileID: 1358764971}
   - component: {fileID: 1358764976}
-  - component: {fileID: 1358764975}
   m_Layer: 5
   m_Name: Menu
   m_TagString: Untagged
@@ -1895,11 +1873,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 800, y: 600}
-  m_ScreenMatchMode: 0
+  m_ReferenceResolution: {x: 1920, y: 1080}
+  m_ScreenMatchMode: 1
   m_MatchWidthOrHeight: 0
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
@@ -1916,7 +1894,7 @@ Canvas:
   m_Enabled: 1
   serializedVersion: 3
   m_RenderMode: 0
-  m_Camera: {fileID: 0}
+  m_Camera: {fileID: 659860980}
   m_PlaneDistance: 100
   m_PixelPerfect: 0
   m_ReceivesEvents: 1
@@ -1943,7 +1921,7 @@ RectTransform:
   m_Children:
   - {fileID: 667057477}
   - {fileID: 223910372}
-  m_Father: {fileID: 3388868402706452432}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -2000,12 +1978,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b7a94987c2404ab5803407c740ae0dff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _object: {fileID: 1621876564}
+  musicEventReference:
+    Guid:
+      Data1: -1534201385
+      Data2: 1228660273
+      Data3: -224809035
+      Data4: -897617681
+    Path: event:/Music/MainMenu
+  _fade: {fileID: 816369139}
   _firstSelect: {fileID: 2110423374210242370}
   _master: {fileID: 8510878090663594565}
   _music: {fileID: 616475769}
   _sfx: {fileID: 2141818550}
-  fade: {fileID: 816369139}
+  _cursor: {fileID: 2800000, guid: 66bb37f69baea854392765c813617e30, type: 3}
 --- !u!1001 &1512868822
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2189,7 +2174,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1621876565
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2277,7 +2262,7 @@ PrefabInstance:
     - target: {fileID: 2488881247796726472, guid: c7efb51054cc2e545b1289be244e9a20,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2488881247796726472, guid: c7efb51054cc2e545b1289be244e9a20,
         type: 3}
@@ -2287,7 +2272,7 @@ PrefabInstance:
     - target: {fileID: 2488881247796726472, guid: c7efb51054cc2e545b1289be244e9a20,
         type: 3}
       propertyPath: m_AnchorMin.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2488881247796726472, guid: c7efb51054cc2e545b1289be244e9a20,
         type: 3}
@@ -2337,12 +2322,12 @@ PrefabInstance:
     - target: {fileID: 2488881247796726472, guid: c7efb51054cc2e545b1289be244e9a20,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 175
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2488881247796726472, guid: c7efb51054cc2e545b1289be244e9a20,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -575
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2488881247796726472, guid: c7efb51054cc2e545b1289be244e9a20,
         type: 3}
@@ -3237,71 +3222,6 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 1780047123}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1939196498
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1939196500}
-  - component: {fileID: 1939196499}
-  m_Layer: 0
-  m_Name: Music
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1939196499
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1939196498}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  CollisionTag: 
-  EventReference:
-    Guid:
-      Data1: -1534201385
-      Data2: 1228660273
-      Data3: -224809035
-      Data4: -897617681
-    Path: event:/Music/MainMenu
-  Event: 
-  PlayEvent: 1
-  StopEvent: 2
-  AllowFadeout: 1
-  TriggerOnce: 0
-  Preload: 0
-  AllowNonRigidbodyDoppler: 0
-  Params:
-  - Name: MusicStage
-    Value: 0
-  OverrideAttenuation: 0
-  OverrideMinDistance: 1
-  OverrideMaxDistance: 20
---- !u!4 &1939196500
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1939196498}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -5.451721, y: 0, z: -1.3808514}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2006020977
 GameObject:
   m_ObjectHideFlags: 0
@@ -3823,7 +3743,7 @@ PrefabInstance:
     - target: {fileID: 2488881247796726472, guid: c7efb51054cc2e545b1289be244e9a20,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2488881247796726472, guid: c7efb51054cc2e545b1289be244e9a20,
         type: 3}
@@ -3833,7 +3753,7 @@ PrefabInstance:
     - target: {fileID: 2488881247796726472, guid: c7efb51054cc2e545b1289be244e9a20,
         type: 3}
       propertyPath: m_AnchorMin.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2488881247796726472, guid: c7efb51054cc2e545b1289be244e9a20,
         type: 3}
@@ -3883,12 +3803,12 @@ PrefabInstance:
     - target: {fileID: 2488881247796726472, guid: c7efb51054cc2e545b1289be244e9a20,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 175
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2488881247796726472, guid: c7efb51054cc2e545b1289be244e9a20,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -175
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2488881247796726472, guid: c7efb51054cc2e545b1289be244e9a20,
         type: 3}
@@ -4234,7 +4154,6 @@ Transform:
   - {fileID: 2376675885806128168}
   - {fileID: 5052958686639967621}
   - {fileID: 6463285981815288775}
-  - {fileID: 1358764974}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 155.9, z: 0}
 --- !u!1 &3414935687788783657
@@ -5801,6 +5720,6 @@ SceneRoots:
   m_Roots:
   - {fileID: 659860981}
   - {fileID: 809867533}
-  - {fileID: 1939196500}
   - {fileID: 437853015}
   - {fileID: 3388868402706452432}
+  - {fileID: 1358764974}

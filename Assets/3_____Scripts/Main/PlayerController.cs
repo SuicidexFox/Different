@@ -11,11 +11,13 @@ using UnityEngine;
 using UnityEngine.Assertions.Must;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
+using UnityEngine.UIElements;
+using Cursor = UnityEngine.Cursor;
 
 
 public class PlayerController : MonoBehaviour
-{
-           ///////////////////////////////////// Variablen \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+{          ///////////////////////////////////// Variablen \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
     public Texture2D _Cursor;
     [SerializeField] public CinemachineInputProvider _playerCamInputProvider;
     //PlayerInput
@@ -33,15 +35,12 @@ public class PlayerController : MonoBehaviour
     private float moveSpeed;
     private float minTurnSpeed = 0.2f;
     private float turnSpeed = 5f;
-    private float acceleration = 0.1f;
     
     private CharacterController characterController;
     private Transform camTransform;
     
     //Animator
     public Animator _animator;
-    public GameObject _tabUIGroupe;
-    public Animator _animatorTabUI;
     
     //Interact
     public InteractableManager _currentInteractable;
@@ -121,10 +120,16 @@ public class PlayerController : MonoBehaviour
         _animator.SetBool("Shift", runAction.inProgress);
         
         ///////////////////////////////////// TabUI \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-        if (tabAction.inProgress)
-        { _animatorTabUI.SetBool("Tab", true); }
+        /*if (tabAction.inProgress)
+        {
+            _animatorTabUI.SetBool("Tab", true);
+            //ToggleTab();
+        }
         else
-        { _animatorTabUI.SetBool("Tab", false); }
+        {
+            _animatorTabUI.SetBool("Tab", false);
+            //ToggleTab();
+        }*/
     }
     private void OnDisable() //Verhalten Deaktivieren
     {
@@ -133,8 +138,8 @@ public class PlayerController : MonoBehaviour
         _playerInput.actions.FindActionMap("UI").FindAction("Pause").performed -= Pause;
         
         ///////////////////////////////////// Extras \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-        hallo.performed -= HalloEmote;
-        cry.performed -= CryEmote;
+        //hallo.performed -= HalloEmote;
+        //cry.performed -= CryEmote;
     }
     
     
@@ -168,11 +173,16 @@ public class PlayerController : MonoBehaviour
     }
 
     
-        ///////////////////////////////////// TabUI \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-    private void InstantiateLetter(QuestManager questManager)
+    
+    /*public RectTransform rectTransform;
+    public void ToggleTab()
     {
-        _tabUIGroupe = Instantiate(questManager._currentLetter);
-    }
+        if (GameManager.instance._inUI == true) 
+        { return; }
+        Vector2 currentPositon = rectTransform.anchoredPosition;
+        currentPositon.x += 100f / Time.deltaTime;
+        rectTransform.anchoredPosition = currentPositon;
+    }*/
     
     
         ///////////////////////////////////// PauseUI \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
@@ -208,17 +218,17 @@ public class PlayerController : MonoBehaviour
     {
         DeactivateInput();
         _animator.Play("RigRosie|Hallo");
-        StartCoroutine(ActivatePlayer());
+        //StartCoroutine(ActivatePlayer());
     }
     private void HalloEmote(InputAction.CallbackContext obj)
     {
         DeactivateInput();
         _animator.Play("RigRosie|Hallo");
-        StartCoroutine(ActivatePlayer());
+        //StartCoroutine(ActivatePlayer());
     }
-    IEnumerator ActivatePlayer()
+    /*IEnumerator ActivatePlayer()
     {
         yield return new WaitForSeconds(5);
         ActivateInput();
-    }
+    }*/
 }
