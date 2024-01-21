@@ -62,7 +62,7 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_VertexColorAlwaysGammaSpace: 1
-  m_AdditionalShaderChannelsFlag: 25
+  m_AdditionalShaderChannelsFlag: 0
   m_UpdateRectTransformForStandalone: 1
   m_SortingLayerID: 0
   m_SortingOrder: 0
@@ -83,7 +83,7 @@ MonoBehaviour:
   m_ReferencePixelsPerUnit: 72
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 1920, y: 1080}
-  m_ScreenMatchMode: 0
+  m_ScreenMatchMode: 1
   m_MatchWidthOrHeight: 0
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
@@ -423,7 +423,7 @@ Transform:
   m_GameObject: {fileID: 875205537981340444}
   serializedVersion: 2
   m_LocalRotation: {x: 0.095909774, y: 0.08675095, z: -0.008391024, w: 0.9915671}
-  m_LocalPosition: {x: 0.35108835, y: -3.4680765, z: 6.269391}
+  m_LocalPosition: {x: -0.32094496, y: 1.7, z: -2.9544232}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -580,8 +580,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6059939611038945908}
-  - component: {fileID: 2817549655745301726}
   - component: {fileID: 7192846002917540191}
+  - component: {fileID: 2817549655745301726}
   m_Layer: 5
   m_Name: Fade
   m_TagString: Untagged
@@ -610,6 +610,18 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &7192846002917540191
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1657216949935576896}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bf8b1ab4804f454469fb1b1714a304da, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!95 &2817549655745301726
 Animator:
   serializedVersion: 5
@@ -631,18 +643,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &7192846002917540191
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1657216949935576896}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dc8df8dfa8fa25640b7d8849256e333e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1881253138742367115
 GameObject:
   m_ObjectHideFlags: 0
@@ -941,7 +941,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 8263438944589772750}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
         m_MethodName: Scenes
         m_Mode: 1
@@ -1594,7 +1594,7 @@ GameObject:
   - component: {fileID: 7691257786526159949}
   - component: {fileID: 6386572827919715675}
   m_Layer: 5
-  m_Name: CountiniueButton
+  m_Name: DialogButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1671,7 +1671,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 8263438944589772750}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
         m_MethodName: NextDialogLine
         m_Mode: 1
@@ -1722,8 +1722,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8495724803320587145}
+  - component: {fileID: 3081303833327816829}
   - component: {fileID: 4808237920643878433}
-  - component: {fileID: 2714264378712200261}
   m_Layer: 5
   m_Name: DialogUI
   m_TagString: Untagged
@@ -1751,6 +1751,18 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &3081303833327816829
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4627515345863403974}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bf8b1ab4804f454469fb1b1714a304da, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!95 &4808237920643878433
 Animator:
   serializedVersion: 5
@@ -1772,18 +1784,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &2714264378712200261
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4627515345863403974}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dc8df8dfa8fa25640b7d8849256e333e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &4633507934688205770
 GameObject:
   m_ObjectHideFlags: 0
@@ -2183,20 +2183,22 @@ MonoBehaviour:
   m_GameObject: {fileID: 5724093554773193749}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b7a94987c2404ab5803407c740ae0dff, type: 3}
+  m_Script: {fileID: 11500000, guid: 4d20d8fa864343f458f9dff2c40a0276, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cursor: {fileID: 2800000, guid: 66bb37f69baea854392765c813617e30, type: 3}
+  cursorPencil: {fileID: 2800000, guid: 66bb37f69baea854392765c813617e30, type: 3}
+  cursorHand: {fileID: 0}
+  cursorNull: {fileID: 0}
   musicEventReference:
     Guid:
-      Data1: 0
-      Data2: 0
-      Data3: 0
-      Data4: 0
-    Path: 
+      Data1: 1654798394
+      Data2: 1162808614
+      Data3: -995772271
+      Data4: -241262485
+    Path: event:/Music/Kitchen
   scenesManager: 
-  fade: {fileID: 484961316813487599}
-  firstSelect: {fileID: 0}
+  fade: {fileID: 8291066122180769176}
+  firstSelect: {fileID: 2773550296023045605}
   master: {fileID: 6391497700562381103}
   music: {fileID: 4286577138311946967}
   sfx: {fileID: 4963079376983731593}
@@ -2767,7 +2769,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7112856279365168134}
-  - component: {fileID: 8314776834308382470}
+  - component: {fileID: 8236282981826911304}
   - component: {fileID: 2489274958169379769}
   m_Layer: 0
   m_Name: QuestUI
@@ -2796,7 +2798,7 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &8314776834308382470
+--- !u!114 &8236282981826911304
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2805,7 +2807,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 6921597807554262160}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dc8df8dfa8fa25640b7d8849256e333e, type: 3}
+  m_Script: {fileID: 11500000, guid: bf8b1ab4804f454469fb1b1714a304da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!95 &2489274958169379769
@@ -2838,7 +2840,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5952966794999470461}
-  - component: {fileID: 8263438944589772750}
+  - component: {fileID: 7349448353986973170}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -2864,7 +2866,7 @@ Transform:
   - {fileID: 7863205726330591896}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8263438944589772750
+--- !u!114 &7349448353986973170
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2873,22 +2875,22 @@ MonoBehaviour:
   m_GameObject: {fileID: 7305405028610144857}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 16516e5cd64102b49a1f93462cfe5089, type: 3}
+  m_Script: {fileID: 11500000, guid: a15646f143a14ed6a2d6b0c4d9950c2e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 0}
-  menu: {fileID: 0}
+  playerController: {fileID: 0}
+  menu: {fileID: 6600314136449301126}
   interactUI: {fileID: 4423552744871006696}
   dishes: 0
   rorschach: 0
-  dialogPsychatrie: {fileID: 0}
+  dialogPsychiatry: {fileID: 0}
   skillkit: 0
   letter: 0
   importantItems: []
   inUI: 0
   dialogUI: {fileID: 4627515345863403974}
   character: {fileID: 2732521143158685973}
-  textbox: {fileID: 1421843771626448777}
+  textBox: {fileID: 1421843771626448777}
   textDialog: {fileID: 2937279646479943352}
   textDialogNPC: {fileID: 7503679683774542633}
   animationCloseDialog: {fileID: 4808237920643878433}
@@ -4093,29 +4095,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: BContinue
       objectReference: {fileID: 0}
-    - target: {fileID: 7884553606147357596, guid: 7697f0a43da6462499bbc776126bcf99,
-        type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 8263438944589772750}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7697f0a43da6462499bbc776126bcf99, type: 3}
---- !u!1 &484961316813487599 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5597063151484605334, guid: 7697f0a43da6462499bbc776126bcf99,
-    type: 3}
-  m_PrefabInstance: {fileID: 5410563643606707833}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &2773550296023045605 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7884553606147357596, guid: 7697f0a43da6462499bbc776126bcf99,
     type: 3}
   m_PrefabInstance: {fileID: 5410563643606707833}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 484961316813487599}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}

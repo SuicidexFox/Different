@@ -358,7 +358,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1434504771569519274}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.07790551, y: 0.08688887, z: -0.0068158545, w: 0.9931438}
+  m_LocalRotation: {x: 0.07790551, y: 0.08688891, z: -0.006815857, w: 0.9931438}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -625,7 +625,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3226797065469277496}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.113929994, y: 0.08658395, z: -0.009967589, w: 0.9896585}
+  m_LocalRotation: {x: 0.11392999, y: 0.08658395, z: -0.009967587, w: 0.9896585}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -884,14 +884,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 6780449758017083149}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5b11e7ff921e79a4aad298f21284313f, type: 3}
+  m_Script: {fileID: 11500000, guid: 43ed29d2b81afdc4b90ed78a3ffac5fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _Cursor: {fileID: 2800000, guid: 66bb37f69baea854392765c813617e30, type: 3}
-  _playerCamInputProvider: {fileID: 4600098127420191408}
-  _playerInput: {fileID: 8270974815088577557}
-  _animator: {fileID: 2601918579271185167}
-  _currentInteractable: {fileID: 0}
+  currentInteractable: {fileID: 0}
+  playerCamInputProvider: {fileID: 4600098127420191408}
+  playerInput: {fileID: 8270974815088577557}
+  animator: {fileID: 2601918579271185167}
+  rectTransform: {fileID: 0}
 --- !u!143 &3169705687150365597
 CharacterController:
   m_ObjectHideFlags: 0
@@ -1135,7 +1135,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 8000439919978226352}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dc8df8dfa8fa25640b7d8849256e333e, type: 3}
+  m_Script: {fileID: 11500000, guid: bf8b1ab4804f454469fb1b1714a304da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!95 &2601918579271185167

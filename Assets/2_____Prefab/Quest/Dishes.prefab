@@ -9,8 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8734701278659776406}
-  - component: {fileID: 446303426620956879}
   - component: {fileID: 4673626467426989091}
+  - component: {fileID: 446303426620956879}
   m_Layer: 5
   m_Name: TabtextQuest1
   m_TagString: Untagged
@@ -37,14 +37,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 200, y: 200}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!222 &446303426620956879
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 597037438851655647}
-  m_CullTransparentMesh: 1
 --- !u!114 &4673626467426989091
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -139,6 +131,14 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!222 &446303426620956879
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 597037438851655647}
+  m_CullTransparentMesh: 1
 --- !u!1 &1474425553901450917
 GameObject:
   m_ObjectHideFlags: 0
@@ -149,7 +149,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1981380263851495184}
   - component: {fileID: 1293995366626942648}
-  - component: {fileID: 6774782293461956477}
   - component: {fileID: 7648687995663072893}
   m_Layer: 5
   m_Name: Dishes
@@ -173,8 +172,8 @@ RectTransform:
   - {fileID: 8734701278659776406}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 350, y: 350}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -186,20 +185,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1474425553901450917}
   m_CullTransparentMesh: 1
---- !u!114 &6774782293461956477
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1474425553901450917}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d21e44f6763047c29c93dc38555e5cae, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _questLine:
-    _questText: {fileID: 4673626467426989091}
 --- !u!114 &7648687995663072893
 MonoBehaviour:
   m_ObjectHideFlags: 0
