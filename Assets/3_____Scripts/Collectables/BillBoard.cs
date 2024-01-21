@@ -1,41 +1,32 @@
-using System;
 using UnityEngine;
-using UnityEngine.UI;
 
-namespace _3_____Scripts.Collectables
-{
-    public class Billboard : MonoBehaviour
+public class Billboard : MonoBehaviour
     {
-        private Camera _cam;
-        public SpriteRenderer _sprite;
-        public bool _NPC;
+        private Camera cam;
+        public SpriteRenderer sprite;
+        public bool npc;
 
         private void Start()
         { 
-            _cam = Camera.main;
-            if (_NPC = true)
+            cam = Camera.main;
+            if (npc = true)
             {
                 return;
             }
-            _sprite.enabled = false;
+            sprite.enabled = false;
         }
-
         private void LateUpdate()
         {
-            transform.rotation = _cam.transform.rotation;
+            transform.rotation = cam.transform.rotation;
         }
-        
-        
-        
         private void OnTriggerEnter(Collider other)
         {
             if (other.GetComponent<PlayerController>() == null) {return;}
-            _sprite.enabled = true;
+            sprite.enabled = true;
         }
-        private void OnTriggerExit(Collider other) //Collider verlassenf
+        private void OnTriggerExit(Collider other)
         {
             if (other.GetComponent<PlayerController>() == null) {return;}
-            _sprite.enabled = false;
+            sprite.enabled = false;
         }
     }
-}

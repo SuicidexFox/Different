@@ -1,37 +1,33 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using FMODUnity;
-using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.UI;
 
 [Serializable]
 public class Buttons
 {
-    public string _text;
-    public UnityEvent _buttonEvent;
+    public string text;
+    public UnityEvent buttonEvent;
 }
 
 [Serializable]
 public class DialoguesLines
 {
-    public EventReference _sound;
-    public Sprite _character;
-    public Sprite _textbox;
-    [TextArea(3, 8)]public string _text;
-    [TextArea(3, 8)]public string _textNPC;
+    public EventReference sound;
+    public Sprite character;
+    public Sprite textBox;
+    [TextArea(3, 8)]public string text;
+    [TextArea(3, 8)]public string textNpc;
 
-    public UnityEvent _lineEvent;
-    public List<Buttons> _Buttons;
+    public UnityEvent lineEvent;
+    public List<Buttons> buttons;
 }
 
 
 public class Dialog : MonoBehaviour
 {
-    public string _needImportantItem;
+    public string needImportantItem;
     public int priority = -1;
     public List<DialoguesLines> dialoguesLines;
     public UnityEvent dialogEnd;
@@ -39,7 +35,7 @@ public class Dialog : MonoBehaviour
 
     public void ShowDialogue()
     {
-        if (dialoguesLines.Count == 0 || GameManager.instance._inUI) { return; }
+        if (dialoguesLines.Count == 0 || GameManager.instance.inUI) { return; }
         GameManager.instance.ShowDialogUI(this);
     }
     public void SetPriority(int newPriority)

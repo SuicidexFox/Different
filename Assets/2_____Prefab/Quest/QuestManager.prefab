@@ -49,6 +49,8 @@ MonoBehaviour:
   _currentLetter: {fileID: 0}
   _text: 
   _questObejcts: []
+  _capsulCollider: []
+  _shader: []
 --- !u!1 &5256882020535375208
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,29 +1,20 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Net;
-using FMOD;
 using FMOD.Studio;
 using FMODUnity;
 using TMPro;
 using Unity.VisualScripting;
-using UnityEditor;
 using UnityEngine;
-using UnityEngine.InputSystem;
-using UnityEngine.InputSystem.UI;
-using UnityEngine.Rendering;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-using Cursor = UnityEngine.WSA.Cursor;
-using Menu = _3_____Scripts.Main.Menu;
 
 
 public class GameManager : MonoBehaviour
-{       ///////////////////////////////////// Variablen \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-    public static GameManager instance; //"static" macht es nur einmahlig und kann überall aufgerufen werden
-    public PlayerController _player;
-    public Menu _menu;
-    private EventInstance _musicEventInstance;
+{       ///////////////////////////////////// Variable \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+    public static GameManager instance;
+    public PlayerController player;
+    public Menu menu;
+    private EventInstance musicEventInstance;
     private InteractableManager interactableManager;
     private Dialog currentLines;
     private QuestManager questManager;
@@ -31,18 +22,18 @@ public class GameManager : MonoBehaviour
     
     [Header("Interact")] 
     [SerializeField] private GameObject interactUI;
-    public float _dishes = 0f;
-    public float _rorschach = 0f;
-    public GameObject _dialogPsychatrie;
-    public float _skillkit = 0f;
-    public float _letter = 0f;
-    public List<string> _importantItems;
-    [Header("Dialouge")]
-    public bool _inUI = false;
+    public float dishes;
+    public float rorschach;
+    public GameObject dialogPsychiatry;
+    public float skillkit;
+    public float letter;
+    public List<string> importantItems;
+    [Header("Dialog")]
+    public bool inUI;
     private int currentLineIndex;
     [SerializeField] private GameObject dialogUI;
     [SerializeField] private Image character;
-    [SerializeField] private Image textbox;
+    [SerializeField] private Image textBox;
     [SerializeField] private TextMeshProUGUI textDialog;
     [SerializeField] private TextMeshProUGUI textDialogNPC;
     [SerializeField] private Animator animationCloseDialog;
@@ -57,44 +48,34 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Animator animationCloseQuestUI;
     [SerializeField] private GameObject questLog;
     [Header("Fade")] 
-    [SerializeField] public GameObject fadeIn;
-    [SerializeField] private Animator animationFadeIn;
-    [SerializeField] private GameObject fadeOut;
+    [SerializeField] public GameObject fade;
+    [SerializeField] private Animator animationFade;
+    [SerializeField] private GameObject fadeOutLetter;
     [SerializeField] private Button buttonFadeOut;
-    [SerializeField] private Animator animationFadeOut;
     [Header("Pause")] 
-    public bool _pause = false;
+    public bool pause;
     [SerializeField] private GameObject pauseUI;
     
     
           ///////////////////////////////////// Start \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-    private void Awake() //nur beim ersten Start der gesamten Instanz
+    private void Awake() //firstStart this Game
     {
         instance = this;
         
     }
     private void Start()
     {
-        _player.DeactivateInput();
-        if (_menu._scenesManager == "Kitchen") { Kitchen(); }
-        if (_menu._scenesManager == "Psychatrie") { Psychatrie(); }
-        _musicEventInstance.setParameterByName(_menu.musicEventReference.Path, 2);
-        
+        player.DeactivateInput();
+        musicEventInstance.setParameterByName(menu.musicEventReference.Path, 0);
+        animationFade.Play("FadeIn");
     }
          ///////////////////////////////////// FadeIn \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-        private void Kitchen()
-        {
-           fadeIn.SetActive(true);
-           animationFadeIn.SetTrigger("FadeIn"); 
-        }
-        private void Psychatrie()
-        {
-            fadeIn.SetActive(true);
-            animationFadeIn.SetTrigger("FadeIn");
-            
-            _player._currentInteractable = Instantiate(_dialogPsychatrie.GetComponent<InteractableManager>());
-            _player._currentInteractable._onInteract.Invoke();
-        }
+         public void PlayerPlay()
+         {
+             //_player.ActivateInput(); 
+             //if (_menu._scenesManager == "Kitchen") { Kitchen(); }
+             //if (_menu._scenesManager == "Psychiatry") { Psychiatry(); }
+         }
     
     
     
@@ -110,65 +91,66 @@ public class GameManager : MonoBehaviour
     }
     public void QuestInteractables()
     {
-        _player._animator.SetTrigger("Take");  
-        _player._playerInput.SwitchCurrentActionMap("UI");
-        _player._playerCamInputProvider.enabled = false;
+        player.animator.SetTrigger("Take");  
+        player.playerInput.SwitchCurrentActionMap("UI");
+        player.playerCamInputProvider.enabled = false;
         ShowIneractUI(false);
-        if (_player._currentInteractable.CompareTag("Dishes"))
+        if (player.currentInteractable.CompareTag("Dishes"))
         {
-            _dishes++;
-            if (_dishes == 5f)
+            dishes++;
+            if (dishes == 5f)
             {
-                _importantItems.Add("Dishes");
-                _dishes = 6f;
-                questManager.DestroyInteractables();
+                importantItems.Add("Dishes");
+                dishes = 6f;
+                questManager.DestroyInteractable();
             }
         }
-        if (_player._currentInteractable.CompareTag("Rorschachtest"))
+        if (player.currentInteractable.CompareTag("Rorschachtest"))
         {
-            _rorschach++;
-            if (_rorschach == 4f)
+            rorschach++;
+            if (rorschach == 4f)
             {
-                _importantItems.Add("Rorschach");
-                _rorschach = 5f;
+                importantItems.Add("Rorschach");
+                rorschach = 5f;
             }
         }
-        if (_player._currentInteractable.CompareTag("Skillkit"))
+        if (player.currentInteractable.CompareTag("Skillkit"))
         {
-            _skillkit++;
-            if (_skillkit == 3f)
+            skillkit++;
+            if (skillkit == 3f)
             {
-                _importantItems.Add("Skillbag");
-                _skillkit = 4f;
+                importantItems.Add("Skillbag");
+                skillkit = 4f;
             }
         }
-        if (_player._currentInteractable.CompareTag("Letter"))
+        if (player.currentInteractable.CompareTag("Letter"))
         { 
-            _letter++; 
-            if (_letter == 2f) 
+            letter++; 
+            if (letter == 2f) 
             { 
-                _importantItems.Add("Letter"); 
-                _letter = 3f;
+                importantItems.Add("Letter"); 
+                letter = 3f;
             }
         }
     }
     public void DestroyInteractable()
     {
-        if (_player._currentInteractable != null)
+        if (player.currentInteractable != null)
         {
-                Destroy(_player._currentInteractable.GameObject());
+                Destroy(player.currentInteractable.GameObject());
         }
-        _player._playerInput.SwitchCurrentActionMap("Player");
-        _player._playerCamInputProvider.enabled = true;
+        player.playerInput.SwitchCurrentActionMap("Player");
+        player.playerCamInputProvider.enabled = true;
     }
     
         ///////////////////////////////////// DialogUI \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
     public void ShowDialogUI(Dialog dialog)
     {
-        _musicEventInstance.setParameterByName(_menu.musicEventReference.Path, 2);
-        _player.DeactivateInput();
+        musicEventInstance.setParameterByName(menu.musicEventReference.Path, 2);
+        player.DeactivateInput();
+        Cursor.SetCursor(menu.cursorHand, Vector2.zero, CursorMode.ForceSoftware);
         dialogUI.SetActive(true);
-        _inUI = true;
+        inUI = true;
         
         textDialog.SetText("");
         textDialogNPC.SetText("");
@@ -183,36 +165,37 @@ public class GameManager : MonoBehaviour
         DialoguesLines dialogueLines = currentLines.dialoguesLines[currentLineIndex];
         if (dialogueLines == null) { return; }
         ClearButton();
-        RuntimeManager.PlayOneShot(dialogueLines._sound);
-        character.sprite = dialogueLines._character;
-        textbox.sprite = dialogueLines._textbox;
-        dialogueLines._lineEvent.Invoke();
-        foreach (Buttons buttons in dialogueLines._Buttons)
+        RuntimeManager.PlayOneShot(dialogueLines.sound);
+        character.sprite = dialogueLines.character;
+        textBox.sprite = dialogueLines.textBox;
+        dialogueLines.lineEvent.Invoke();
+        foreach (Buttons buttons in dialogueLines.buttons)
         {
             GameObject buttonInstance = Instantiate(buttonCurrent, buttonGroup.transform);
-            buttonInstance.GetComponent<ButtonManager>().Setup(buttons._text, buttons._buttonEvent);
-            buttonDialog.gameObject.SetActive(false);
+            buttonInstance.GetComponent<ButtonManager>().Setup(buttons.text, buttons.buttonEvent);
         }
         StartCoroutine(SelectButtonDialogUI(dialogueLines));
     }
     IEnumerator SelectButtonDialogUI(DialoguesLines dialoguesLines)
     {
        yield return new WaitForEndOfFrame();
-       if (dialoguesLines._Buttons.Count > 0) //first Dialog Button
+       if (dialoguesLines.buttons.Count > 0) //first Dialog Button
        {
+           buttonGroup.SetActive(true);
            GameObject firstButtom = buttonGroup.transform.GetChild(0).gameObject;
            firstButtom.GetComponent<Button>().Select();
            buttonDialog.gameObject.SetActive(false);
        }
        else 
        {
+           buttonGroup.SetActive(false);
            buttonDialog.gameObject.SetActive(true);
            buttonDialog.Select();
        }
     }
     public void NextDialogLine()
     {
-        if (!_inUI) { return; }
+        if (!inUI) { return; }
         currentLineIndex++; //einfach immer eins weiter zählen
         if (currentLines.dialoguesLines.Count == currentLineIndex)
         {
@@ -231,16 +214,17 @@ public class GameManager : MonoBehaviour
     public void CloseDialogUI()
     {
         animationCloseDialog.Play("DialogUIScaleLow");
-        _musicEventInstance.setParameterByName(_menu.musicEventReference.Path, 2);
+        musicEventInstance.setParameterByName(menu.musicEventReference.Path, 2);
+        Cursor.SetCursor(menu.cursorNull, Vector2.zero, CursorMode.ForceSoftware);
     } 
     public void AnimationCloseDialogUI()
     { 
-        _player.ActivateInput();
+        player.ActivateInput();
         //GameManager
         dialogUI.SetActive(false);
-        _inUI = false;
+        inUI = false;
         currentLines.dialogEnd.Invoke();
-        currentLines.GetComponentInParent<DialoguesManager>()._dialogCam.Priority = 0;
+        currentLines.GetComponentInParent<DialoguesManager>().dialogCam.Priority = 0;
         ClearButton();
     }
     private void ClearButton()
@@ -253,30 +237,30 @@ public class GameManager : MonoBehaviour
     
     
     ///////////////////////////////////// TypewriterEffect \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\  
-    private float _speed = 0.05f;
-    private int _currentPosition = -1;
+    private float speed = 0.05f;
+    private int currentPosition = -1;
     private bool _hasFinished { get; set; }
     public void RunTypewriterEffect()
     {
         DialoguesLines dialogueLines = currentLines.dialoguesLines[currentLineIndex];
-        textDialog.SetText(dialogueLines._text);
-        textDialogNPC.SetText(dialogueLines._textNPC);
+        textDialog.SetText(dialogueLines.text);
+        textDialogNPC.SetText(dialogueLines.textNpc);
         StartCoroutine(TypewriterEffect());
     }
     IEnumerator TypewriterEffect()
     { 
         var textLenght = textDialog.text.Length;
-        while (!_hasFinished && _currentPosition + 1 < textLenght)
+        while (!_hasFinished && currentPosition + 1 < textLenght)
         {
             textDialog.text += GetNextToken();
-            yield return new WaitForSeconds(_speed);
+            yield return new WaitForSeconds(speed);
         }
         _hasFinished = true;
     }
     private string GetNextToken()
     {
-        _currentPosition++;
-        var nextToken = textDialog.text[_currentPosition].ToString();
+        currentPosition++;
+        var nextToken = textDialog.text[currentPosition].ToString();
         return nextToken;
     } 
     
@@ -284,12 +268,13 @@ public class GameManager : MonoBehaviour
          ///////////////////////////////////// QuestUI \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
     public void ShowQuestUI(QuestManager questManager)
     {
-        _player.DeactivateInput();
+        player.DeactivateInput();
+        Cursor.SetCursor(menu.cursorPencil, Vector2.zero, CursorMode.ForceSoftware);
         ShowIneractUI(false);
-        _inUI = true;
+        inUI = true;
         questUI.SetActive(true);
-        textQuest.SetText(questManager._text);
-        questLog = Instantiate(questManager._currentLetter);
+        textQuest.SetText(questManager.text);
+        questLog = Instantiate(questManager.currentLetter);
     }
     public void AnimationSelectButtonQuestUI()
     {
@@ -298,22 +283,31 @@ public class GameManager : MonoBehaviour
     public void CloseQuestUI()
     {
         animationCloseQuestUI.Play("QuestUIScaleSmal");
+        Cursor.SetCursor(menu.cursorNull, Vector2.zero, CursorMode.ForceSoftware);
     }
     public void AnimationCloseQuestUI()
     {
-        _player.ActivateInput();
+        player.ActivateInput();
         questUI.SetActive(false);
-        _inUI = false;
+        inUI = false;
+        questManager.GetComponent<QuestManager>().questCam.Priority = 0;
     }
     
     
           ///////////////////////////////////// FadeOut \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
     public void ShowFadeOut()
     { 
-        _player.DeactivateInput();
+        player.DeactivateInput();
+        Cursor.SetCursor(menu.cursorPencil, Vector2.zero, CursorMode.ForceSoftware);
         ShowIneractUI(false);
-        fadeOut.SetActive(true);
-        animationFadeOut.Play("FadeOut");
+        fade.SetActive(true);
+        if (menu.scenesManager == "Kitchen")
+        { 
+            fadeOutLetter.SetActive(true);
+            animationFade.Play("FadeOut");
+            return;
+        }
+        animationFade.Play("FadeOutShort");
     } 
     public void AnumationSelectButtonFadeOutUI()
     {
@@ -321,40 +315,34 @@ public class GameManager : MonoBehaviour
     }
     public void Scenes()
     {
-        if (_menu._scenesManager == "Kitchen")
-        {
-            SceneManager.LoadScene("Psychatrie");
-            return;
-        }
-        if (_menu._scenesManager == "Psychatrie") { SceneManager.LoadScene("Save Place"); }
-        if (_menu._scenesManager == "Save Place") { SceneManager.LoadScene("Abspann"); }
-        if (_menu._scenesManager == "Abspann") { SceneManager.LoadScene("MainMenu"); }
-        _menu.StopMusic();
+        if (menu.scenesManager == "Kitchen") { SceneManager.LoadScene("Psychiatry"); }
+        if (menu.scenesManager == "Psychiatry") { SceneManager.LoadScene("Save Place"); }
+        if (menu.scenesManager == "Save Place") { SceneManager.LoadScene("Credits"); }
+        if (menu.scenesManager == "Credits") { SceneManager.LoadScene("MainMenu"); }
+        menu.StopMusic();
     }
     
     
     ///////////////////////////////////// Pause \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
     public void TogglePause() 
     {
-        if (_inUI == true) { return; }
-        _pause = !_pause;
-        pauseUI.SetActive(_pause);
+        if (inUI == true) { return; }
+        pause = !pause;
+        pauseUI.SetActive(pause);
             
-        if (_pause)
+        if (pause)
         {
-            _player.DeactivateInput();
+            player.DeactivateInput();
+            Cursor.SetCursor(menu.cursorPencil, Vector2.zero, CursorMode.ForceSoftware);
             Time.timeScale = 0.0f;
         }
         else
         { 
-            _player.ActivateInput(); 
+            player.ActivateInput();
+            Cursor.SetCursor(menu.cursorNull, Vector2.zero, CursorMode.ForceSoftware);
             Time.timeScale = 1.0f;
         } 
     }
-
-    private float speed = 1;
-    
-    
     
     
     

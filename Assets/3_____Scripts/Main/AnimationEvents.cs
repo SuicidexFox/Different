@@ -1,13 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.Net;
-using _3_____Scripts.Main;
 using FMODUnity;
-using UnityEditor;
 using UnityEngine;
 
 public class AnimationEvents : MonoBehaviour
-{       ///////////////////////////////////// Variablen \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+{       ///////////////////////////////////// Variable \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
     private PlayerController player;
     
         ///////////////////////////////////// Player \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
@@ -18,7 +13,7 @@ public class AnimationEvents : MonoBehaviour
         string soundPath = "event:/SFX/Rosie/RosieFootsteps/Footstep_Tile"; 
         //Kitchen
         if (ground == "Tiles") { soundPath = "event:/SFX/Rosie/RosieFootsteps/Footstep_Tile"; }
-        //Psychatrie
+        //Psychiatry
         if (ground == "Wood") { soundPath = "event:/SFX/Rosie/RosieFootsteps/Footstep_Wood"; }
         if (ground == "Carpet") { soundPath = "event:/SFX/Rosie/RosieFootsteps/Footstep_Capet"; }
         //Save Place
@@ -45,9 +40,10 @@ public class AnimationEvents : MonoBehaviour
     
 
         ///////////////////////////////////// Canvas \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-    public void StartInput() { player.ActivateInput(); GameManager.instance.fadeIn.SetActive(false);}
+    public void StartInput() { player.ActivateInput(); GameManager.instance.fade.SetActive(false); }
     public void CloseDialogUI() { GameManager.instance.AnimationCloseDialogUI(); }
     public void SelectQuestButton() { GameManager.instance.AnimationSelectButtonQuestUI(); }
     public void CloseQuestUI() { GameManager.instance.AnimationCloseQuestUI(); }
     public void SelectFadeOutButton() { GameManager.instance.AnumationSelectButtonFadeOutUI(); }
+    public void FadeOutShort() { GameManager.instance.Scenes();}
 }

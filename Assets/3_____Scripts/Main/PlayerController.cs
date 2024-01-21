@@ -1,33 +1,24 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Dynamic;
-using System.Security.Cryptography.X509Certificates;
 using Cinemachine;
-using TMPro;
-using Unity.VisualScripting;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
-using UnityEngine.Assertions.Must;
 using UnityEngine.InputSystem;
-using UnityEngine.SceneManagement;
-using UnityEngine.UI;
-using UnityEngine.UIElements;
-using Cursor = UnityEngine.Cursor;
 
 
 public class PlayerController : MonoBehaviour
-{          ///////////////////////////////////// Variablen \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-    public Texture2D _Cursor;
-    [SerializeField] public CinemachineInputProvider _playerCamInputProvider;
-    //PlayerInput
-    public PlayerInput _playerInput;
+{          ///////////////////////////////////// Variable \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+    public InteractableManager currentInteractable;
+    public CinemachineInputProvider playerCamInputProvider;
+    
+    public PlayerInput playerInput;
     private InputAction moveAction;
     private InputAction runAction;
     private InputAction interactAction;
     private InputAction tabAction;
     private InputAction pauseAction;
     
+    private CharacterController characterController;
+    private Transform camTransform;
+    public Animator animator;
     
     //Move
     private float walkSpeed = 1f;
@@ -36,54 +27,42 @@ public class PlayerController : MonoBehaviour
     private float minTurnSpeed = 0.2f;
     private float turnSpeed = 5f;
     
-    private CharacterController characterController;
-    private Transform camTransform;
-    
-    //Animator
-    public Animator _animator;
-    
-    //Interact
-    public InteractableManager _currentInteractable;
-        
     
             ///////////////////////////////////// Start \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-    void Start()
+    public void Start()
     {
         ///////////////////////////////////// Movement \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-        _playerInput = GetComponent<PlayerInput>();
+        playerInput = GetComponent<PlayerInput>();
         characterController = GetComponent<CharacterController>();
         camTransform = Camera.main.transform;
         
-        ///////////////////////////////////// Walk & Rund \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-        moveAction = _playerInput.actions.FindAction("Move");
-        runAction = _playerInput.actions.FindAction("Run");
+        ///////////////////////////////////// Walk & Run \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+        moveAction = playerInput.actions.FindAction("Move");
+        runAction = playerInput.actions.FindAction("Run");
         
         ///////////////////////////////////// Animations \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-        _animator = GetComponentInChildren<Animator>(); //InChildren sucht er alle Unterordner ab
-        hallo = _playerInput.actions.FindAction("Hallo");
-        cry = _playerInput.actions.FindAction("Cry");
+        animator = GetComponentInChildren<Animator>(); //InChildren sucht er alle Unterordner ab
+        hallo = playerInput.actions.FindAction("Hallo");
+        cry = playerInput.actions.FindAction("Cry");
         
         ///////////////////////////////////// Interact \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-        interactAction = _playerInput.actions.FindAction("Submit");
+        interactAction = playerInput.actions.FindAction("Submit");
         interactAction.performed += Interact;
 
         ///////////////////////////////////// Pause \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-        _playerInput.actions.FindActionMap("UI").FindAction("Pause").performed +=Pause;
-        _playerInput.actions.FindActionMap("UI").FindAction("Pause").performed += Pause;
+        playerInput.actions.FindActionMap("UI").FindAction("Pause").performed +=Pause;
+        playerInput.actions.FindActionMap("UI").FindAction("Pause").performed += Pause;
         
         ///////////////////////////////////// QuestLog/Tab \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-        tabAction = _playerInput.actions.FindAction("Tab");
+        tabAction = playerInput.actions.FindAction("Tab");
         
-        ///////////////////////////////////// Cursor \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.SetCursor(_Cursor = null, Vector2.zero, CursorMode.ForceSoftware);
         
         ///////////////////////////////////// Extras \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-        _animator = GetComponentInChildren<Animator>(); //InChildren sucht er alle Unterordner ab
-        hallo = _playerInput.actions.FindAction("Hallo");
-        cry = _playerInput.actions.FindAction("Cry");
+        animator = GetComponentInChildren<Animator>();
+        hallo = playerInput.actions.FindAction("Hallo");
+        cry = playerInput.actions.FindAction("Cry");
     }
-    void Update() 
+    public void Update() 
     {   
         ///////////////////////////////////// Movement \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
         Vector2 input = moveAction.ReadValue<Vector2>();
@@ -116,96 +95,86 @@ public class PlayerController : MonoBehaviour
         if (input == Vector2.zero)
         { animatonSpeed = 0.0f; }
         else if (runAction.inProgress) { }
-        _animator.SetFloat("Speed", animatonSpeed);
-        _animator.SetBool("Shift", runAction.inProgress);
+        animator.SetFloat("Speed", animatonSpeed);
+        animator.SetBool("Shift", runAction.inProgress);
         
         ///////////////////////////////////// TabUI \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-        /*if (tabAction.inProgress)
+        if (tabAction.inProgress)
         {
-            _animatorTabUI.SetBool("Tab", true);
-            //ToggleTab();
+            ToggleTab();
         }
         else
         {
-            _animatorTabUI.SetBool("Tab", false);
-            //ToggleTab();
-        }*/
+            ToggleTab();
+        }
     }
-    private void OnDisable() //Verhalten Deaktivieren
+    private void OnDisable() //Disable behavior 
     {
         interactAction.performed -= Interact;
-        _playerInput.actions.FindActionMap("UI").FindAction("Pause").performed -=Pause;
-        _playerInput.actions.FindActionMap("UI").FindAction("Pause").performed -= Pause;
+        playerInput.actions.FindActionMap("UI").FindAction("Pause").performed -=Pause;
+        playerInput.actions.FindActionMap("UI").FindAction("Pause").performed -= Pause;
         
         ///////////////////////////////////// Extras \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-        //hallo.performed -= HalloEmote;
-        //cry.performed -= CryEmote;
+        hallo.performed -= HalloEmote;
+        cry.performed -= CryEmote;
     }
     
     
           ///////////////////////////////////// Interact & Collect \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
     private void Interact(InputAction.CallbackContext obj)
     {
-        if (_currentInteractable == null) { return; }
-        _currentInteractable._onInteract.Invoke();
+        if (currentInteractable == null) { return; }
+        currentInteractable._onInteract.Invoke();
     }
-    private void OnTriggerEnter(Collider other) //Collider berühren
+    private void OnTriggerEnter(Collider other)
     {
-        InteractableManager _newInteractable = other.GetComponent<InteractableManager>(); //Achte auf die Klasse ganz oben in deinem Script
+        InteractableManager _newInteractable = other.GetComponent<InteractableManager>(); //Name of publicClass
         if (_newInteractable == null) { return; }
-        _currentInteractable = _newInteractable;
+        currentInteractable = _newInteractable;
         GameManager.instance.ShowIneractUI(true);
     }
-    private void OnTriggerExit(Collider other) //Collider verlassen
-    {
+    private void OnTriggerExit(Collider other)
+    { 
         InteractableManager _newInteractable = other.GetComponent<InteractableManager>();
-
-        if (_currentInteractable == null)
+        if (currentInteractable == null) { return; } 
+        if (_newInteractable == currentInteractable)
         {
-            return;
-        }
-        
-        if (_newInteractable == _currentInteractable)
-        {
-            _currentInteractable = null;
+            currentInteractable = null;
             GameManager.instance.ShowIneractUI(false);
         }
     }
 
     
-    
-    /*public RectTransform rectTransform;
+          ///////////////////////////////////// QuestLog \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+    public RectTransform rectTransform;
     public void ToggleTab()
     {
-        if (GameManager.instance._inUI == true) 
-        { return; }
-        Vector2 currentPositon = rectTransform.anchoredPosition;
-        currentPositon.x += 100f / Time.deltaTime;
-        rectTransform.anchoredPosition = currentPositon;
-    }*/
+        if (GameManager.instance.inUI == true) { return; }
+        else { if (GameManager.instance.pause == true) { {return;} } }
+        //Vector2 currentPositon = rectTransform.anchoredPosition;
+        //currentPositon.x += 100f / Time.deltaTime;
+        //rectTransform.anchoredPosition = currentPositon;
+    }
     
     
         ///////////////////////////////////// PauseUI \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-    private void Pause(InputAction.CallbackContext obj)
-    {
-        GameManager.instance.TogglePause();
-    }
+    private void Pause(InputAction.CallbackContext obj) { GameManager.instance.TogglePause(); }
 
     
         ///////////////////////////////////// Player Inputs \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
     public void DeactivateInput()
     {
-       _playerInput.SwitchCurrentActionMap("UI");
+       playerInput.SwitchCurrentActionMap("UI");
        Cursor.lockState = CursorLockMode.Confined;
-       _playerCamInputProvider.enabled = false; //Maus
-       _currentInteractable = null;
+       playerCamInputProvider.enabled = false; //Maus
+       currentInteractable = null;
     }
     public void ActivateInput()
     {
-        _playerInput.SwitchCurrentActionMap("Player");
+        playerInput.SwitchCurrentActionMap("Player");
         Cursor.lockState = CursorLockMode.Locked;
-        Cursor.SetCursor(_Cursor = null, Vector2.zero, CursorMode.ForceSoftware);
-        _playerCamInputProvider.enabled = true; //Maus
+        //Cursor.SetCursor(_Cursor = null, Vector2.zero, CursorMode.ForceSoftware);
+        playerCamInputProvider.enabled = true; //Maus
     }
     
     
@@ -213,22 +182,21 @@ public class PlayerController : MonoBehaviour
     ///////////////////////////////////// Extras \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
     private InputAction hallo;
     private InputAction cry;
-
     private void CryEmote(InputAction.CallbackContext obj)
     {
         DeactivateInput();
-        _animator.Play("RigRosie|Hallo");
-        //StartCoroutine(ActivatePlayer());
+        //animator.Play("");
+        StartCoroutine(ActivatePlayer());
     }
     private void HalloEmote(InputAction.CallbackContext obj)
     {
         DeactivateInput();
-        _animator.Play("RigRosie|Hallo");
-        //StartCoroutine(ActivatePlayer());
+        //animator.Play("");
+        StartCoroutine(ActivatePlayer());
     }
-    /*IEnumerator ActivatePlayer()
+    IEnumerator ActivatePlayer()
     {
         yield return new WaitForSeconds(5);
         ActivateInput();
-    }*/
+    }
 }

@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using Cinemachine;
 using UnityEngine;
@@ -6,44 +5,42 @@ using UnityEngine;
 
 
 public class DialoguesManager : MonoBehaviour
-{
-    public CinemachineVirtualCamera _dialogCam;
-    [SerializeField] private List<Dialog> _dialogues;
-    
+{ 
+    public CinemachineVirtualCamera dialogCam;
+    [SerializeField] private List<Dialog> dialogues;
     
     private void Start()
     {
         foreach (Dialog d in GetComponentsInChildren<Dialog>())
         {
-            _dialogues.Add(d); 
+            dialogues.Add(d); 
         }
     }
     public void ShowDialogue()
     {
         GetPrioritizedDialogue().ShowDialogue();
-        _dialogCam.Priority = 11;
+        dialogCam.Priority = 11;
     }
     private Dialog GetPrioritizedDialogue()
     {
-        Dialog prioritizedDialogue = _dialogues[0];
+        Dialog prioritizedDialogue = dialogues[0];
 
-        foreach (Dialog d in _dialogues)
+        foreach (Dialog d in dialogues)
         {
-            if (d._needImportantItem != "") //wenn er das Item nicht hat
-                if (GameManager.instance._importantItems.Contains(d._needImportantItem))
+            if (d.needImportantItem != "")
+                if (GameManager.instance.importantItems.Contains(d.needImportantItem))
                 {
                     return d;
                 }
                 else
                 {
                     continue;
-                }
-        if (prioritizedDialogue.priority < d.priority)
+                } 
+            if (prioritizedDialogue.priority < d.priority) 
             {
-                prioritizedDialogue = d;
-            }
+                prioritizedDialogue = d; 
+            } 
         }
-
         return prioritizedDialogue;
     }
 }
