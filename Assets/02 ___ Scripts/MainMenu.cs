@@ -2,27 +2,28 @@ using System.Collections;
 using System.Collections.Generic;
 using FMOD.Studio;
 using FMODUnity;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Rendering;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class MainMenu : MonoBehaviour
 {   ///////////////////////////////////// Variable \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-    private EventInstance musicEventInstance;
-    [SerializeField] private EventReference musicReference;
-    [SerializeField] private Texture2D cursorPencil;
-    [SerializeField] private Texture2D cursorHand;
+    public EventInstance musicEventInstance;
+    public EventReference musicReference;
+    public string scenesManager;
+    public Texture2D cursorPencil;
+    public Texture2D cursorHand;
+    public Texture2D cursorNull;
     [SerializeField] private Animator animatorFade;
 
     [Header("Letter")]
-    [SerializeField] private GameObject main;
-    [SerializeField] private GameObject settings;
-    [SerializeField] private GameObject sound; 
-    [SerializeField] private GameObject controls;
-    [SerializeField] private GameObject fade;
-
-    [Header("Button")]
-    [SerializeField] private Button firstSelect;
+    public GameObject main;
+    public GameObject settings;
+    public GameObject sound; 
+    public GameObject controls;
+    public GameObject fade;
     
     [Header("Slider")]
     [SerializeField] private Slider master;
@@ -32,17 +33,17 @@ public class MainMenu : MonoBehaviour
     
     
     ///////////////////////////////////// Events \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-    private void Awake()
-    {
-        master.value = 0.5f;
-        music.value = 0.5f;
-        effects.value = 0.5f;
-    }
     private void Start()
     {
         Cursor.SetCursor(cursorPencil, Vector2.zero, CursorMode.ForceSoftware);
+        Cursor.lockState = CursorLockMode.Confined;
+        scenesManager = SceneManager.GetActiveScene().name;
         musicEventInstance = RuntimeManager.CreateInstance(musicReference);
-        musicEventInstance.start();
+        if (musicReference.Path != null)
+        { 
+          musicEventInstance.start();
+          musicEventInstance.setParameterByName(musicReference.Path, 0);
+        }
         SetupSlider(master, "bus:/Master");
         SetupSlider(music, "bus:/Master/Music");
         SetupSlider(effects, "bus:/Master/SFX");
@@ -59,8 +60,14 @@ public class MainMenu : MonoBehaviour
     public void SetMusicVolume() { RuntimeManager.GetBus("bus:/Master/Music").setVolume(music.value); }
     public void SetSFXVolume() { RuntimeManager.GetBus("bus:/Master/SFX").setVolume(effects.value); }
     
+    
     //////////////////////////////////// Start \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-    public void SelectButton() { firstSelect.Select(); }
+    public void SelectButton()
+    {
+        fade.SetActive(false);
+        if (scenesManager == "Kitchen") { SelectButtonKitchen(); animatorFade.Play("FadeOutKitchen"); return; }
+        GetComponentInChildren<Button>().Select();
+    }
     
     ///////////////////////////////////// Toggle \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
     public void ToggleSettings(bool letterOne)
@@ -75,6 +82,7 @@ public class MainMenu : MonoBehaviour
             main.SetActive(true);
             settings.SetActive(false);
         }
+        GetComponentInChildren<Button>(true).Select();
         RuntimeManager.PlayOneShot("event:/SFX/UI_UX/Menu/Open_NextSide");
     }
     public void ToggleSound(bool letterTwo)
@@ -91,10 +99,10 @@ public class MainMenu : MonoBehaviour
             settings.SetActive(true);
             sound.SetActive(false);
         }
-
+        GetComponentInChildren<Button>(true).Select();
         RuntimeManager.PlayOneShot("event:/SFX/UI_UX/Menu/Open_NextSide");
     }
-    public void Controls(bool letterThree)
+    public void ToggleControls(bool letterThree)
     {
         if (letterThree == true)
         {
@@ -106,27 +114,40 @@ public class MainMenu : MonoBehaviour
             settings.SetActive(true);
             controls.SetActive(false);
         }
-
+        GetComponentInChildren<Button>(true).Select();
         RuntimeManager.PlayOneShot("event:/SFX/UI_UX/Menu/Open_NextSide");
     }
     
-    ///////////////////////////////////// Start \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-    public void AnimationEventStart()
-    {
-        fade.SetActive(true);
-        animatorFade.Play("aKitchen");
-    }
-    public void StartGame()
-    {
-        SceneManager.LoadScene("Kitchen");
-        musicEventInstance.setVolume(0);
-    }
+    
+    ///////////////////////////////////// MainMenu \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+    /////////////////////////////////////   Start  \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+    public void AnimationEventStart() { fade.SetActive(true); animatorFade.Play("Play"); }
+    public void StartGame() { SceneManager.LoadScene("Kitchen"); musicEventInstance.setVolume(0); }
     
     ///////////////////////////////////// Quit \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-    public void AnimationEventQuit()
-    { animatorFade.Play("Quit"); }
+    public void AnimationEventQuit() { fade.SetActive(true); animatorFade.Play("Quit"); }
     public void Quit() { Application.Quit(); }
+    
+    
+    
+    ///////////////////////////////////////// Pause \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+    ///////////////////////////////////// Back MainMenu  \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+    public void AnimationEventMainMenu() { fade.SetActive(true); animatorFade.Play("FadeOut"); }
+    public void BackMainMenu() { SceneManager.LoadScene("MainMenu"); }
+
+    ///////////////////////////////////// Scenenwechsel  \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+    public void AnimationEventScenenwechsel() { fade.SetActive(true); animatorFade.Play("FadeOutShort"); }
+    public void Scenenwechsel()
+    {
+        if (scenesManager == "Kitchen") { SceneManager.LoadScene("Psychiatry"); }
+        if (scenesManager == "Psychiatry") { SceneManager.LoadScene("Save Place"); }
+    }
+    
+    ///////////////////////////////////// Kitchen  \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+    public void AnimationEventLetter() { fade.SetActive(true); animatorFade.Play("FadeOutKitchen"); }
+    public void SelectButtonKitchen() { fade.GetComponentInChildren<Button>().Select();}
 }
+
 
      
   
