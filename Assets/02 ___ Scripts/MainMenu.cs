@@ -10,6 +10,7 @@ using UnityEngine.UI;
 
 public class MainMenu : MonoBehaviour
 {   ///////////////////////////////////// Variable \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+    public static MainMenu instance;
     public EventInstance musicEventInstance;
     public EventReference musicReference;
     public string scenesManager;
@@ -35,19 +36,25 @@ public class MainMenu : MonoBehaviour
     ///////////////////////////////////// Events \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
     private void Start()
     {
-        Cursor.SetCursor(cursorPencil, Vector2.zero, CursorMode.ForceSoftware);
-        Cursor.lockState = CursorLockMode.Confined;
-        scenesManager = SceneManager.GetActiveScene().name;
         musicEventInstance = RuntimeManager.CreateInstance(musicReference);
-        if (musicReference.Path != null)
-        { 
-          musicEventInstance.start();
-          musicEventInstance.setParameterByName(musicReference.Path, 0);
-        }
+        musicEventInstance.start();
+        musicEventInstance.setParameterByName(musicReference.Path, 0);
         SetupSlider(master, "bus:/Master");
         SetupSlider(music, "bus:/Master/Music");
         SetupSlider(effects, "bus:/Master/SFX");
+        
+        scenesManager = SceneManager.GetActiveScene().name;
+        if (scenesManager != "MainMenu") { return; }
+        Cursor.SetCursor(cursorPencil, Vector2.zero, CursorMode.ForceSoftware);
+        Cursor.lockState = CursorLockMode.Confined;
+        StartMainMenu();
     } 
+    IEnumerator StartMainMenu() 
+    { 
+        yield return new WaitForSeconds(1);
+        fade.SetActive(false);
+        main.GetComponentInChildren<Button>().Select();
+    }
     
     ///////////////////////////////////// SoundVolume \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
     private void SetupSlider(Slider slider, string busPath)
@@ -61,13 +68,6 @@ public class MainMenu : MonoBehaviour
     public void SetSFXVolume() { RuntimeManager.GetBus("bus:/Master/SFX").setVolume(effects.value); }
     
     
-    //////////////////////////////////// Start \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-    public void SelectButton()
-    {
-        fade.SetActive(false);
-        if (scenesManager == "Kitchen") { SelectButtonKitchen(); animatorFade.Play("FadeOutKitchen"); return; }
-        GetComponentInChildren<Button>().Select();
-    }
     
     ///////////////////////////////////// Toggle \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
     public void ToggleSettings(bool letterOne)
@@ -120,32 +120,79 @@ public class MainMenu : MonoBehaviour
     
     
     ///////////////////////////////////// MainMenu \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-    /////////////////////////////////////   Start  \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-    public void AnimationEventStart() { fade.SetActive(true); animatorFade.Play("Play"); }
-    public void StartGame() { SceneManager.LoadScene("Kitchen"); musicEventInstance.setVolume(0); }
-    
-    ///////////////////////////////////// Quit \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-    public void AnimationEventQuit() { fade.SetActive(true); animatorFade.Play("Quit"); }
-    public void Quit() { Application.Quit(); }
-    
+    public void StartGame() 
+    { 
+        fade.SetActive(true); 
+        animatorFade.Play("Play");
+        StartCoroutine(CStartGame());
+    }
+    IEnumerator CStartGame()
+    {
+        yield return new WaitForSeconds(1.6f); 
+        SceneManager.LoadScene("Kitchen"); 
+        musicEventInstance.setVolume(0);
+    }
+   
+    public void QuitGame()
+    {
+        fade.SetActive(true);
+        animatorFade.Play("Quit");
+        StartCoroutine(CQuit());
+    }
+    IEnumerator CQuit()
+    {
+        yield return new WaitForSeconds(1.6f); 
+        Application.Quit();
+    }
     
     
     ///////////////////////////////////////// Pause \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-    ///////////////////////////////////// Back MainMenu  \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-    public void AnimationEventMainMenu() { fade.SetActive(true); animatorFade.Play("FadeOut"); }
-    public void BackMainMenu() { SceneManager.LoadScene("MainMenu"); }
+    public void MainMenuBack()
+    {
+        GameManager.instance.TogglePause();
+        fade.SetActive(true); 
+        animatorFade.Play("FadeOutShort");
+        StartCoroutine(CMainMenu());
+    }
+    IEnumerator CMainMenu()
+    {
+        yield return new WaitForSeconds(2);
+        SceneManager.LoadScene("MainMenu");
+    }
+    
+    
 
     ///////////////////////////////////// Scenenwechsel  \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-    public void AnimationEventScenenwechsel() { fade.SetActive(true); animatorFade.Play("FadeOutShort"); }
-    public void Scenenwechsel()
+    public void ScenenManager()
     {
-        if (scenesManager == "Kitchen") { SceneManager.LoadScene("Psychiatry"); }
-        if (scenesManager == "Psychiatry") { SceneManager.LoadScene("Save Place"); }
+        fade.SetActive(false);
+        animatorFade.Play("FadeOutShort");
+        StartCoroutine(CScenenwechsel());
+    }
+    IEnumerator CScenenwechsel() 
+    { 
+        yield return new WaitForSeconds(1);
+        if (scenesManager == "Psychiatry" ) { SceneManager.LoadScene("Save Place"); } 
+        if (scenesManager == "SavePlace" ) { SceneManager.LoadScene(""); } 
     }
     
     ///////////////////////////////////// Kitchen  \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-    public void AnimationEventLetter() { fade.SetActive(true); animatorFade.Play("FadeOutKitchen"); }
-    public void SelectButtonKitchen() { fade.GetComponentInChildren<Button>().Select();}
+    public void StartFadeOutKitchen()
+    {
+        fade.SetActive(false);
+        animatorFade.Play("FadeOutKitchen");
+        StartCoroutine(SelectButtonKitchen());
+    }
+    IEnumerator SelectButtonKitchen() 
+    { 
+        yield return new WaitForSeconds(1);
+        fade.GetComponentInChildren<Button>().Select(); 
+    }
+    public void SceneMainMenu() { SceneManager.LoadScene("Psychiatrie"); }
+    
+    
+    
+    
 }
 
 

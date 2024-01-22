@@ -10,19 +10,15 @@ public class QuestManager : MonoBehaviour
     public GameObject currentLetter;
     [TextArea(3, 8)] public string text;
     public List<Interactable> questObjects;
-    public List<CapsuleCollider> capsuleCollider;
 
     private void Start()
     {
-        foreach (Interactable im in GetComponentsInChildren<Interactable>())
-        {
-            questObjects.Add(im);
-        }
-        foreach (CapsuleCollider cc in GetComponentsInChildren<CapsuleCollider>())
-        {
-            capsuleCollider.Add(cc);
-            enabled = true;
-        }
+        foreach (Interactable im in GetComponentsInChildren<Interactable>()) { questObjects.Add(im); }
+
+        GameObject[] objectsToActivate = GameObject.FindGameObjectsWithTag("Active");
+        foreach (GameObject obj in objectsToActivate) { obj.SetActive(true); }
+        CapsuleCollider[] capsuleColliders = GetComponentsInChildren<CapsuleCollider>();
+        foreach (CapsuleCollider cc in capsuleColliders) { cc.enabled = true; } 
     }
     public void ShowQuestUI()
     {

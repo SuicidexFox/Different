@@ -209,7 +209,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 9081817467070920606}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 496116e4247d3054c893c11a09634463, type: 3}
+  m_Script: {fileID: 11500000, guid: ea59397568b65504b8c1486169fb93b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   dialogCam: {fileID: 556402916813784191}

@@ -6,6 +6,7 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {          ///////////////////////////////////// Variable \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+    public static PlayerController instance;
     public Interactable currentInteractable;
     public CinemachineInputProvider playerCamInputProvider;
     
@@ -54,9 +55,9 @@ public class PlayerController : MonoBehaviour
         
         ///////////////////////////////////// Extras \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
         animator = GetComponentInChildren<Animator>();
-        hallo = playerInput.actions.FindAction("Hallo");
+        hallo = playerInput.actions.FindAction("EmoteHallo");
         hallo.performed += HalloEmote;
-        cry = playerInput.actions.FindAction("Cry");
+        cry = playerInput.actions.FindAction("EmoteCry");
         cry.performed += CryEmote;
     }
     public void Update() 
@@ -96,14 +97,14 @@ public class PlayerController : MonoBehaviour
         animator.SetBool("Shift", runAction.inProgress);
         
         ///////////////////////////////////// TabUI \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-        if (tabAction.inProgress)
+        /*if (tabAction.inProgress)
         {
             //GameManager.instance.ToggleEmote();
         }
         else
         {
             //GameManager.instance.ToggleEmote();
-        }
+        }*/
     }
     private void OnDisable() //Disable behavior 
     {
@@ -150,14 +151,12 @@ public class PlayerController : MonoBehaviour
     public void DeactivateInput()
     {
        playerInput.SwitchCurrentActionMap("UI");
-       Cursor.lockState = CursorLockMode.Confined;
        playerCamInputProvider.enabled = false;
        currentInteractable = null;
     }
     public void ActivateInput()
     {
         playerInput.SwitchCurrentActionMap("Player");
-        Cursor.lockState = CursorLockMode.Locked;
         playerCamInputProvider.enabled = true;
     }
     

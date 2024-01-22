@@ -4,7 +4,9 @@ using FMOD.Studio;
 using FMODUnity;
 using TMPro;
 using Unity.VisualScripting;
+using UnityEditor;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
@@ -17,8 +19,22 @@ public class GameManager : MonoBehaviour
     private EventReference musicReference;
     
     private void Awake() { instance = this; }
-    private void Start() { playerController.DeactivateInput(); WaitStart(); }
-    IEnumerator WaitStart() { yield return new WaitForSeconds(1); playerController.ActivateInput(); }
+    private void Start() { playerController.DeactivateInput(); StartCoroutine(WaitStart()); }
+    IEnumerator WaitStart()
+    {
+        yield return new WaitForSeconds(1); 
+        playerController.ActivateInput();
+        menu.fade.SetActive(false);
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
     
     ///////////////////////////////////// DialogUI \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
@@ -170,6 +186,7 @@ public class GameManager : MonoBehaviour
         questUI.SetActive(true);
         textQuest.SetText(questManager.text);
         questLog = Instantiate(questManager.currentLetter);
+        RuntimeManager.PlayOneShot("event:/SFX/UI_UX/Menu/Open_NextSide");
     }
     public void AnimationSelectButtonQuestUI()
     {
@@ -179,6 +196,7 @@ public class GameManager : MonoBehaviour
     {
         animationCloseQuestUI.Play("QuestUIScaleSmal");
         Cursor.SetCursor(menu.cursorNull, Vector2.zero, CursorMode.ForceSoftware);
+        RuntimeManager.PlayOneShot("event:/SFX/UI_UX/Menu/Clicket");
     }
     public void AnimationEventCloseQuestUI()
     {

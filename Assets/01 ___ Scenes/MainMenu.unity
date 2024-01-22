@@ -289,7 +289,7 @@ PrefabInstance:
     - target: {fileID: 7529941796101006886, guid: c7efb51054cc2e545b1289be244e9a20,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: ToogleControls
+      value: ToggleControls
       objectReference: {fileID: 0}
     - target: {fileID: 7529941796101006886, guid: c7efb51054cc2e545b1289be244e9a20,
         type: 3}
@@ -756,7 +756,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa87d8e005ff1ce4db9f2e7d9e87da2c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mainMenu: {fileID: 1358764977}
 --- !u!224 &585451756
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1897,15 +1896,16 @@ MonoBehaviour:
       Data3: -224809035
       Data4: -897617681
     Path: event:/Music/MainMenu
+  scenesManager: 
   cursorPencil: {fileID: 2800000, guid: efefa00827bbf0f46b44dff0332949a8, type: 3}
   cursorHand: {fileID: 2800000, guid: efefa00827bbf0f46b44dff0332949a8, type: 3}
+  cursorNull: {fileID: 0}
   animatorFade: {fileID: 585451751}
   main: {fileID: 1621876564}
   settings: {fileID: 997758332}
   sound: {fileID: 1636437441}
   controls: {fileID: 1646429120}
   fade: {fileID: 585451750}
-  firstSelect: {fileID: 2110423374210242370}
   master: {fileID: 8510878090663594565}
   music: {fileID: 1855086416}
   effects: {fileID: 2141818554}
@@ -3082,7 +3082,7 @@ PrefabInstance:
     - target: {fileID: 7529941796101006886, guid: c7efb51054cc2e545b1289be244e9a20,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: ToogleControls
+      value: ToggleControls
       objectReference: {fileID: 0}
     - target: {fileID: 7529941796101006886, guid: c7efb51054cc2e545b1289be244e9a20,
         type: 3}
@@ -3525,7 +3525,7 @@ PrefabInstance:
     - target: {fileID: 7529941796101006886, guid: c7efb51054cc2e545b1289be244e9a20,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: AnimationEventStart
+      value: StartGame
       objectReference: {fileID: 0}
     - target: {fileID: 7529941796101006886, guid: c7efb51054cc2e545b1289be244e9a20,
         type: 3}
