@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using FMOD.Studio;
 using FMODUnity;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.SceneManagement;
@@ -42,13 +41,13 @@ public class MainMenu : MonoBehaviour
     {
         musicEventInstance = RuntimeManager.CreateInstance(musicReference);
         musicEventInstance.start();
-        musicEventInstance.setParameterByName(musicReference.Path, 0);
+        //musicEventInstance.setParameterByName(musicReference.Path, 0);
         SetupSlider(master, "bus:/Master");
         SetupSlider(music, "bus:/Master/Music");
         SetupSlider(effects, "bus:/Master/SFX");
         
         scenesManager = SceneManager.GetActiveScene().name;
-        if (scenesManager == "MainMenu")
+        if (scenesManager == "00 _ MainMenu")
         {
             Cursor.lockState = CursorLockMode.Confined;
             Cursor.SetCursor(cursorPencil, Vector2.zero, CursorMode.ForceSoftware);
@@ -57,12 +56,13 @@ public class MainMenu : MonoBehaviour
     } 
     IEnumerator StartMainMenu() 
     { 
-        yield return new WaitForSeconds(2);
-        if (scenesManager == "MainMenu")
+        yield return new WaitForSeconds(1);
+        if (scenesManager == "00 _ MainMenu")
         {
             fade.SetActive(false);
             main.GetComponentInChildren<Button>(true).Select();
         }
+        fade.SetActive(false);
     }
     
     ///////////////////////////////////// SoundVolume \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
@@ -91,7 +91,6 @@ public class MainMenu : MonoBehaviour
             buttonMain.Select();
             settings.SetActive(false);
         }
-        
         RuntimeManager.PlayOneShot("event:/SFX/UI_UX/Menu/Open_NextSide");
     }
     public void ToggleSound(bool letterTwo)

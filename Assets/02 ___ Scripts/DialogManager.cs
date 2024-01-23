@@ -6,7 +6,6 @@ using UnityEngine;
 public class DialogManager : MonoBehaviour
 {
     public CinemachineVirtualCamera dialogCam;
-    public NPC npc;
     [SerializeField] private List<Dialog> dialogues;
     
     private void Start()
@@ -20,8 +19,6 @@ public class DialogManager : MonoBehaviour
     {
         GetPrioritizedDialogue().ShowDialogue();
         dialogCam.Priority = 11;
-        if (npc == null) { return; }
-        npc.StartDialog();
     }
     private Dialog GetPrioritizedDialogue()
     {

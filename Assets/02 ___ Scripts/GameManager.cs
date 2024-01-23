@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using FMOD.Studio;
 using FMODUnity;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -49,7 +48,7 @@ public class GameManager : MonoBehaviour
         
     public void ShowDialogUI(Dialog dialog)
     {
-        menu.musicEventInstance.setParameterByName(menu.musicReference.Path, 2);
+        //menu.musicEventInstance.setParameterByName(menu.musicReference.Path, 0);
         playerController.DeactivateInput();
         Cursor.SetCursor(menu.cursorHand, Vector2.zero, CursorMode.ForceSoftware);
         dialogUI.SetActive(true);
@@ -86,15 +85,12 @@ public class GameManager : MonoBehaviour
        yield return new WaitForEndOfFrame();
        if (dialoguesLines.buttonLinesList.Count > 0)
        {
-           buttonGroup.SetActive(true);
            GameObject firstButtom = buttonGroup.transform.GetChild(0).gameObject;
            firstButtom.GetComponent<Button>().Select();
-           buttonDialog.gameObject.SetActive(false);
        }
        else 
        {
            buttonGroup.SetActive(false);
-           buttonDialog.gameObject.SetActive(true);
            buttonDialog.Select();
        }
     }
@@ -108,7 +104,6 @@ public class GameManager : MonoBehaviour
             return;
         }
         ShowCurrentLine();
-        //RunTypewriterEffect();
     }
     public void ShowNewDialog(Dialog dialog)
     {
@@ -119,7 +114,7 @@ public class GameManager : MonoBehaviour
     public void CloseDialogUI()
     {
         animationCloseDialog.Play("DialogUIScaleLow");
-        menu.musicEventInstance.setParameterByName(menu.musicReference.Path, 0);
+        //menu.musicEventInstance.setParameterByName(menu.musicReference.Path, 0);
         Cursor.SetCursor(menu.cursorNull, Vector2.zero, CursorMode.ForceSoftware);
     } 
     public void AnimationEventCloseDialogUI()
@@ -202,6 +197,7 @@ public class GameManager : MonoBehaviour
     {
         ShowIneractUI(false);
         playerController.animator.SetTrigger("Take");
+        playerController.Emote();
         if (playerController.currentInteractable.CompareTag("Dishes"))
         {
             dishes++;
@@ -211,7 +207,7 @@ public class GameManager : MonoBehaviour
                 dishes = 6f;
             }
         }
-        if (playerController.currentInteractable.CompareTag("Rorschachtest"))
+        if (playerController.currentInteractable.gameObject.CompareTag("Rorschachtest"))
         {
             rorschach++;
             if (rorschach == 4f)
@@ -241,7 +237,8 @@ public class GameManager : MonoBehaviour
     }
     public void DestroyInteractable()
     {
-        if (playerController.currentInteractable != null) { Destroy(playerController.currentInteractable.GameObject()); }
+        if (playerController.currentInteractable != null)
+        { Destroy(playerController.currentInteractable.gameObject); }
     }
     
     

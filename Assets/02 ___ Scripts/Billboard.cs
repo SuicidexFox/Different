@@ -12,7 +12,7 @@ public class BillBoard : MonoBehaviour
     private void Start()
     { 
         cam = Camera.main;
-        if (npc = true)
+        if (npc == true)
         {
             return;
         }
