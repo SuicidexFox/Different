@@ -1,12 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using Cinemachine;
+using FMODUnity;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {          ///////////////////////////////////// Variable \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-    public static PlayerController instance;
     public Interactable currentInteractable;
     public CinemachineInputProvider playerCamInputProvider;
     
@@ -43,8 +43,7 @@ public class PlayerController : MonoBehaviour
         
         
         ///////////////////////////////////// Interact \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-        interactAction = playerInput.actions.FindAction("Submit");
-        interactAction.performed += Interact;
+        playerInput.actions.FindActionMap("Player").FindAction("Submit").performed +=Interact;
 
         ///////////////////////////////////// Pause \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
         playerInput.actions.FindActionMap("Player").FindAction("Pause").performed +=Pause;
@@ -97,18 +96,12 @@ public class PlayerController : MonoBehaviour
         animator.SetBool("Shift", runAction.inProgress);
         
         ///////////////////////////////////// TabUI \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-        /*if (tabAction.inProgress)
-        {
-            //GameManager.instance.ToggleEmote();
-        }
-        else
-        {
-            //GameManager.instance.ToggleEmote();
-        }*/
+        //if (tabAction.ReadValue<float>() == 1f) { GameManager.instance.pause = true; }
+        //else { GameManager.instance.pause = false; }
     }
     private void OnDisable() //Disable behavior 
     {
-        interactAction.performed -= Interact;
+        playerInput.actions.FindActionMap("Player").FindAction("Submit").performed -=Interact;
         playerInput.actions.FindActionMap("Player").FindAction("Pause").performed -=Pause;
         playerInput.actions.FindActionMap("UI").FindAction("Pause").performed -= Pause;
         
@@ -153,11 +146,14 @@ public class PlayerController : MonoBehaviour
        playerInput.SwitchCurrentActionMap("UI");
        playerCamInputProvider.enabled = false;
        currentInteractable = null;
+       Cursor.lockState = CursorLockMode.Confined;
     }
     public void ActivateInput()
     {
         playerInput.SwitchCurrentActionMap("Player");
         playerCamInputProvider.enabled = true;
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.SetCursor(GameManager.instance.menu.cursorNull, Vector2.zero, CursorMode.ForceSoftware);
     }
     
     
@@ -167,11 +163,17 @@ public class PlayerController : MonoBehaviour
     private void CryEmote(InputAction.CallbackContext obj)
     {
         animator.Play("Cry");
-        GameManager.instance.ToggleEmote();
+        RuntimeManager.PlayOneShot("event:/SFX/Rosie/Emotes/Cry");
+        Emote();
     }
     private void HalloEmote(InputAction.CallbackContext obj)
     {
         animator.Play("Hallo");
-        GameManager.instance.ToggleEmote();
+        RuntimeManager.PlayOneShot("event:/SFX/Rosie/Emotes/Hallo");
+        Emote();
+    }
+    public void Emote()
+    {
+        playerInput.SwitchCurrentActionMap("UI");
     }
 }

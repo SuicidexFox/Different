@@ -12,12 +12,12 @@ public class AnimationEvent : MonoBehaviour
     
     
     public void SelectQuestButton() { GameManager.instance.AnimationSelectButtonQuestUI(); }
+
     public void CloseQuestUI() { GameManager.instance.AnimationEventCloseQuestUI(); }
     
     
     ///////////////////////////////////////// \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
     ///////////////////////////////////// Player \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-    
     public void PlaySound(string soundPath) { RuntimeManager.PlayOneShot(soundPath); }
     public void PlayerFootstep()
     {
@@ -44,7 +44,12 @@ public class AnimationEvent : MonoBehaviour
         else { return ""; }
     }
     public void PlayerTake() { GameManager.instance.DestroyInteractable(); }
-    public void PlayerActiveInput() { PlayerController.instance.ActivateInput(); }
-    public void PlayerDeactivate() { PlayerController.instance.DeactivateInput(); }
-    public void PlayerPlaySitUp() { RuntimeManager.PlayOneShot(""); }
+    public void PlayerInput() { GameManager.instance.playerController.ActivateInput(); }
+    public void PlayerPlaySitUp() { RuntimeManager.PlayOneShot("event:/SFX/Rosie/RosieFootsteps/Footstep_Capet"); }
+    
+    
+    ///////////////////////////////////////// \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+    /////////////////////////////////////// NPC \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+    public void Scrible() { RuntimeManager.PlayOneShot("event:/SFX/Therapist/Pencil"); }
+    
 }

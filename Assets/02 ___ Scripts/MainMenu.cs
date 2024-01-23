@@ -7,6 +7,7 @@ using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using STOP_MODE = FMOD.Studio.STOP_MODE;
 
 public class MainMenu : MonoBehaviour
 {   ///////////////////////////////////// Variable \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
@@ -26,12 +27,15 @@ public class MainMenu : MonoBehaviour
     public GameObject controls;
     public GameObject fade;
     
+    [Header("Button")]
+    [SerializeField] private Button buttonMain;
+    [SerializeField] private Button buttonSettings;
+    [SerializeField] private Button buttonControls;
+    
     [Header("Slider")]
     [SerializeField] private Slider master;
     [SerializeField] private Slider music;
     [SerializeField] private Slider effects;
-    
-    
     
     ///////////////////////////////////// Events \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
     private void Start()
@@ -44,16 +48,21 @@ public class MainMenu : MonoBehaviour
         SetupSlider(effects, "bus:/Master/SFX");
         
         scenesManager = SceneManager.GetActiveScene().name;
-        if (scenesManager != "MainMenu") { return; }
-        Cursor.SetCursor(cursorPencil, Vector2.zero, CursorMode.ForceSoftware);
-        Cursor.lockState = CursorLockMode.Confined;
-        StartMainMenu();
+        if (scenesManager == "MainMenu")
+        {
+            Cursor.lockState = CursorLockMode.Confined;
+            Cursor.SetCursor(cursorPencil, Vector2.zero, CursorMode.ForceSoftware);
+            StartCoroutine(StartMainMenu());
+        }
     } 
     IEnumerator StartMainMenu() 
     { 
-        yield return new WaitForSeconds(1);
-        fade.SetActive(false);
-        main.GetComponentInChildren<Button>().Select();
+        yield return new WaitForSeconds(2);
+        if (scenesManager == "MainMenu")
+        {
+            fade.SetActive(false);
+            main.GetComponentInChildren<Button>(true).Select();
+        }
     }
     
     ///////////////////////////////////// SoundVolume \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
@@ -67,8 +76,6 @@ public class MainMenu : MonoBehaviour
     public void SetMusicVolume() { RuntimeManager.GetBus("bus:/Master/Music").setVolume(music.value); }
     public void SetSFXVolume() { RuntimeManager.GetBus("bus:/Master/SFX").setVolume(effects.value); }
     
-    
-    
     ///////////////////////////////////// Toggle \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
     public void ToggleSettings(bool letterOne)
     {
@@ -76,13 +83,15 @@ public class MainMenu : MonoBehaviour
         {
             main.SetActive(false);
             settings.SetActive(true);
+            buttonSettings.Select();
         }
         else
         {
             main.SetActive(true);
+            buttonMain.Select();
             settings.SetActive(false);
         }
-        GetComponentInChildren<Button>(true).Select();
+        
         RuntimeManager.PlayOneShot("event:/SFX/UI_UX/Menu/Open_NextSide");
     }
     public void ToggleSound(bool letterTwo)
@@ -92,14 +101,15 @@ public class MainMenu : MonoBehaviour
             Cursor.SetCursor(cursorHand, Vector2.zero, CursorMode.ForceSoftware);
             settings.SetActive(false);
             sound.SetActive(true);
+            master.Select();
         }
         else
         {
             Cursor.SetCursor(cursorPencil, Vector2.zero, CursorMode.ForceSoftware);
             settings.SetActive(true);
+            buttonSettings.Select();
             sound.SetActive(false);
         }
-        GetComponentInChildren<Button>(true).Select();
         RuntimeManager.PlayOneShot("event:/SFX/UI_UX/Menu/Open_NextSide");
     }
     public void ToggleControls(bool letterThree)
@@ -108,16 +118,16 @@ public class MainMenu : MonoBehaviour
         {
             settings.SetActive(false);
             controls.SetActive(true);
+            buttonControls.Select();
         }
         else
         {
             settings.SetActive(true);
+            buttonSettings.Select();
             controls.SetActive(false);
         }
-        GetComponentInChildren<Button>(true).Select();
         RuntimeManager.PlayOneShot("event:/SFX/UI_UX/Menu/Open_NextSide");
     }
-    
     
     ///////////////////////////////////// MainMenu \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
     public void StartGame() 
@@ -130,7 +140,9 @@ public class MainMenu : MonoBehaviour
     {
         yield return new WaitForSeconds(1.6f); 
         SceneManager.LoadScene("Kitchen"); 
-        musicEventInstance.setVolume(0);
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.SetCursor(cursorNull, Vector2.zero, CursorMode.ForceSoftware);
+        musicEventInstance.stop(STOP_MODE.IMMEDIATE);
     }
    
     public void QuitGame()
@@ -145,7 +157,6 @@ public class MainMenu : MonoBehaviour
         Application.Quit();
     }
     
-    
     ///////////////////////////////////////// Pause \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
     public void MainMenuBack()
     {
@@ -158,41 +169,28 @@ public class MainMenu : MonoBehaviour
     {
         yield return new WaitForSeconds(2);
         SceneManager.LoadScene("MainMenu");
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.SetCursor(cursorNull, Vector2.zero, CursorMode.ForceSoftware);
+        musicEventInstance.stop(STOP_MODE.IMMEDIATE);
     }
     
-    
-
     ///////////////////////////////////// Scenenwechsel  \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
     public void ScenenManager()
     {
-        fade.SetActive(false);
-        animatorFade.Play("FadeOutShort");
+        fade.SetActive(true);
+        animatorFade.Play("FadeOut");
         StartCoroutine(CScenenwechsel());
     }
     IEnumerator CScenenwechsel() 
     { 
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(2);
+        if (scenesManager == "Kitchen" ) { SceneManager.LoadScene("Psychiatry"); }
         if (scenesManager == "Psychiatry" ) { SceneManager.LoadScene("Save Place"); } 
         if (scenesManager == "SavePlace" ) { SceneManager.LoadScene(""); } 
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.SetCursor(cursorNull, Vector2.zero, CursorMode.ForceSoftware);
+        musicEventInstance.stop(STOP_MODE.IMMEDIATE);
     }
-    
-    ///////////////////////////////////// Kitchen  \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-    public void StartFadeOutKitchen()
-    {
-        fade.SetActive(false);
-        animatorFade.Play("FadeOutKitchen");
-        StartCoroutine(SelectButtonKitchen());
-    }
-    IEnumerator SelectButtonKitchen() 
-    { 
-        yield return new WaitForSeconds(1);
-        fade.GetComponentInChildren<Button>().Select(); 
-    }
-    public void SceneMainMenu() { SceneManager.LoadScene("Psychiatrie"); }
-    
-    
-    
-    
 }
 
 

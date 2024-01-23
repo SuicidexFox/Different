@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -17,6 +18,22 @@ public class BillBoard : MonoBehaviour
         }
         sprite.enabled = false;
     }
+
+    private void Update()
+    {
+        if (npc == true)
+        {
+            if (GameManager.instance.inUI == true)
+            {
+                sprite.enabled = false;
+            }
+            else
+            {
+                sprite.enabled = true;
+            }
+        }
+    }
+
     private void LateUpdate()
     {
         transform.rotation = cam.transform.rotation;
@@ -31,4 +48,8 @@ public class BillBoard : MonoBehaviour
         if (other.GetComponent<PlayerController>() == null) {return;}
         sprite.enabled = false;
     }
+    
+    
+    
+    
 }

@@ -19,22 +19,17 @@ public class GameManager : MonoBehaviour
     private EventReference musicReference;
     
     private void Awake() { instance = this; }
-    private void Start() { playerController.DeactivateInput(); StartCoroutine(WaitStart()); }
+    private void Start() 
+    { 
+        playerController.DeactivateInput(); 
+        StartCoroutine(WaitStart()); 
+    }
     IEnumerator WaitStart()
     {
         yield return new WaitForSeconds(1); 
         playerController.ActivateInput();
         menu.fade.SetActive(false);
     }
-    
-    
-    
-    
-    
-    
-    
-    
-    
     
     
     ///////////////////////////////////// DialogUI \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
@@ -76,6 +71,8 @@ public class GameManager : MonoBehaviour
         RuntimeManager.PlayOneShot(dialogueLines.sound);
         character.sprite = dialogueLines.character;
         textBox.sprite = dialogueLines.textBox;
+        textDialog.SetText(dialogueLines.text);
+        textDialogNPC.SetText(dialogueLines.textNpc);
         dialogueLines.lineEvent.Invoke();
         foreach (ButtonLines buttonsLines in dialogueLines.buttonLinesList)
         {
@@ -142,33 +139,6 @@ public class GameManager : MonoBehaviour
             Destroy(t.gameObject);
         }
     }
-    ///////////////////////////////////// TypewriterEffect \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\  
-    private float speed = 0.05f;
-    private int currentPosition = -1;
-    private bool _hasFinished { get; set; }
-    public void RunTypewriterEffect()
-    {
-        DialoguesLines dialogueLines = currentLines.DialoguesLinesList[currentLineIndex];
-        textDialog.SetText(dialogueLines.text);
-        textDialogNPC.SetText(dialogueLines.textNpc);
-        StartCoroutine(TypewriterEffect());
-    }
-    IEnumerator TypewriterEffect()
-    { 
-        var textLenght = textDialog.text.Length;
-        while (!_hasFinished && currentPosition + 1 < textLenght)
-        {
-            textDialog.text += GetNextToken();
-            yield return new WaitForSeconds(speed);
-        }
-        _hasFinished = true;
-    }
-    private string GetNextToken()
-    {
-        currentPosition++;
-        var nextToken = textDialog.text[currentPosition].ToString();
-        return nextToken;
-    }
     
     
     ///////////////////////////////////// QuestUI \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
@@ -185,13 +155,10 @@ public class GameManager : MonoBehaviour
         inUI = true;
         questUI.SetActive(true);
         textQuest.SetText(questManager.text);
-        questLog = Instantiate(questManager.currentLetter);
+        questLog = Instantiate(questManager.currentLetter, questLog.transform);
         RuntimeManager.PlayOneShot("event:/SFX/UI_UX/Menu/Open_NextSide");
     }
-    public void AnimationSelectButtonQuestUI()
-    {
-        buttonQuest.Select();
-    }
+    public void AnimationSelectButtonQuestUI() { buttonQuest.Select(); }
     public void CloseQuestUI()
     {
         animationCloseQuestUI.Play("QuestUIScaleSmal");
@@ -203,7 +170,6 @@ public class GameManager : MonoBehaviour
         playerController.ActivateInput();
         questUI.SetActive(false);
         inUI = false;
-        questManager.GetComponent<QuestManager>().questCam.Priority = 0;
     }
     
     
@@ -234,10 +200,8 @@ public class GameManager : MonoBehaviour
     }
     public void QuestInteractables()
     {
-        playerController.animator.SetTrigger("Take");  
-        playerController.playerInput.SwitchCurrentActionMap("UI");
-        playerController.playerCamInputProvider.enabled = false;
         ShowIneractUI(false);
+        playerController.animator.SetTrigger("Take");
         if (playerController.currentInteractable.CompareTag("Dishes"))
         {
             dishes++;
@@ -245,7 +209,6 @@ public class GameManager : MonoBehaviour
             {
                 importantItems.Add("Dishes");
                 dishes = 6f;
-                questManager.DestroyInteractable();
             }
         }
         if (playerController.currentInteractable.CompareTag("Rorschachtest"))
@@ -279,8 +242,6 @@ public class GameManager : MonoBehaviour
     public void DestroyInteractable()
     {
         if (playerController.currentInteractable != null) { Destroy(playerController.currentInteractable.GameObject()); }
-        playerController.playerInput.SwitchCurrentActionMap("Player");
-        playerController.playerCamInputProvider.enabled = true;
     }
     
     
@@ -299,14 +260,13 @@ public class GameManager : MonoBehaviour
         if (pause)
         {
             playerController.DeactivateInput();
-            Cursor.SetCursor(menu.cursorPencil, Vector2.zero, CursorMode.ForceSoftware);
+            menu.main.GetComponentInChildren<Button>(true).Select();
             RuntimeManager.PlayOneShot("event:/SFX/UI_UX/Menu/Open_NextSide");
             Time.timeScale = 0.0f;
         }
         else
         { 
             playerController.ActivateInput();
-            Cursor.SetCursor(menu.cursorNull, Vector2.zero, CursorMode.ForceSoftware);
             RuntimeManager.PlayOneShot("event:/SFX/UI_UX/Menu/Close");
             Time.timeScale = 1.0f;
             menu.main.SetActive(true);
@@ -315,21 +275,4 @@ public class GameManager : MonoBehaviour
             menu.controls.SetActive(false);
         } 
     }
-    
-    
-    
-    ///////////////////////////////////// Emote \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-    public bool emote;
-    
-    public void ToggleEmote()
-    {
-        if (inUI == true) { return; }
-        emote = !emote;
-        if (emote) { playerController.DeactivateInput(); }
-        else { playerController.ActivateInput(); } 
-    }
-    
-    
-    
-
 }
