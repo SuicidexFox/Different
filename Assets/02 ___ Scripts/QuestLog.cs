@@ -13,8 +13,7 @@ public class QuestLog : MonoBehaviour
     private float moveout = 400f;
     private float canvasSpeed = 2f;
 
-    void Start()
-    { canvasRectTransform = GetComponent<RectTransform>(); } 
+    void Start() { canvasRectTransform = GetComponent<RectTransform>(); } 
     
     public void MoveCanvas()
     {
@@ -45,22 +44,6 @@ public class QuestLog : MonoBehaviour
         yield return new WaitForSeconds(seconds);
         GameManager.instance.playerController.questLog = false;
     }
-    
-    
-    
-    
-    /*public void MoveIn()
-    {
-        Vector2 currentPosition = canvasRectTransform.anchoredPosition;
-        currentPosition.x -= canvasSpeed * Time.deltaTime;
-        canvasRectTransform.anchoredPosition = currentPosition;
-    }
-    public void MoveOut()
-    {
-        Vector2 currentPosition = canvasRectTransform.anchoredPosition;
-        currentPosition.x = moveout;
-        canvasRectTransform.anchoredPosition = currentPosition;
-    }*/
 }
 
 

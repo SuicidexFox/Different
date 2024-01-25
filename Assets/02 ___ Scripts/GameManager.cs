@@ -23,17 +23,19 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         scenesManager = SceneManager.GetActiveScene().name;
-        if (scenesManager == "Psychiatry")
+        if (scenesManager == "Kitchen")
         {
             playerController.DeactivateInput();
+            StartCoroutine(Kitchen());
+        }
+        if (scenesManager == "Psychiatry")
+        {
+            playerController.currentInteractable._onInteract.Invoke();
             playerController.animator.Play("Psychiatry"); 
             StartCoroutine(WaitPsychiatry());
         }
-        else { playerController.DeactivateInput(); }
-        StartCoroutine(WaitStart()); 
-        
     }
-    IEnumerator WaitStart()
+    IEnumerator Kitchen()
     {
         yield return new WaitForSeconds(1); 
         playerController.ActivateInput();
@@ -42,7 +44,6 @@ public class GameManager : MonoBehaviour
     IEnumerator WaitPsychiatry()
     {
         yield return new WaitForSeconds(1); 
-        dialogPsychiatry.ShowDialogue();
         menu.fade.SetActive(false);
     }
 
@@ -63,24 +64,23 @@ public class GameManager : MonoBehaviour
         
     public void ShowDialogUI(Dialog dialog)
     {
-        playerController.DeactivateInput();
+        playerController.DeactivateInput(); 
+        ClearButton();
         Cursor.SetCursor(menu.cursorHand, Vector2.zero, CursorMode.ForceSoftware);
         dialogUI.SetActive(true);
         inUI = true;
-        
         textDialog.SetText("");
         textDialogNPC.SetText("");
         currentLines = dialog;
         currentLineIndex = 0;
         ShowIneractUI(false);
-        ClearButton();
         ShowCurrentLine();
     }
     private void ShowCurrentLine()
     {
         DialoguesLines dialogueLines = currentLines.DialoguesLinesList[currentLineIndex];
         ClearButton();
-        if (dialogueLines == null) { CloseDialogUI(); }
+        if (dialogueLines == null) { return; }
         if (dialogueLines.sound.Path != null) { RuntimeManager.PlayOneShot(dialogueLines.sound); }
         character.sprite = dialogueLines.character;
         textBox.sprite = dialogueLines.textBox;
@@ -99,8 +99,9 @@ public class GameManager : MonoBehaviour
        yield return new WaitForEndOfFrame();
        if (dialoguesLines.buttonLinesList.Count > 0)
        {
-           GameObject firstButtom = buttonCurrent.transform.GetChild(0).gameObject;
-           firstButtom.GetComponent<Button>().Select();
+           buttonGroup.SetActive(true);
+           GameObject firstButton = buttonGroup.transform.GetChild(0).gameObject;
+           firstButton.GetComponent<Button>().Select();
            buttonDialog.gameObject.SetActive(false);
        }
        else 
@@ -145,6 +146,7 @@ public class GameManager : MonoBehaviour
     {
         foreach (Transform t in buttonGroup.transform)
         {
+            buttonGroup.SetActive(false);
             Destroy(t.gameObject);
         }
     }
@@ -186,7 +188,6 @@ public class GameManager : MonoBehaviour
     
     public float dishes;
     public float rorschach;
-    public DialogManager dialogPsychiatry;
     public float skillkit;
     public float letter;
     public List<string> importantItems;
@@ -208,7 +209,6 @@ public class GameManager : MonoBehaviour
                 importantItems.Add("Dishes");
                 dishes = 6f;
                 questLog.Questende();
-                questLog.lettertext.fontStyle = FontStyles.Strikethrough;
                 questLog.GetComponentInChildren<Animator>().enabled = true;
             }
         }
@@ -231,8 +231,6 @@ public class GameManager : MonoBehaviour
                 importantItems.Add("Skillbag");
                 skillkit = 4f;
                 questLog.Questende();
-                questLog.lettertext.fontStyle = FontStyles.Strikethrough;
-                questLog.GetComponentInChildren<Animator>().enabled = true;
                 questLog.GetComponentInChildren<Animator>(CompareTag("Skillkit")).enabled = true;
             }
         }

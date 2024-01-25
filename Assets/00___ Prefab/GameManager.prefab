@@ -953,7 +953,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &2848418725478304095
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1250,7 +1250,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 33, y: 174}
+  m_AnchoredPosition: {x: 33, y: 130}
   m_SizeDelta: {x: 650, y: 430}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &3409539284838631269
@@ -1708,7 +1708,6 @@ MonoBehaviour:
   interactUI: {fileID: 4423552744871006696}
   dishes: 0
   rorschach: 0
-  dialogPsychiatry: {fileID: 0}
   skillkit: 0
   letter: 0
   importantItems: []
@@ -1822,10 +1821,30 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7743148326401583303, guid: 47d2cb4727b564f49b1396e52226cf78,
+        type: 3}
+      propertyPath: music
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 7743148326401583303, guid: 47d2cb4727b564f49b1396e52226cf78,
+        type: 3}
+      propertyPath: master
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 7743148326401583303, guid: 47d2cb4727b564f49b1396e52226cf78,
+        type: 3}
+      propertyPath: effects
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 9195266452595467860, guid: 47d2cb4727b564f49b1396e52226cf78,
         type: 3}
       propertyPath: m_Name
       value: Menu
+      objectReference: {fileID: 0}
+    - target: {fileID: 9195266452595467860, guid: 47d2cb4727b564f49b1396e52226cf78,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

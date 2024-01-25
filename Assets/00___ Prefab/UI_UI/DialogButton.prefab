@@ -52,7 +52,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b68401a649ec3d247b26086186427559, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _buttonTextUI: {fileID: 3021572709873037241}
+  buttonTextUI: {fileID: 3021572709873037241}
   text: .....
   buttonEvent:
     m_PersistentCalls:
