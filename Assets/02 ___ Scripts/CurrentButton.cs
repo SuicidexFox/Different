@@ -6,11 +6,11 @@ using UnityEngine.Events;
 
 public class CurrentButton : MonoBehaviour
 {
-    [SerializeField] private TextMeshProUGUI _buttonTextUI;
+    [SerializeField] private TextMeshProUGUI buttonTextUI;
     public string text;
     public UnityEvent buttonEvent;
     
-    public void Setup(string text, UnityEvent buttonEvent) { this.text = text; this.buttonEvent = buttonEvent; _buttonTextUI.SetText(text); }
+    public void Setup(string text, UnityEvent buttonEvent) { this.text = text; this.buttonEvent = buttonEvent; buttonTextUI.SetText(text); }
     
     public void OnClick()
         {

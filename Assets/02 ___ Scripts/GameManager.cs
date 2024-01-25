@@ -46,12 +46,6 @@ public class GameManager : MonoBehaviour
         menu.fade.SetActive(false);
     }
 
-    private void Update()
-    {
-        if (inUI == true) { menu.musicInstance.setParameterByName("MusicStage", 2); }
-        else { menu.musicInstance.setParameterByName("MusicStage", 0); }
-    }
-
     ///////////////////////////////////// DialogUI \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
     [Header("Dialog")]
     public bool inUI;
@@ -87,7 +81,7 @@ public class GameManager : MonoBehaviour
         DialoguesLines dialogueLines = currentLines.DialoguesLinesList[currentLineIndex];
         ClearButton();
         if (dialogueLines == null) { CloseDialogUI(); }
-        RuntimeManager.PlayOneShot(dialogueLines.sound);
+        if (dialogueLines.sound.Path != null) { RuntimeManager.PlayOneShot(dialogueLines.sound); }
         character.sprite = dialogueLines.character;
         textBox.sprite = dialogueLines.textBox;
         textDialog.SetText(dialogueLines.text);
@@ -190,9 +184,6 @@ public class GameManager : MonoBehaviour
     ///////////////////////////////////// InteractUI \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
     [Header("Interact")] 
     [SerializeField] private GameObject interactUI;
-    [SerializeField] private GameObject interactKey;
-    [SerializeField] private GameObject interactCon;
-    
     
     public float dishes;
     public float rorschach;
@@ -282,13 +273,13 @@ public class GameManager : MonoBehaviour
         { 
             playerController.DeactivateInput();
             menu.buttonMain.Select();
-            RuntimeManager.PlayOneShot("event:/SFX/UI_UX/Menu/Open_NextSide");
+            RuntimeManager.PlayOneShot("event:/SFX/UI_UX/Menu/Open_NextSidePause");
             Time.timeScale = 0.0f;
         }
         else
         { 
             playerController.ActivateInput();
-            RuntimeManager.PlayOneShot("event:/SFX/UI_UX/Menu/Close");
+            RuntimeManager.PlayOneShot("event:/SFX/UI_UX/Menu/ClosePause");
             Time.timeScale = 1.0f;
             menu.main.SetActive(true);
             menu.settings.SetActive(false);

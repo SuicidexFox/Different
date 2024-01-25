@@ -35,7 +35,7 @@ RectTransform:
   - {fileID: 8495724803320587145}
   - {fileID: 7112856279365168134}
   - {fileID: 7459573365749479134}
-  - {fileID: 1122196522237223674}
+  - {fileID: 2168614417261232541}
   m_Father: {fileID: 5952966794999470461}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -1687,7 +1687,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerController: {fileID: 0}
-  menu: {fileID: 6600314136449301126}
+  menu: {fileID: 5337792660042799585}
   questLog: {fileID: 7213659210607526904}
   scenesManager: 
   inUI: 0
@@ -1706,8 +1706,6 @@ MonoBehaviour:
   buttonQuest: {fileID: 3572564489945408547}
   animationCloseQuestUI: {fileID: 2489274958169379769}
   interactUI: {fileID: 4423552744871006696}
-  interactKey: {fileID: 4071515016884226431}
-  interactCon: {fileID: 0}
   dishes: 0
   rorschach: 0
   dialogPsychiatry: {fileID: 0}
@@ -1715,8 +1713,8 @@ MonoBehaviour:
   letter: 0
   importantItems: []
   pause: 0
-  pauseUI: {fileID: 8941203310634340581}
---- !u!1001 &3525252927035740737
+  pauseUI: {fileID: 7899077977758856066}
+--- !u!1001 &2406776269759476006
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -1724,26 +1722,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 8233154124529548127}
     m_Modifications:
-    - target: {fileID: 1626247588048865188, guid: 47d2cb4727b564f49b1396e52226cf78,
-        type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1626247588048865188, guid: 47d2cb4727b564f49b1396e52226cf78,
-        type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1626247588048865188, guid: 47d2cb4727b564f49b1396e52226cf78,
-        type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 2743722231517775105, guid: 47d2cb4727b564f49b1396e52226cf78,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 4575341758736494779, guid: 47d2cb4727b564f49b1396e52226cf78,
         type: 3}
       propertyPath: m_Pivot.x
@@ -1854,17 +1832,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 47d2cb4727b564f49b1396e52226cf78, type: 3}
---- !u!224 &1122196522237223674 stripped
+--- !u!224 &2168614417261232541 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 4575341758736494779, guid: 47d2cb4727b564f49b1396e52226cf78,
     type: 3}
-  m_PrefabInstance: {fileID: 3525252927035740737}
+  m_PrefabInstance: {fileID: 2406776269759476006}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &6600314136449301126 stripped
+--- !u!114 &5337792660042799585 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7743148326401583303, guid: 47d2cb4727b564f49b1396e52226cf78,
     type: 3}
-  m_PrefabInstance: {fileID: 3525252927035740737}
+  m_PrefabInstance: {fileID: 2406776269759476006}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
@@ -1872,9 +1850,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c3bfe3804528fe4ca423b9bd1d77f3e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &8941203310634340581 stripped
+--- !u!1 &7899077977758856066 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5546675341150847652, guid: 47d2cb4727b564f49b1396e52226cf78,
     type: 3}
-  m_PrefabInstance: {fileID: 3525252927035740737}
+  m_PrefabInstance: {fileID: 2406776269759476006}
   m_PrefabAsset: {fileID: 0}

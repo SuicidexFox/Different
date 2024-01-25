@@ -15,22 +15,17 @@ public class MainMenu : MonoBehaviour
     public static MainMenu instance;
     public EventInstance musicInstance;
     public EventReference musicReference;
-    public StudioEventEmitter musicEmitter;
     public string scenesManager;
     public Texture2D cursorPencil;
     public Texture2D cursorHand;
     public Texture2D cursorNull;
     [SerializeField] private Animator animatorFade;
-    public PlayerInput PlayerInput;
-    public string currentControlScheme;
     
     [Header("Letter")]
     public GameObject main;
     public GameObject settings;
     public GameObject sound; 
     public GameObject controls;
-    [SerializeField] private GameObject contolsKey;
-    [SerializeField] private GameObject controlsCon;
     public GameObject fade;
     
     [Header("Button")]
@@ -63,6 +58,12 @@ public class MainMenu : MonoBehaviour
     } 
     IEnumerator StartMainMenu() 
     { yield return new WaitForSeconds(1); { fade.SetActive(false); buttonMain.Select(); }}
+    
+    private void Update()
+    {
+        if (GameManager.instance.inUI == true) { musicInstance.setParameterByName("MusicStage", 2); }
+        else { musicInstance.setParameterByName("MusicStage", 0); }
+    }
     
 
     ///////////////////////////////////// SoundVolume \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
@@ -153,6 +154,7 @@ public class MainMenu : MonoBehaviour
     }
     
     ///////////////////////////////////////// Pause \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+    public void Continue() { GameManager.instance.TogglePause(); }
     public void MainMenuBack()
     {
         GameManager.instance.TogglePause();
@@ -181,10 +183,10 @@ public class MainMenu : MonoBehaviour
         yield return new WaitForSeconds(2);
         if (scenesManager == "Kitchen" ) { SceneManager.LoadScene("Psychiatry"); }
         if (scenesManager == "Psychiatry" ) { SceneManager.LoadScene("Save Place"); } 
-        if (scenesManager == "SavePlace" ) { SceneManager.LoadScene(""); } 
+        if (scenesManager == "SavePlace" ) { SceneManager.LoadScene("Credits"); } 
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.SetCursor(cursorNull, Vector2.zero, CursorMode.ForceSoftware);
-        musicInstance.stop(STOP_MODE.ALLOWFADEOUT);
+        musicInstance.stop(STOP_MODE.IMMEDIATE);
     }
 }
 
