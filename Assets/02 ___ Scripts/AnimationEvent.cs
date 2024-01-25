@@ -7,15 +7,17 @@ using UnityEngine.SceneManagement;
 public class AnimationEvent : MonoBehaviour
 {   
     ///////////////////////////////////// UI_UX \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+    ///////////////////////////////////////// \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+    ///////////////////////////////////// DialogUI \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
     public void CloseDialogUI() { GameManager.instance.AnimationEventCloseDialogUI(); }
     
-    
-    
+    ///////////////////////////////////// QuestUI \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
     public void SelectQuestButton() { GameManager.instance.AnimationSelectButtonQuestUI(); }
     public void CloseQuestUI() { GameManager.instance.AnimationEventCloseQuestUI(); }
+    
+    ///////////////////////////////////// QuestLog \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
     public void PlayOneShotQuestTab() {RuntimeManager.PlayOneShot("event:/SFX/UI_UX/QuestUI/QuestUIClose");}
     public void QuestTabLetterDestroy() { Destroy(gameObject); }
-    
     
     ///////////////////////////////////////// \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
     ///////////////////////////////////// Player \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
@@ -44,7 +46,9 @@ public class AnimationEvent : MonoBehaviour
         if (Physics.Raycast(ray, out hit, rayDistance)) { return hit.collider.tag; }
         else { return ""; }
     }
-    public void PlayerTake() { GameManager.instance.DestroyInteractable(); }
+    public void PlayerTake() { GameManager.instance.DestroyInteractable();
+        RuntimeManager.PlayOneShot("event:/SFX/UI_UX/Collect/Take 3");
+    }
     public void PlayerInput() { GameManager.instance.playerController.ActivateInput(); }
     public void PlayerPlaySitUp() { RuntimeManager.PlayOneShot("event:/SFX/Rosie/RosieFootsteps/Footstep_Capet"); }
     

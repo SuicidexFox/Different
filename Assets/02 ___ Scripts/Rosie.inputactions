@@ -6,6 +6,15 @@
             "id": "373dac45-db2c-42bf-9872-6fa4beec0249",
             "actions": [
                 {
+                    "name": "Pause",
+                    "type": "Button",
+                    "id": "9084563d-559e-442b-8b58-64834260f324",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "Look",
                     "type": "Button",
                     "id": "7f243757-cae6-4d85-bfa5-d26e723a8db0",
@@ -33,16 +42,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "QuestLog",
-                    "type": "Button",
-                    "id": "fd366667-e253-40d0-b27f-a8c23ff4509e",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "Submit",
+                    "name": "Interact",
                     "type": "Button",
                     "id": "0576b85c-01ed-424d-9ff3-23b9af7057a0",
                     "expectedControlType": "Button",
@@ -51,9 +51,9 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Pause",
+                    "name": "QuestLog",
                     "type": "Button",
-                    "id": "9084563d-559e-442b-8b58-64834260f324",
+                    "id": "fd366667-e253-40d0-b27f-a8c23ff4509e",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -239,30 +239,8 @@
                     "path": "<Gamepad>/leftTrigger",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
-                    "action": "Run",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "cacd05ed-b8b6-463d-912f-9e41a6daf40c",
-                    "path": "<Keyboard>/tab",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Keyboard",
-                    "action": "QuestLog",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "b3b73f97-ab6e-4de1-979b-1a0dc27ce050",
-                    "path": "<Gamepad>/leftStick/right",
-                    "interactions": "",
-                    "processors": "",
                     "groups": "Controller",
-                    "action": "QuestLog",
+                    "action": "Run",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -273,7 +251,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Controller",
-                    "action": "Submit",
+                    "action": "Interact",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -284,7 +262,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard",
-                    "action": "Submit",
+                    "action": "Interact",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -295,51 +273,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard",
-                    "action": "Submit",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "b0c84718-a907-48c5-a398-0925fef309b2",
-                    "path": "<Keyboard>/p",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Keyboard",
-                    "action": "Pause",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "32a97cbf-0aa0-4fd0-93df-7f3269abe0d4",
-                    "path": "<Gamepad>/start",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Controller",
-                    "action": "Pause",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "d1f0eebc-8c13-44e8-97c6-9d736cae94c2",
-                    "path": "<Keyboard>/escape",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Keyboard",
-                    "action": "Pause",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "8285c1df-5e00-4ada-8d81-de721a45650a",
-                    "path": "<DualShockGamepad>/touchpadButton",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Pause",
+                    "action": "Interact",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -384,6 +318,83 @@
                     "processors": "",
                     "groups": "Controller",
                     "action": "EmoteHallo",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "b0c84718-a907-48c5-a398-0925fef309b2",
+                    "path": "<Keyboard>/p",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard",
+                    "action": "Pause",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "32a97cbf-0aa0-4fd0-93df-7f3269abe0d4",
+                    "path": "<Gamepad>/start",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Controller",
+                    "action": "Pause",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "d1f0eebc-8c13-44e8-97c6-9d736cae94c2",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard",
+                    "action": "Pause",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "8285c1df-5e00-4ada-8d81-de721a45650a",
+                    "path": "<DualShockGamepad>/touchpadButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Controller",
+                    "action": "Pause",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "adedff3c-bb6f-4048-97c0-cd8487bcb54b",
+                    "path": "<Keyboard>/tab",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard",
+                    "action": "Pause",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "cacd05ed-b8b6-463d-912f-9e41a6daf40c",
+                    "path": "<Keyboard>/e",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard",
+                    "action": "QuestLog",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "b3b73f97-ab6e-4de1-979b-1a0dc27ce050",
+                    "path": "<Gamepad>/dpad/right",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Controller",
+                    "action": "QuestLog",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
@@ -673,6 +684,17 @@
                 },
                 {
                     "name": "",
+                    "id": "ac4f5852-35a2-40be-a633-772ed91ffda9",
+                    "path": "<Keyboard>/tab",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard",
+                    "action": "Pause",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "a136c703-c39a-40ea-9200-cec7b55a22eb",
                     "path": "<Keyboard>/f",
                     "interactions": "",
@@ -732,7 +754,7 @@
                     "path": "<DualShockGamepad>/leftStick",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": "Controller",
                     "action": "Point",
                     "isComposite": false,
                     "isPartOfComposite": false

@@ -7,21 +7,21 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
-{          ///////////////////////////////////// Variable \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-    public Interactable currentInteractable;
+{   ///////////////////////////////////// Variable \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
     public CinemachineInputProvider playerCamInputProvider;
-    public string currentControlScheme;
     
     public PlayerInput playerInput;
     private InputAction moveAction;
     private InputAction runAction;
     private InputAction interactAction;
-    public bool questLog = false;
     private InputAction pauseAction;
     
-    private CharacterController characterController;
-    private Transform camTransform;
+    public CharacterController characterController;
+    public Transform camTransform;
     public Animator animator;
+    
+    public Interactable currentInteractable;
+    public bool questLog = false;
     
     //Move
     private float walkSpeed = 1f;
@@ -30,17 +30,11 @@ public class PlayerController : MonoBehaviour
     private float minTurnSpeed = 0.2f;
     private float turnSpeed = 5f;
     
-
-    // Funktion, um das aktuelle Control Scheme abzufragen
-    public string GetCurrentControlScheme()
-    { return currentControlScheme; }
     
     ///////////////////////////////////// Start \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
     public void Start()
     {
         ///////////////////////////////////// Movement \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-        playerInput = GetComponent<PlayerInput>();
-        characterController = GetComponent<CharacterController>();
         camTransform = Camera.main.transform;
         
         ///////////////////////////////////// Walk & Run \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
@@ -49,7 +43,7 @@ public class PlayerController : MonoBehaviour
         
         
         ///////////////////////////////////// Interact \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-        interactAction = playerInput.actions.FindAction("Submit");
+        interactAction = playerInput.actions.FindAction("Interact");
         interactAction.performed += Interact;
 
         ///////////////////////////////////// Pause \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
@@ -100,10 +94,10 @@ public class PlayerController : MonoBehaviour
         
         ///////////////////////////////////// QuestLog \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
         //Keyboard
-        if (Input.GetKeyDown(KeyCode.Tab))
+        if (Input.GetKeyDown(KeyCode.E))
         { questLog = true; }
         // Prüfe, ob die Taste losgelassen wurde
-        if (Input.GetKeyUp(KeyCode.Tab))
+        if (Input.GetKeyUp(KeyCode.E))
         { questLog = false; GameManager.instance.questLog.ResetCanvasPosition(); }
         // Bewege das Canvas, wenn die Taste gedrückt wird
         if (questLog)
@@ -161,12 +155,18 @@ public class PlayerController : MonoBehaviour
 
     
     ///////////////////////////////////// Player Inputs \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-    public void DeactivateInput()
+    public void DeactivateInput()  //Deaktiviere Alles
     {
        playerInput.SwitchCurrentActionMap("UI");
        playerCamInputProvider.enabled = false;
        currentInteractable = null;
        Cursor.lockState = CursorLockMode.Confined;
+       if (GameManager.instance.inUI == true)
+       { Cursor.SetCursor(GameManager.instance.menu.cursorHand, Vector2.zero, CursorMode.ForceSoftware); return;}
+       if (GameManager.instance.pause == true)
+       { Cursor.SetCursor(GameManager.instance.menu.cursorPencil, Vector2.zero, CursorMode.ForceSoftware); return; }
+       Cursor.lockState = CursorLockMode.Confined;
+       Cursor.SetCursor(GameManager.instance.menu.cursorHand, Vector2.zero, CursorMode.ForceSoftware);
     }
     public void ActivateInput()
     {
@@ -181,19 +181,8 @@ public class PlayerController : MonoBehaviour
     private InputAction hallo;
     private InputAction cry;
     private void CryEmote(InputAction.CallbackContext obj)
-    {
-        animator.Play("Cry");
-        RuntimeManager.PlayOneShot("event:/SFX/Rosie/Emotes/Cry");
-        Emote();
-    }
+    { animator.Play("Cry"); RuntimeManager.PlayOneShot("event:/SFX/Rosie/Emotes/Cry"); Emote(); }
     private void HalloEmote(InputAction.CallbackContext obj)
-    {
-        animator.Play("Hallo");
-        RuntimeManager.PlayOneShot("event:/SFX/Rosie/Emotes/Hallo");
-        Emote();
-    }
-    public void Emote()
-    {
-        playerInput.SwitchCurrentActionMap("UI");
-    }
+    { animator.Play("Hallo"); RuntimeManager.PlayOneShot("event:/SFX/Rosie/Voice/lachen 2"); Emote(); }
+    public void Emote() { playerInput.SwitchCurrentActionMap("UI"); }
 }

@@ -159,19 +159,18 @@ public class GameManager : MonoBehaviour
     public void ShowQuestUI(QuestManager questManager)
     {
         playerController.DeactivateInput();
-        Cursor.SetCursor(menu.cursorPencil, Vector2.zero, CursorMode.ForceSoftware);
         ShowIneractUI(false);
         inUI = true;
         questUI.SetActive(true);
         textQuest.SetText(questManager.text);
-        RuntimeManager.PlayOneShot("event:/SFX/UI_UX/Menu/Open_NextSide");
+        RuntimeManager.PlayOneShot("event:/SFX/UI_UX/Collect/Take 4");
     }
     public void AnimationSelectButtonQuestUI() { buttonQuest.Select(); }
     public void CloseQuestUI()
     {
         animationCloseQuestUI.Play("QuestUIScaleSmal");
         Cursor.SetCursor(menu.cursorNull, Vector2.zero, CursorMode.ForceSoftware);
-        RuntimeManager.PlayOneShot("event:/SFX/UI_UX/Menu/Clicket");
+        RuntimeManager.PlayOneShot("event:/SFX/UI_UX/QuestUI/QuestUIClose");
     }
     public void AnimationEventCloseQuestUI()
     {
@@ -272,19 +271,19 @@ public class GameManager : MonoBehaviour
         if (pause)
         { 
             playerController.DeactivateInput();
-            menu.buttonMain.Select();
             RuntimeManager.PlayOneShot("event:/SFX/UI_UX/Menu/Open_NextSidePause");
+            menu.buttonMain.Select();
             Time.timeScale = 0.0f;
         }
         else
         { 
             playerController.ActivateInput();
             RuntimeManager.PlayOneShot("event:/SFX/UI_UX/Menu/ClosePause");
-            Time.timeScale = 1.0f;
             menu.main.SetActive(true);
             menu.settings.SetActive(false);
             menu.sound.SetActive(false);
             menu.controls.SetActive(false);
+            Time.timeScale = 1.0f;
         } 
     }
 }

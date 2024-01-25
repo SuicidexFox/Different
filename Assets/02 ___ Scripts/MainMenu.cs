@@ -39,7 +39,7 @@ public class MainMenu : MonoBehaviour
     [SerializeField] private Slider effects;
     
     ///////////////////////////////////// Events \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-    private void Start()
+    private void Start()  //Startet das Main Menu, nicht die Pause
     {
         musicInstance = RuntimeManager.CreateInstance(musicReference);
         musicInstance.setParameterByName("MusicStage", 0);
@@ -157,17 +157,17 @@ public class MainMenu : MonoBehaviour
     public void Continue() { GameManager.instance.TogglePause(); }
     public void MainMenuBack()
     {
-        GameManager.instance.TogglePause();
+        Time.timeScale = 1.0f;
         fade.SetActive(true); 
-        animatorFade.Play("FadeOutShort");
+        animatorFade.Play("FadeOut");
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.SetCursor(cursorNull, Vector2.zero, CursorMode.ForceSoftware);
         StartCoroutine(CMainMenu());
     }
     IEnumerator CMainMenu()
     {
         yield return new WaitForSeconds(2);
-        SceneManager.LoadScene("MainMenu");
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.SetCursor(cursorNull, Vector2.zero, CursorMode.ForceSoftware);
+        SceneManager.LoadScene("00 _ MainMenu");
         musicInstance.stop(STOP_MODE.IMMEDIATE);
     }
     
@@ -176,6 +176,21 @@ public class MainMenu : MonoBehaviour
     {
         fade.SetActive(true);
         animatorFade.Play("FadeOut");
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.SetCursor(cursorNull, Vector2.zero, CursorMode.ForceSoftware);
+        if (scenesManager == "Kitchen")
+        {
+            musicInstance.stop(STOP_MODE.IMMEDIATE);
+            RuntimeManager.PlayOneShot("event:/SFX/Rosie/Voice/Schrei");
+            StartCoroutine(CKitchen());
+            return;
+        }
+        StartCoroutine(CScenenwechsel());
+    }
+
+    IEnumerator CKitchen()
+    {
+        yield return new WaitForSeconds(7);
         StartCoroutine(CScenenwechsel());
     }
     IEnumerator CScenenwechsel() 
@@ -184,8 +199,6 @@ public class MainMenu : MonoBehaviour
         if (scenesManager == "Kitchen" ) { SceneManager.LoadScene("Psychiatry"); }
         if (scenesManager == "Psychiatry" ) { SceneManager.LoadScene("Save Place"); } 
         if (scenesManager == "SavePlace" ) { SceneManager.LoadScene("Credits"); } 
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.SetCursor(cursorNull, Vector2.zero, CursorMode.ForceSoftware);
         musicInstance.stop(STOP_MODE.IMMEDIATE);
     }
 }
