@@ -12,8 +12,9 @@ public class AnimationEvent : MonoBehaviour
     
     
     public void SelectQuestButton() { GameManager.instance.AnimationSelectButtonQuestUI(); }
-
     public void CloseQuestUI() { GameManager.instance.AnimationEventCloseQuestUI(); }
+    public void PlayOneShotQuestTab() {RuntimeManager.PlayOneShot("event:/SFX/UI_UX/QuestUI/QuestUIClose");}
+    public void QuestTabLetterDestroy() { Destroy(gameObject); }
     
     
     ///////////////////////////////////////// \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using FMOD.Studio;
@@ -13,15 +14,24 @@ public class GameManager : MonoBehaviour
     public static GameManager instance;
     public PlayerController playerController;
     public MainMenu menu;
+    public QuestLog questLog;
     private Dialog currentLines;
-    private QuestManager questManager;
-    private EventReference musicReference;
+    public string scenesManager;
+    
     
     private void Awake() { instance = this; }
-    private void Start() 
-    { 
-        playerController.DeactivateInput(); 
+    private void Start()
+    {
+        scenesManager = SceneManager.GetActiveScene().name;
+        if (scenesManager == "Psychiatry")
+        {
+            playerController.DeactivateInput();
+            playerController.animator.Play("Psychiatry"); 
+            StartCoroutine(WaitPsychiatry());
+        }
+        else { playerController.DeactivateInput(); }
         StartCoroutine(WaitStart()); 
+        
     }
     IEnumerator WaitStart()
     {
@@ -29,12 +39,23 @@ public class GameManager : MonoBehaviour
         playerController.ActivateInput();
         menu.fade.SetActive(false);
     }
-    
-    
+    IEnumerator WaitPsychiatry()
+    {
+        yield return new WaitForSeconds(1); 
+        dialogPsychiatry.ShowDialogue();
+        menu.fade.SetActive(false);
+    }
+
+    private void Update()
+    {
+        if (inUI == true) { menu.musicInstance.setParameterByName("MusicStage", 2); }
+        else { menu.musicInstance.setParameterByName("MusicStage", 0); }
+    }
+
     ///////////////////////////////////// DialogUI \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
     [Header("Dialog")]
     public bool inUI;
-    private int currentLineIndex;
+    private int currentLineIndex = 0;
     [SerializeField] private GameObject dialogUI;
     [SerializeField] private Image character;
     [SerializeField] private Image textBox;
@@ -48,7 +69,6 @@ public class GameManager : MonoBehaviour
         
     public void ShowDialogUI(Dialog dialog)
     {
-        //menu.musicEventInstance.setParameterByName(menu.musicReference.Path, 0);
         playerController.DeactivateInput();
         Cursor.SetCursor(menu.cursorHand, Vector2.zero, CursorMode.ForceSoftware);
         dialogUI.SetActive(true);
@@ -65,8 +85,8 @@ public class GameManager : MonoBehaviour
     private void ShowCurrentLine()
     {
         DialoguesLines dialogueLines = currentLines.DialoguesLinesList[currentLineIndex];
-        if (dialogueLines == null) { return; }
         ClearButton();
+        if (dialogueLines == null) { CloseDialogUI(); }
         RuntimeManager.PlayOneShot(dialogueLines.sound);
         character.sprite = dialogueLines.character;
         textBox.sprite = dialogueLines.textBox;
@@ -85,12 +105,13 @@ public class GameManager : MonoBehaviour
        yield return new WaitForEndOfFrame();
        if (dialoguesLines.buttonLinesList.Count > 0)
        {
-           GameObject firstButtom = buttonGroup.transform.GetChild(0).gameObject;
+           GameObject firstButtom = buttonCurrent.transform.GetChild(0).gameObject;
            firstButtom.GetComponent<Button>().Select();
+           buttonDialog.gameObject.SetActive(false);
        }
        else 
        {
-           buttonGroup.SetActive(false);
+           buttonDialog.gameObject.SetActive(true);
            buttonDialog.Select();
        }
     }
@@ -114,7 +135,6 @@ public class GameManager : MonoBehaviour
     public void CloseDialogUI()
     {
         animationCloseDialog.Play("DialogUIScaleLow");
-        //menu.musicEventInstance.setParameterByName(menu.musicReference.Path, 0);
         Cursor.SetCursor(menu.cursorNull, Vector2.zero, CursorMode.ForceSoftware);
     } 
     public void AnimationEventCloseDialogUI()
@@ -150,7 +170,6 @@ public class GameManager : MonoBehaviour
         inUI = true;
         questUI.SetActive(true);
         textQuest.SetText(questManager.text);
-        questLog = Instantiate(questManager.currentLetter, questLog.transform);
         RuntimeManager.PlayOneShot("event:/SFX/UI_UX/Menu/Open_NextSide");
     }
     public void AnimationSelectButtonQuestUI() { buttonQuest.Select(); }
@@ -168,24 +187,16 @@ public class GameManager : MonoBehaviour
     }
     
     
-    ///////////////////////////////////// QuestLog \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-    [Header("QuestLog")]
-    [SerializeField] private GameObject questLog;
-    
-    //public RectTransform rectTransform;
-    //Vector2 currentPositon = rectTransform.anchoredPosition;
-    //currentPositon.x += 100f / Time.deltaTime;
-    //rectTransform.anchoredPosition = currentPositon;
-    
-    
-    
     ///////////////////////////////////// InteractUI \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
     [Header("Interact")] 
     [SerializeField] private GameObject interactUI;
+    [SerializeField] private GameObject interactKey;
+    [SerializeField] private GameObject interactCon;
+    
     
     public float dishes;
     public float rorschach;
-    public GameObject dialogPsychiatry;
+    public DialogManager dialogPsychiatry;
     public float skillkit;
     public float letter;
     public List<string> importantItems;
@@ -199,12 +210,16 @@ public class GameManager : MonoBehaviour
         playerController.animator.SetTrigger("Take");
         playerController.Emote();
         if (playerController.currentInteractable.CompareTag("Dishes"))
-        {
+        { 
+            
             dishes++;
             if (dishes == 5f)
             {
                 importantItems.Add("Dishes");
                 dishes = 6f;
+                questLog.Questende();
+                questLog.lettertext.fontStyle = FontStyles.Strikethrough;
+                questLog.GetComponentInChildren<Animator>().enabled = true;
             }
         }
         if (playerController.currentInteractable.gameObject.CompareTag("Rorschachtest"))
@@ -212,8 +227,10 @@ public class GameManager : MonoBehaviour
             rorschach++;
             if (rorschach == 4f)
             {
-                importantItems.Add("Rorschach");
+                importantItems.Add("Rorschach"); ;
                 rorschach = 5f;
+                questLog.Questende();
+                questLog.GetComponentInChildren<Animator>(CompareTag("Rorschachtest")).enabled = true;
             }
         }
         if (playerController.currentInteractable.CompareTag("Skillkit"))
@@ -223,6 +240,10 @@ public class GameManager : MonoBehaviour
             {
                 importantItems.Add("Skillbag");
                 skillkit = 4f;
+                questLog.Questende();
+                questLog.lettertext.fontStyle = FontStyles.Strikethrough;
+                questLog.GetComponentInChildren<Animator>().enabled = true;
+                questLog.GetComponentInChildren<Animator>(CompareTag("Skillkit")).enabled = true;
             }
         }
         if (playerController.currentInteractable.CompareTag("Letter"))
@@ -230,8 +251,11 @@ public class GameManager : MonoBehaviour
             letter++; 
             if (letter == 2f) 
             { 
-                importantItems.Add("Letter"); 
+                importantItems.Add("Letter");
                 letter = 3f;
+                questLog.Questende();
+                questLog.lettertext.fontStyle = FontStyles.Strikethrough;
+                questLog.GetComponentInChildren<Animator>().enabled = true;
             }
         }
     }
@@ -255,9 +279,9 @@ public class GameManager : MonoBehaviour
         pauseUI.SetActive(pause);
             
         if (pause)
-        {
+        { 
             playerController.DeactivateInput();
-            menu.main.GetComponentInChildren<Button>(true).Select();
+            menu.buttonMain.Select();
             RuntimeManager.PlayOneShot("event:/SFX/UI_UX/Menu/Open_NextSide");
             Time.timeScale = 0.0f;
         }

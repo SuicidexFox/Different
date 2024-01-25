@@ -8,7 +8,6 @@ using Debug = System.Diagnostics.Debug;
 public class QuestManager : MonoBehaviour
 {
     [Header("ShowQuest")]
-    public GameObject currentLetter;
     [TextArea(3, 8)] public string text;
     
     public void ShowQuestUI()

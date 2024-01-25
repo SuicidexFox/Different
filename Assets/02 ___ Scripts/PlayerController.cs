@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Cinemachine;
@@ -9,12 +10,13 @@ public class PlayerController : MonoBehaviour
 {          ///////////////////////////////////// Variable \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
     public Interactable currentInteractable;
     public CinemachineInputProvider playerCamInputProvider;
+    public string currentControlScheme;
     
     public PlayerInput playerInput;
     private InputAction moveAction;
     private InputAction runAction;
     private InputAction interactAction;
-    private InputAction tabAction;
+    public bool questLog = false;
     private InputAction pauseAction;
     
     private CharacterController characterController;
@@ -28,6 +30,10 @@ public class PlayerController : MonoBehaviour
     private float minTurnSpeed = 0.2f;
     private float turnSpeed = 5f;
     
+
+    // Funktion, um das aktuelle Control Scheme abzufragen
+    public string GetCurrentControlScheme()
+    { return currentControlScheme; }
     
     ///////////////////////////////////// Start \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
     public void Start()
@@ -43,25 +49,22 @@ public class PlayerController : MonoBehaviour
         
         
         ///////////////////////////////////// Interact \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-        playerInput.actions.FindActionMap("Player").FindAction("Submit").performed +=Interact;
+        interactAction = playerInput.actions.FindAction("Submit");
+        interactAction.performed += Interact;
 
         ///////////////////////////////////// Pause \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
         playerInput.actions.FindActionMap("Player").FindAction("Pause").performed +=Pause;
         playerInput.actions.FindActionMap("UI").FindAction("Pause").performed += Pause;
         
-        ///////////////////////////////////// QuestLog/Tab \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-        tabAction = playerInput.actions.FindAction("Tab");
         
         ///////////////////////////////////// Extras \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-        animator = GetComponentInChildren<Animator>();
         hallo = playerInput.actions.FindAction("EmoteHallo");
         hallo.performed += HalloEmote;
         cry = playerInput.actions.FindAction("EmoteCry");
         cry.performed += CryEmote;
     }
     public void Update() 
-    {   
-        ///////////////////////////////////// Movement \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+    {   ////////////////////////////////// Movement \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
         Vector2 input = moveAction.ReadValue<Vector2>();
         float horizontalInput = input.x;
         float verticalInput = input.y;
@@ -95,13 +98,30 @@ public class PlayerController : MonoBehaviour
         animator.SetFloat("Speed", animatonSpeed);
         animator.SetBool("Shift", runAction.inProgress);
         
-        ///////////////////////////////////// TabUI \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-        //if (tabAction.ReadValue<float>() == 1f) { GameManager.instance.pause = true; }
-        //else { GameManager.instance.pause = false; }
-    }
+        ///////////////////////////////////// QuestLog \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+        //Keyboard
+        if (Input.GetKeyDown(KeyCode.Tab))
+        { questLog = true; }
+        // Prüfe, ob die Taste losgelassen wurde
+        if (Input.GetKeyUp(KeyCode.Tab))
+        { questLog = false; GameManager.instance.questLog.ResetCanvasPosition(); }
+        // Bewege das Canvas, wenn die Taste gedrückt wird
+        if (questLog)
+        { GameManager.instance.questLog.MoveCanvas();}
+        //Controller
+        var gamepad = Gamepad.current;
+        if (gamepad != null)
+        {
+            if (gamepad.dpad.right.wasPressedThisFrame) { questLog = true; }
+            if (gamepad.dpad.right.wasReleasedThisFrame)
+            { questLog = false; GameManager.instance.questLog.ResetCanvasPosition(); }
+            if (questLog) { GameManager.instance.questLog.MoveCanvas(); }
+        }
+    }   
+    
     private void OnDisable() //Disable behavior 
     {
-        playerInput.actions.FindActionMap("Player").FindAction("Submit").performed -=Interact;
+        interactAction.performed -=Interact;
         playerInput.actions.FindActionMap("Player").FindAction("Pause").performed -=Pause;
         playerInput.actions.FindActionMap("UI").FindAction("Pause").performed -= Pause;
         
@@ -135,7 +155,7 @@ public class PlayerController : MonoBehaviour
         }
     }
     
-    
+
     ///////////////////////////////////// PauseUI \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
     private void Pause(InputAction.CallbackContext obj) { GameManager.instance.TogglePause(); }
 

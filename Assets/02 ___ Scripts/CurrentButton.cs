@@ -10,19 +10,11 @@ public class CurrentButton : MonoBehaviour
     public string text;
     public UnityEvent buttonEvent;
     
-    public void Setup(string text, UnityEvent buttonEvent)
-        {
-            this.text = text;
-            this.buttonEvent = buttonEvent;
-            _buttonTextUI.SetText(text);
-        }
+    public void Setup(string text, UnityEvent buttonEvent) { this.text = text; this.buttonEvent = buttonEvent; _buttonTextUI.SetText(text); }
+    
     public void OnClick()
         {
-            if (buttonEvent.GetPersistentEventCount() == 0)
-            {
-                GameManager.instance.NextDialogLine();
-                return;
-            }
+            if (buttonEvent.GetPersistentEventCount() == 0) { GameManager.instance.NextDialogLine(); return; }
             buttonEvent.Invoke();
         }
 }

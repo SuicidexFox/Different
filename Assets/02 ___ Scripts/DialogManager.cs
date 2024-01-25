@@ -27,18 +27,9 @@ public class DialogManager : MonoBehaviour
         foreach (Dialog d in dialogues)
         {
             if (d.needImportantItem != "")
-                if (GameManager.instance.importantItems.Contains(d.needImportantItem))
-                {
-                    return d;
-                }
-                else
-                {
-                    continue;
-                } 
-            if (prioritizedDialogue.priority < d.priority) 
-            {
-                prioritizedDialogue = d; 
-            } 
+                if (GameManager.instance.importantItems.Contains(d.needImportantItem)) { return d; }
+                else { continue; } 
+            if (prioritizedDialogue.priority < d.priority) { prioritizedDialogue = d; } 
         }
         return prioritizedDialogue;
     }

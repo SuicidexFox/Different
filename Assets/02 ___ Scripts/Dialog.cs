@@ -30,7 +30,7 @@ public class DialoguesLines
 public class Dialog : MonoBehaviour
 {
     public string needImportantItem;
-    public int priority = -1;
+    public int priority;
     public List<DialoguesLines> DialoguesLinesList;
     public UnityEvent dialogEnd;
 
