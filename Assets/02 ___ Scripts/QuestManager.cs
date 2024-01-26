@@ -9,7 +9,7 @@ public class QuestManager : MonoBehaviour
 {
     [Header("ShowQuest")]
     [TextArea(3, 8)] public string text;
-    
+
     public void ShowQuestUI()
     {
         GameManager.instance.ShowQuestUI(this);

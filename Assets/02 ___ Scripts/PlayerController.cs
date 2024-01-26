@@ -9,6 +9,7 @@ using UnityEngine.InputSystem;
 public class PlayerController : MonoBehaviour
 {   ///////////////////////////////////// Variable \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
     public CinemachineInputProvider playerCamInputProvider;
+    public CinemachineBrain cinemachineBrain;
     
     public PlayerInput playerInput;
     private InputAction moveAction;
@@ -24,8 +25,8 @@ public class PlayerController : MonoBehaviour
     public bool questLog = false;
     
     //Move
-    private float walkSpeed = 1f;
-    private float runSpeed = 3f;
+    private float walkSpeed = 2f;
+    private float runSpeed = 4f;
     private float moveSpeed;
     private float minTurnSpeed = 0.2f;
     private float turnSpeed = 5f;
@@ -82,7 +83,9 @@ public class PlayerController : MonoBehaviour
         }
         
         ///////////////////////////////////// Gravity \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-        characterController.SimpleMove(new Vector3(velocity.x * moveSpeed, 0, velocity.z * moveSpeed));
+        if (characterController.enabled == true)
+        { characterController.SimpleMove(new Vector3(velocity.x * moveSpeed, 0, velocity.z * moveSpeed)); }
+        
         
         ///////////////////////////////////// Animations \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
         float animatonSpeed = velocity.magnitude;
@@ -94,10 +97,10 @@ public class PlayerController : MonoBehaviour
         
         ///////////////////////////////////// QuestLog \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
         //Keyboard
-        if (Input.GetKeyDown(KeyCode.E))
+        if (Input.GetKeyDown(KeyCode.Tab))
         { questLog = true; }
         // Prüfe, ob die Taste losgelassen wurde
-        if (Input.GetKeyUp(KeyCode.E))
+        if (Input.GetKeyUp(KeyCode.Tab))
         { questLog = false; GameManager.instance.questLog.ResetCanvasPosition(); }
         // Bewege das Canvas, wenn die Taste gedrückt wird
         if (questLog)
@@ -185,4 +188,7 @@ public class PlayerController : MonoBehaviour
     private void HalloEmote(InputAction.CallbackContext obj)
     { animator.Play("Hallo"); RuntimeManager.PlayOneShot("event:/SFX/Rosie/Voice/lachen 2"); Emote(); }
     public void Emote() { playerInput.SwitchCurrentActionMap("UI"); }
+    
+    ///////////////////////////////////// Extras \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+    public void BrainTime(int newBrainTime) { cinemachineBrain.m_DefaultBlend.m_Time = newBrainTime; }
 }

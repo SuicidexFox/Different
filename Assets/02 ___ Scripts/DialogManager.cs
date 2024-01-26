@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Cinemachine;
@@ -15,9 +16,11 @@ public class DialogManager : MonoBehaviour
             dialogues.Add(d); 
         }
     }
+
     public void ShowDialogue()
     {
         GetPrioritizedDialogue().ShowDialogue();
+        if (dialogCam == null) { return; }
         dialogCam.Priority = 11;
     }
     private Dialog GetPrioritizedDialogue()

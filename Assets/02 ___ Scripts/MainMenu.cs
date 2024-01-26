@@ -197,9 +197,9 @@ public class MainMenu : MonoBehaviour
     { 
         yield return new WaitForSeconds(2);
         if (scenesManager == "Kitchen" ) { SceneManager.LoadScene("Psychiatry"); }
-        if (scenesManager == "Psychiatry" ) { SceneManager.LoadScene("Save Place"); } 
+        if (scenesManager == "Psychiatry" ) { SceneManager.LoadScene("SavePlace"); } 
         if (scenesManager == "SavePlace" ) { SceneManager.LoadScene("Credits"); } 
-        musicInstance.stop(STOP_MODE.IMMEDIATE);
+        musicInstance.setVolume(0);
     }
 }
 

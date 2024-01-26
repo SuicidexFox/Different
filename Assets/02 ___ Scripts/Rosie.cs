@@ -389,19 +389,8 @@ public partial class @Rosie: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""adedff3c-bb6f-4048-97c0-cd8487bcb54b"",
-                    ""path"": ""<Keyboard>/tab"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Keyboard"",
-                    ""action"": ""Pause"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
                     ""id"": ""cacd05ed-b8b6-463d-912f-9e41a6daf40c"",
-                    ""path"": ""<Keyboard>/e"",
+                    ""path"": ""<Keyboard>/tab"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard"",
@@ -697,17 +686,6 @@ public partial class @Rosie: IInputActionCollection2, IDisposable
                     ""name"": """",
                     ""id"": ""87b6bbf7-5e17-4c89-9ee0-66dc35d38682"",
                     ""path"": ""<Keyboard>/escape"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Keyboard"",
-                    ""action"": ""Pause"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""ac4f5852-35a2-40be-a633-772ed91ffda9"",
-                    ""path"": ""<Keyboard>/tab"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard"",

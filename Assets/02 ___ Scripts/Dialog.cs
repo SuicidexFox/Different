@@ -45,8 +45,5 @@ public class Dialog : MonoBehaviour
         GameManager.instance.ShowDialogUI(this);
     }
 
-    public void SetPriority(int newPriority)
-    {
-        priority = newPriority;
-    }
+    public void SetPriority(int newPriority) { priority = newPriority; }
 }

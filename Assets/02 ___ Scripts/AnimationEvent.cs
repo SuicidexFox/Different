@@ -46,8 +46,10 @@ public class AnimationEvent : MonoBehaviour
         if (Physics.Raycast(ray, out hit, rayDistance)) { return hit.collider.tag; }
         else { return ""; }
     }
-    public void PlayerTake() { GameManager.instance.DestroyInteractable();
+    public void PlayerTake() 
+    { 
         RuntimeManager.PlayOneShot("event:/SFX/UI_UX/Collect/Take 3");
+        GameManager.instance.DestroyInteractable();
     }
     public void PlayerInput() { GameManager.instance.playerController.ActivateInput(); }
     public void PlayerPlaySitUp() { RuntimeManager.PlayOneShot("event:/SFX/Rosie/RosieFootsteps/Footstep_Capet"); }
@@ -55,6 +57,5 @@ public class AnimationEvent : MonoBehaviour
     
     ///////////////////////////////////////// \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
     /////////////////////////////////////// NPC \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-    public void Scrible() { RuntimeManager.PlayOneShot("event:/SFX/Therapist/Pencil"); }
     
 }

@@ -1065,6 +1065,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerCamInputProvider: {fileID: 4600098127420191408}
+  cinemachineBrain: {fileID: 8546736102806021863}
   playerInput: {fileID: 6263680031089000132}
   characterController: {fileID: 3169705687150365597}
   camTransform: {fileID: 4408276672233722000}

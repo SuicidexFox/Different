@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Cinemachine;
 using FMOD.Studio;
 using FMODUnity;
 using TMPro;
@@ -30,9 +31,13 @@ public class GameManager : MonoBehaviour
         }
         if (scenesManager == "Psychiatry")
         {
-            playerController.currentInteractable._onInteract.Invoke();
+            playerController.characterController.enabled = false;
             playerController.animator.Play("Psychiatry"); 
             StartCoroutine(WaitPsychiatry());
+        }
+        if (scenesManager == "SavePlace")
+        {
+            StartCoroutine(Kitchen());
         }
     }
     IEnumerator Kitchen()
@@ -45,6 +50,8 @@ public class GameManager : MonoBehaviour
     {
         yield return new WaitForSeconds(1); 
         menu.fade.SetActive(false);
+        playerController.currentInteractable._onInteract.Invoke();
+        playerController.cinemachineBrain.m_DefaultBlend.m_Time = 4;
     }
 
     ///////////////////////////////////// DialogUI \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
@@ -81,7 +88,7 @@ public class GameManager : MonoBehaviour
         DialoguesLines dialogueLines = currentLines.DialoguesLinesList[currentLineIndex];
         ClearButton();
         if (dialogueLines == null) { return; }
-        if (dialogueLines.sound.Path != null) { RuntimeManager.PlayOneShot(dialogueLines.sound); }
+        RuntimeManager.PlayOneShot(dialogueLines.sound);
         character.sprite = dialogueLines.character;
         textBox.sprite = dialogueLines.textBox;
         textDialog.SetText(dialogueLines.text);
@@ -189,6 +196,7 @@ public class GameManager : MonoBehaviour
     public float dishes;
     public float rorschach;
     public float skillkit;
+    public float saveplace;
     public float letter;
     public List<string> importantItems;
     public void ShowIneractUI(bool show)
@@ -217,10 +225,11 @@ public class GameManager : MonoBehaviour
             rorschach++;
             if (rorschach == 4f)
             {
-                importantItems.Add("Rorschach"); ;
+                importantItems.Add("Rorschach");
+                ;
                 rorschach = 5f;
                 questLog.Questende();
-                questLog.GetComponentInChildren<Animator>(CompareTag("Rorschachtest")).enabled = true;
+                questLog.rorschachtest.enabled = true;
             }
         }
         if (playerController.currentInteractable.CompareTag("Skillkit"))
@@ -231,8 +240,13 @@ public class GameManager : MonoBehaviour
                 importantItems.Add("Skillbag");
                 skillkit = 4f;
                 questLog.Questende();
-                questLog.GetComponentInChildren<Animator>(CompareTag("Skillkit")).enabled = true;
+                questLog.skillkit.enabled = true;
             }
+        }
+        if (playerController.currentInteractable.CompareTag("SavePlace"))
+        {
+            saveplace++;
+            if (saveplace == 2f) { menu.ScenenManager(); }
         }
         if (playerController.currentInteractable.CompareTag("Letter"))
         { 
@@ -250,7 +264,9 @@ public class GameManager : MonoBehaviour
     public void DestroyInteractable()
     {
         if (playerController.currentInteractable != null)
-        { Destroy(playerController.currentInteractable.gameObject); }
+        {
+            Destroy(playerController.currentInteractable.gameObject);
+        }
     }
     
     

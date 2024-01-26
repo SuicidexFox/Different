@@ -98,6 +98,85 @@ MonoBehaviour:
           m_StringArgument: Close
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!1 &2444537884144815328
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7442695489634183558}
+  - component: {fileID: 2005943038972550598}
+  m_Layer: 0
+  m_Name: Skillkit
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7442695489634183558
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2444537884144815328}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4289506619046775616}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2005943038972550598
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2444537884144815328}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a3118eab86800f47950bffe92a9586d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  needImportantItem: 
+  priority: 8
+  DialoguesLinesList:
+  - sound:
+      Guid:
+        Data1: 0
+        Data2: 0
+        Data3: 0
+        Data4: 0
+      Path: 
+    character: {fileID: 21300000, guid: be9d6428d77201047a010a2dee0301b6, type: 3}
+    textBox: {fileID: 21300000, guid: 184b1a0d2dddbe848be3fc7cfcd1cf96, type: 3}
+    text: 
+    textNpc: 'We need things for crafting first.
+
+      Scissors, cardboard and glue.'
+    lineEvent:
+      m_PersistentCalls:
+        m_Calls: []
+    buttonLinesList: []
+  dialogEnd:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 454373746862893904}
+        m_TargetAssemblyTypeName: UnityEngine.Animator, UnityEngine
+        m_MethodName: Play
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Close
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &3019071341322623866
 GameObject:
   m_ObjectHideFlags: 0
@@ -328,6 +407,42 @@ MonoBehaviour:
             m_IntArgument: -99
             m_FloatArgument: 0
             m_StringArgument: 
+            m_BoolArgument: 1
+          m_CallState: 2
+        - m_Target: {fileID: 454373746862893904}
+          m_TargetAssemblyTypeName: UnityEngine.Animator, UnityEngine
+          m_MethodName: Play
+          m_Mode: 5
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: -99
+            m_FloatArgument: 0
+            m_StringArgument: Close
+            m_BoolArgument: 1
+          m_CallState: 2
+        - m_Target: {fileID: 0}
+          m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+          m_MethodName: CloseDialogUI
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: -99
+            m_FloatArgument: 0
+            m_StringArgument: Close
+            m_BoolArgument: 1
+          m_CallState: 2
+        - m_Target: {fileID: 0}
+          m_TargetAssemblyTypeName: UnityEngine.Behaviour, UnityEngine
+          m_MethodName: set_enabled
+          m_Mode: 6
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: -99
+            m_FloatArgument: 0
+            m_StringArgument: Close
             m_BoolArgument: 1
           m_CallState: 2
     buttonLinesList: []
@@ -859,6 +974,18 @@ MonoBehaviour:
             m_StringArgument: Close
             m_BoolArgument: 1
           m_CallState: 2
+        - m_Target: {fileID: 0}
+          m_TargetAssemblyTypeName: UnityEngine.Behaviour, UnityEngine
+          m_MethodName: set_enabled
+          m_Mode: 6
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: -99
+            m_FloatArgument: 0
+            m_StringArgument: Close
+            m_BoolArgument: 1
+          m_CallState: 2
     buttonLinesList: []
   dialogEnd:
     m_PersistentCalls:
@@ -1001,6 +1128,10 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 6149929549291847242}
+    - targetCorrespondingSourceObject: {fileID: 4595423997808644434, guid: fdc60adc7661818408675e4952434831,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7442695489634183558}
     - targetCorrespondingSourceObject: {fileID: 4595423997808644434, guid: fdc60adc7661818408675e4952434831,
         type: 3}
       insertIndex: -1

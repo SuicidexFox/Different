@@ -142,7 +142,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a3118eab86800f47950bffe92a9586d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  needImportantItem: Rorschachtest
+  needImportantItem: Rorschach
   priority: 1
   DialoguesLinesList:
   - sound:
@@ -203,19 +203,7 @@ MonoBehaviour:
     lineEvent:
       m_PersistentCalls:
         m_Calls: []
-    buttonLinesList:
-    - text: Teddy baer.
-      buttonEvent:
-        m_PersistentCalls:
-          m_Calls: []
-    - text: It scarres me.
-      buttonEvent:
-        m_PersistentCalls:
-          m_Calls: []
-    - text: It's a stain.
-      buttonEvent:
-        m_PersistentCalls:
-          m_Calls: []
+    buttonLinesList: []
   - sound:
       Guid:
         Data1: -938413143
@@ -233,19 +221,7 @@ MonoBehaviour:
     lineEvent:
       m_PersistentCalls:
         m_Calls: []
-    buttonLinesList:
-    - text: Teddy baer.
-      buttonEvent:
-        m_PersistentCalls:
-          m_Calls: []
-    - text: It scarres me.
-      buttonEvent:
-        m_PersistentCalls:
-          m_Calls: []
-    - text: It's a stain.
-      buttonEvent:
-        m_PersistentCalls:
-          m_Calls: []
+    buttonLinesList: []
   dialogEnd:
     m_PersistentCalls:
       m_Calls:
@@ -295,7 +271,7 @@ MonoBehaviour:
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: Close
-          m_BoolArgument: 0
+          m_BoolArgument: 1
         m_CallState: 2
       - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
@@ -354,15 +330,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   needImportantItem: 
-  priority: 5
+  priority: 6
   DialoguesLinesList:
   - sound:
       Guid:
-        Data1: -938413143
-        Data2: 1305648819
-        Data3: 283855785
-        Data4: -500178708
-      Path: event:/SFX/Therapist/Voice
+        Data1: 0
+        Data2: 0
+        Data3: 0
+        Data4: 0
+      Path: 
     character: {fileID: 21300000, guid: 8620e5d0e45a4e546b5d3fa813d93756, type: 3}
     textBox: {fileID: 21300000, guid: a85a76640c19f53488634b49253ad413, type: 3}
     text: Where am I?
@@ -399,9 +375,9 @@ MonoBehaviour:
           m_BoolArgument: 1
         m_CallState: 2
       - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: UnityEngine.Animator, UnityEngine
-        m_MethodName: Play
-        m_Mode: 5
+        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
+        m_MethodName: ActivateInput
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -411,9 +387,9 @@ MonoBehaviour:
           m_BoolArgument: 1
         m_CallState: 2
       - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: UnityEngine.Collider, UnityEngine
-        m_MethodName: set_enabled
-        m_Mode: 6
+        m_TargetAssemblyTypeName: UnityEngine.Animator, UnityEngine
+        m_MethodName: Play
+        m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -426,6 +402,18 @@ MonoBehaviour:
         m_TargetAssemblyTypeName: UnityEngine.Animator, UnityEngine
         m_MethodName: Play
         m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: -100
+          m_FloatArgument: 0
+          m_StringArgument: Close
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: UnityEngine.Collider, UnityEngine
+        m_MethodName: set_enabled
+        m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -479,7 +467,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   needImportantItem: 
-  priority: 3
+  priority: 4
   DialoguesLinesList:
   - sound:
       Guid:
@@ -590,7 +578,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   needImportantItem: 
-  priority: 4
+  priority: 5
   DialoguesLinesList:
   - sound:
       Guid:
@@ -799,7 +787,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   needImportantItem: 
-  priority: 1
+  priority: 2
   DialoguesLinesList:
   - sound:
       Guid:
@@ -815,6 +803,21 @@ MonoBehaviour:
 
       describes your current
       feelings for me.'
+    lineEvent:
+      m_PersistentCalls:
+        m_Calls: []
+    buttonLinesList: []
+  - sound:
+      Guid:
+        Data1: 0
+        Data2: 0
+        Data3: 0
+        Data4: 0
+      Path: 
+    character: {fileID: 21300000, guid: 1233e17910e0f75459fca645d7e895d5, type: 3}
+    textBox: {fileID: 21300000, guid: 184b1a0d2dddbe848be3fc7cfcd1cf96, type: 3}
+    text: 
+    textNpc: In each room, there is only one.
     lineEvent:
       m_PersistentCalls:
         m_Calls: []
@@ -879,7 +882,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   needImportantItem: 
-  priority: 2
+  priority: 3
   DialoguesLinesList:
   - sound:
       Guid:
@@ -1239,27 +1242,27 @@ PrefabInstance:
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 4595423997808644434, guid: fdc60adc7661818408675e4952434831,
         type: 3}
-      insertIndex: -1
+      insertIndex: 0
       addedObject: {fileID: 3907732084475087224}
     - targetCorrespondingSourceObject: {fileID: 4595423997808644434, guid: fdc60adc7661818408675e4952434831,
         type: 3}
-      insertIndex: -1
+      insertIndex: 1
       addedObject: {fileID: 2199927029893470353}
     - targetCorrespondingSourceObject: {fileID: 4595423997808644434, guid: fdc60adc7661818408675e4952434831,
         type: 3}
-      insertIndex: -1
+      insertIndex: 2
       addedObject: {fileID: 4497030828084732612}
     - targetCorrespondingSourceObject: {fileID: 4595423997808644434, guid: fdc60adc7661818408675e4952434831,
         type: 3}
-      insertIndex: -1
+      insertIndex: 3
       addedObject: {fileID: 8214463577850401733}
     - targetCorrespondingSourceObject: {fileID: 4595423997808644434, guid: fdc60adc7661818408675e4952434831,
         type: 3}
-      insertIndex: -1
+      insertIndex: 4
       addedObject: {fileID: 3987789301166698609}
     - targetCorrespondingSourceObject: {fileID: 4595423997808644434, guid: fdc60adc7661818408675e4952434831,
         type: 3}
-      insertIndex: -1
+      insertIndex: 5
       addedObject: {fileID: 2359746120655120484}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fdc60adc7661818408675e4952434831, type: 3}

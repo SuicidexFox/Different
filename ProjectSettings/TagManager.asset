@@ -13,8 +13,7 @@ TagManager:
   - Skillkit
   - Letter
   - Tiles
-  - ' Tiles'
-  - Active
+  - SavePlace
   layers:
   - Default
   - TransparentFX

@@ -1187,6 +1187,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38984be6dc6fe234a8a80a92556dad84, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rorschachtest: {fileID: 0}
+  skillkit: {fileID: 0}
   lettertext: {fileID: 0}
   canvasRectTransform: {fileID: 7459573365749479134}
 --- !u!114 &946000892058927529
@@ -1709,6 +1711,7 @@ MonoBehaviour:
   dishes: 0
   rorschach: 0
   skillkit: 0
+  saveplace: 0
   letter: 0
   importantItems: []
   pause: 0
@@ -1820,21 +1823,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7743148326401583303, guid: 47d2cb4727b564f49b1396e52226cf78,
-        type: 3}
-      propertyPath: music
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 7743148326401583303, guid: 47d2cb4727b564f49b1396e52226cf78,
-        type: 3}
-      propertyPath: master
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 7743148326401583303, guid: 47d2cb4727b564f49b1396e52226cf78,
-        type: 3}
-      propertyPath: effects
-      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 9195266452595467860, guid: 47d2cb4727b564f49b1396e52226cf78,
         type: 3}

@@ -1992,7 +1992,6 @@ MonoBehaviour:
   cursorHand: {fileID: 2800000, guid: da1536d84a873094f8d4db427136d396, type: 3}
   cursorNull: {fileID: 0}
   animatorFade: {fileID: 585451751}
-  PlayerInput: {fileID: 809867535}
   main: {fileID: 1621876564}
   settings: {fileID: 997758332}
   sound: {fileID: 1636437441}
@@ -2968,7 +2967,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1744885998
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3369,7 +3368,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &2006020978
 RectTransform:
   m_ObjectHideFlags: 0
