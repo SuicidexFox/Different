@@ -914,7 +914,7 @@ MonoBehaviour:
     Path: event:/Music/MainMenu
   scenesManager: 
   cursorPencil: {fileID: 2800000, guid: da1536d84a873094f8d4db427136d396, type: 3}
-  cursorHand: {fileID: 2800000, guid: 1138ab068176f29499337d7a73dfecd9, type: 3}
+  cursorHand: {fileID: 2800000, guid: e8c7b3258f71cb943a0123e331a1da83, type: 3}
   cursorNull: {fileID: 0}
   animatorFade: {fileID: 1726502257276886687}
   main: {fileID: 6347227956474262743}

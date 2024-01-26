@@ -1989,7 +1989,7 @@ MonoBehaviour:
     Path: event:/Music/MainMenu
   scenesManager: 
   cursorPencil: {fileID: 2800000, guid: da1536d84a873094f8d4db427136d396, type: 3}
-  cursorHand: {fileID: 2800000, guid: da1536d84a873094f8d4db427136d396, type: 3}
+  cursorHand: {fileID: 2800000, guid: e8c7b3258f71cb943a0123e331a1da83, type: 3}
   cursorNull: {fileID: 0}
   animatorFade: {fileID: 585451751}
   main: {fileID: 1621876564}
@@ -2977,14 +2977,14 @@ RectTransform:
   m_GameObject: {fileID: 1744885997}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.9, y: 0.9, z: 0.9}
+  m_LocalScale: {x: 0.6, y: 0.6, z: 0.6}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 1646429121}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -17, y: 34}
+  m_AnchoredPosition: {x: 154, y: -107}
   m_SizeDelta: {x: 1330, y: 670}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1744885999
@@ -3378,14 +3378,14 @@ RectTransform:
   m_GameObject: {fileID: 2006020977}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.9, y: 0.9, z: 0.9}
+  m_LocalScale: {x: 0.6, y: 0.6, z: 0.6}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 1646429121}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -26, y: -2}
+  m_AnchoredPosition: {x: -433, y: 160}
   m_SizeDelta: {x: 1330, y: 670}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2006020979

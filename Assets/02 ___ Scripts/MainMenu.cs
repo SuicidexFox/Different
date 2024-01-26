@@ -61,8 +61,8 @@ public class MainMenu : MonoBehaviour
     
     private void Update()
     {
-        if (GameManager.instance.inUI == true) { musicInstance.setParameterByName("MusicStage", 2); }
-        else { musicInstance.setParameterByName("MusicStage", 0); }
+        //if (GameManager.instance.inUI == true) { musicInstance.setParameterByName("MusicStage", 2); }
+        //else { musicInstance.setParameterByName("MusicStage", 0); }
     }
     
 
@@ -88,7 +88,7 @@ public class MainMenu : MonoBehaviour
             buttonMain.Select();
             settings.SetActive(false);
         }
-        RuntimeManager.PlayOneShot("event:/SFX/UI_UX/Menu/Open_NextSide");
+        RuntimeManager.PlayOneShot("event:/SFX/UI_UX/Menu/Open_NextSidePause");
     }
     public void ToggleSound(bool letterTwo)
     {
@@ -106,7 +106,7 @@ public class MainMenu : MonoBehaviour
             buttonSettings.Select();
             sound.SetActive(false);
         }
-        RuntimeManager.PlayOneShot("event:/SFX/UI_UX/Menu/Open_NextSide");
+        RuntimeManager.PlayOneShot("event:/SFX/UI_UX/Menu/Open_NextSidePause");
     }
     public void ToggleControls(bool letterThree)
     {
@@ -122,7 +122,7 @@ public class MainMenu : MonoBehaviour
             buttonSettings.Select();
             controls.SetActive(false);
         }
-        RuntimeManager.PlayOneShot("event:/SFX/UI_UX/Menu/Open_NextSide");
+        RuntimeManager.PlayOneShot("event:/SFX/UI_UX/Menu/Open_NextSidePause");
     }
     
     ///////////////////////////////////// MainMenu \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
@@ -197,12 +197,8 @@ public class MainMenu : MonoBehaviour
     { 
         yield return new WaitForSeconds(2);
         if (scenesManager == "Kitchen" ) { SceneManager.LoadScene("Psychiatry"); }
-        if (scenesManager == "Psychiatry" ) { SceneManager.LoadScene("SavePlace"); } 
+        if (scenesManager == "Psychiatry" ) { SceneManager.LoadScene("Sequence"); } 
         if (scenesManager == "SavePlace" ) { SceneManager.LoadScene("Credits"); } 
         musicInstance.setVolume(0);
     }
 }
-
-
-     
-  
