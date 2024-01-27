@@ -26,9 +26,9 @@ public class Sequence : MonoBehaviour
         fadeAnimator.Play("FadeOut");
         StartCoroutine(CScenenwechsel());
     }
-    IEnumerator CScenenwechsel() { yield return new WaitForSeconds(1); SceneManager.LoadScene("SavePlace"); }
+    IEnumerator CScenenwechsel() { yield return new WaitForSeconds(2); SceneManager.LoadScene("SavePlace"); }
 
 
-    public void Rosie() { rosie.Play("Cry"); }
+    public void Rosie() { rosie.Play("Sequence"); }
     public void InnerChilde() {innerChilde.Play("Hallo");}
 }

@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Cinemachine;
 using FMOD.Studio;
 using FMODUnity;
 using UnityEngine;
@@ -27,6 +28,10 @@ public class MainMenu : MonoBehaviour
     public GameObject sound; 
     public GameObject controls;
     public GameObject fade;
+    public GameObject tutorial;
+    public Button tutorialButton;
+    public GameObject fadePsychiatry;
+    public CinemachineVirtualCamera fadeOutCam;
     
     [Header("Button")]
     public Button buttonMain;
@@ -61,8 +66,14 @@ public class MainMenu : MonoBehaviour
     
     private void Update()
     {
-        //if (GameManager.instance.inUI == true) { musicInstance.setParameterByName("MusicStage", 2); }
-        //else { musicInstance.setParameterByName("MusicStage", 0); }
+        if (scenesManager == "00 _ MainMenu")
+        { return; }
+        else
+        {
+            if (GameManager.instance.inUI == true) { musicInstance.setParameterByName("MusicStage", 2); }
+            else { musicInstance.setParameterByName("MusicStage", 0); } 
+        }
+        
     }
     
 
@@ -183,9 +194,14 @@ public class MainMenu : MonoBehaviour
             musicInstance.stop(STOP_MODE.IMMEDIATE);
             RuntimeManager.PlayOneShot("event:/SFX/Rosie/Voice/Schrei");
             StartCoroutine(CKitchen());
-            return;
         }
-        StartCoroutine(CScenenwechsel());
+        if (scenesManager == "Psychiatry") { fade.SetActive(true); StartCoroutine(CPsychiatry()); }
+        if (scenesManager == "SavePlace") 
+        { 
+            fadeOutCam.gameObject.SetActive(true);
+            GameManager.instance.playerController.cinemachineBrain.m_DefaultBlend.m_Time = 4;
+            StartCoroutine(CFadeOutCam()); 
+        }
     }
 
     IEnumerator CKitchen()
@@ -193,6 +209,14 @@ public class MainMenu : MonoBehaviour
         yield return new WaitForSeconds(7);
         StartCoroutine(CScenenwechsel());
     }
+    IEnumerator CPsychiatry()
+    {
+        yield return new WaitForSeconds(10);
+        StartCoroutine(CScenenwechsel());
+    }
+    IEnumerator CFadeOutCam() { yield return new WaitForSeconds(3); fade.SetActive(true); StartCoroutine(CSavePlace()); }
+    IEnumerator CSavePlace(){ yield return new WaitForSeconds(5); StartCoroutine(CScenenwechsel()); }
+    
     IEnumerator CScenenwechsel() 
     { 
         yield return new WaitForSeconds(2);
@@ -200,5 +224,6 @@ public class MainMenu : MonoBehaviour
         if (scenesManager == "Psychiatry" ) { SceneManager.LoadScene("Sequence"); } 
         if (scenesManager == "SavePlace" ) { SceneManager.LoadScene("Credits"); } 
         musicInstance.setVolume(0);
+        musicInstance.stop(STOP_MODE.IMMEDIATE);
     }
 }

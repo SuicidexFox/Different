@@ -840,7 +840,7 @@ AnimationClip:
   m_HasMotionFloatCurves: 0
   m_Events:
   - time: 10.983334
-    functionName: Rosie
+    functionName: RosieSequence
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
@@ -854,7 +854,7 @@ AnimationClip:
     intParameter: 0
     messageOptions: 0
   - time: 15
-    functionName: Scenenwechsel
+    functionName: FadeOut
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0

@@ -9,6 +9,7 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using STOP_MODE = FMOD.Studio.STOP_MODE;
 
 public class GameManager : MonoBehaviour
 {
@@ -26,25 +27,33 @@ public class GameManager : MonoBehaviour
         scenesManager = SceneManager.GetActiveScene().name;
         if (scenesManager == "Kitchen")
         {
+            inUI = true;
             playerController.DeactivateInput();
             StartCoroutine(Kitchen());
         }
         if (scenesManager == "Psychiatry")
         {
             playerController.characterController.enabled = false;
-            playerController.animator.Play("Psychiatry"); 
+            playerController.playerCamInputProvider.enabled = false;
+            playerController.animator.Play("Psychiatry");
             StartCoroutine(WaitPsychiatry());
         }
-        if (scenesManager == "SavePlace")
-        {
-            StartCoroutine(Kitchen());
-        }
+        if (scenesManager == "SavePlace") { StartCoroutine(SavePlace()); }
     }
     IEnumerator Kitchen()
     {
-        yield return new WaitForSeconds(1); 
-        playerController.ActivateInput();
+        yield return new WaitForSeconds(1);
         menu.fade.SetActive(false);
+        menu.tutorial.gameObject.SetActive(true);
+        menu.tutorialButton.Select();
+        Cursor.lockState = CursorLockMode.Confined;
+        Cursor.SetCursor(menu.cursorHand, Vector2.zero, CursorMode.ForceSoftware);
+    }
+    public void Tutorial()
+    {
+        menu.tutorial.gameObject.SetActive(false);
+        inUI = false;
+        playerController.ActivateInput();
     }
     IEnumerator WaitPsychiatry()
     {
@@ -53,6 +62,8 @@ public class GameManager : MonoBehaviour
         playerController.currentInteractable._onInteract.Invoke();
         playerController.cinemachineBrain.m_DefaultBlend.m_Time = 4;
     }
+    IEnumerator SavePlace() { yield return new WaitForSeconds(1); menu.fade.SetActive(false); }
+    
 
     ///////////////////////////////////// DialogUI \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
     [Header("Dialog")]
@@ -217,7 +228,7 @@ public class GameManager : MonoBehaviour
                 importantItems.Add("Dishes");
                 dishes = 6f;
                 questLog.Questende();
-                questLog.GetComponentInChildren<Animator>().enabled = true;
+                questLog.lettertext.SetText("Your ready, you can load the Dishwasher");
             }
         }
         if (playerController.currentInteractable.gameObject.CompareTag("Rorschachtest"))
@@ -226,10 +237,8 @@ public class GameManager : MonoBehaviour
             if (rorschach == 4f)
             {
                 importantItems.Add("Rorschach");
-                ;
                 rorschach = 5f;
                 questLog.Questende();
-                questLog.rorschachtest.enabled = true;
             }
         }
         if (playerController.currentInteractable.CompareTag("Skillkit"))
@@ -240,35 +249,39 @@ public class GameManager : MonoBehaviour
                 importantItems.Add("Skillbag");
                 skillkit = 4f;
                 questLog.Questende();
-                questLog.skillkit.enabled = true;
+                questLog.lettertext.SetText("Your ready, go to Mrs. Flow");
             }
         }
         if (playerController.currentInteractable.CompareTag("SavePlace"))
         {
             saveplace++;
-            if (saveplace == 2f) { menu.ScenenManager(); }
+            if (saveplace == 2f)
+            {
+                playerController.characterController.enabled = false;
+                menu.musicInstance.setVolume(0);
+                menu.musicInstance.stop(STOP_MODE.IMMEDIATE);
+                playerController.cinemachineBrain.m_DefaultBlend.m_Time = 5;
+                RuntimeManager.PlayOneShot("event:/SFX/Ambience/Psychiatry/Patientroom/WisperFadeOut");
+                playerController.animator.Play("Cry");
+                menu.fadePsychiatry.SetActive(true);
+                playerController.DeactivateInput();
+                StartCoroutine(CPsychiatry());
+            }
         }
         if (playerController.currentInteractable.CompareTag("Letter"))
         { 
             letter++; 
-            if (letter == 2f) 
+            if (letter == 3f) 
             { 
                 importantItems.Add("Letter");
-                letter = 3f;
+                letter = 4f;
                 questLog.Questende();
-                questLog.lettertext.fontStyle = FontStyles.Strikethrough;
-                questLog.GetComponentInChildren<Animator>().enabled = true;
+                questLog.lettertext.SetText("Perfect. Go back to your inner Child");
             }
         }
     }
-    public void DestroyInteractable()
-    {
-        if (playerController.currentInteractable != null)
-        {
-            Destroy(playerController.currentInteractable.gameObject);
-        }
-    }
-    
+    public void DestroyInteractable() { if (playerController.currentInteractable != null) { Destroy(playerController.currentInteractable.gameObject); } }
+    IEnumerator CPsychiatry() { yield return new WaitForSeconds(2); menu.ScenenManager(); }
     
     
     ///////////////////////////////////// Pause \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\

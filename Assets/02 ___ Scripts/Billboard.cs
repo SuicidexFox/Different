@@ -23,21 +23,12 @@ public class BillBoard : MonoBehaviour
     {
         if (npc == true)
         {
-            if (GameManager.instance.inUI == true)
-            {
-                sprite.enabled = false;
-            }
-            else
-            {
-                sprite.enabled = true;
-            }
+            if (GameManager.instance.inUI == true) { sprite.enabled = false; }
+            else { sprite.enabled = true; }
         }
     }
 
-    private void LateUpdate()
-    {
-        transform.rotation = cam.transform.rotation;
-    }
+    private void LateUpdate() { if (npc == true) { transform.rotation = cam.transform.rotation; } }
     private void OnTriggerEnter(Collider other)
     {
         if (other.GetComponent<PlayerController>() == null) {return;}

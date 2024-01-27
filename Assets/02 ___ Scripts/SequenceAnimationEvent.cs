@@ -7,13 +7,10 @@ public class AnimationEventSequence : MonoBehaviour
 {
     public Sequence sequence;
     
-    public void Rosie()
-    {
-        sequence.Rosie();
-    }
+    public void RosieSequence() { sequence.rosie.Play("Sequence"); }
+    public void RosieHallo() { sequence.rosie.Play("winken");}
+    public void ChildHallo() { sequence.innerChilde.Play("Hallo"); }
+    public void ChildKlatschen() { sequence.innerChilde.Play("Klatschen"); }
     
-    public void InnerChilde()
-    {
-        sequence.InnerChilde();
-    }
+    public void FadeOut() { sequence.Scenenwechsel(); }
 }

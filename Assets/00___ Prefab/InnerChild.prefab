@@ -156,6 +156,21 @@ MonoBehaviour:
       m_PersistentCalls:
         m_Calls: []
     buttonLinesList: []
+  - sound:
+      Guid:
+        Data1: 0
+        Data2: 0
+        Data3: 0
+        Data4: 0
+      Path: 
+    character: {fileID: 21300000, guid: 854332e94d5cddb4aa77bb4cb5e6408a, type: 3}
+    textBox: {fileID: 21300000, guid: 184b1a0d2dddbe848be3fc7cfcd1cf96, type: 3}
+    text: 
+    textNpc: You have to be close to see them.
+    lineEvent:
+      m_PersistentCalls:
+        m_Calls: []
+    buttonLinesList: []
   dialogEnd:
     m_PersistentCalls:
       m_Calls: []
@@ -301,7 +316,7 @@ MonoBehaviour:
       Path: event:/SFX/Rosie/Voice/lachen 2
     character: {fileID: 21300000, guid: 8620e5d0e45a4e546b5d3fa813d93756, type: 3}
     textBox: {fileID: 21300000, guid: 83bfec00a0c355048809136f10826b6b, type: 3}
-    text: 'Wow, you are mewhen I
+    text: 'Wow, you are me when I
 
       was younger.'
     textNpc: 

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using FMODUnity;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UIElements;
 
 public class AnimationEvent : MonoBehaviour
 {   
@@ -13,7 +14,7 @@ public class AnimationEvent : MonoBehaviour
     
     ///////////////////////////////////// QuestUI \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
     public void SelectQuestButton() { GameManager.instance.AnimationSelectButtonQuestUI(); }
-    public void CloseQuestUI() { GameManager.instance.AnimationEventCloseQuestUI(); }
+    public void CloseQuestUI() { { GameManager.instance.AnimationEventCloseQuestUI(); } }
     
     ///////////////////////////////////// QuestLog \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
     public void PlayOneShotQuestTab() {RuntimeManager.PlayOneShot("event:/SFX/UI_UX/QuestUI/QuestUIClose");}
@@ -53,9 +54,4 @@ public class AnimationEvent : MonoBehaviour
     }
     public void PlayerInput() { GameManager.instance.playerController.ActivateInput(); }
     public void PlayerPlaySitUp() { RuntimeManager.PlayOneShot("event:/SFX/Rosie/RosieFootsteps/Footstep_Capet"); }
-    
-    
-    ///////////////////////////////////////// \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-    /////////////////////////////////////// NPC \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-    
 }

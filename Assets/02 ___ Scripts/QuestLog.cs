@@ -6,8 +6,6 @@ using UnityEngine;
 
 public class QuestLog : MonoBehaviour
 {
-    public Animator rorschachtest;
-    public Animator skillkit;
     public TextMeshProUGUI lettertext;
     
     public RectTransform canvasRectTransform;
@@ -38,12 +36,13 @@ public class QuestLog : MonoBehaviour
         canvasRectTransform.anchoredPosition = currentPosition;
     }
 
-    public void Questende() { StartCoroutine(ActivateBoolForSeconds(2f)); }
+    public void Questende() { StartCoroutine(ActivateBoolForSeconds(3f)); }
     IEnumerator ActivateBoolForSeconds(float seconds)
     { 
         GameManager.instance.playerController.questLog = true;
         yield return new WaitForSeconds(seconds);
         GameManager.instance.playerController.questLog = false;
+        ResetCanvasPosition();
     }
 }
 
