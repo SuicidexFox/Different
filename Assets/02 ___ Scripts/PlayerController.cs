@@ -148,9 +148,12 @@ public class PlayerController : MonoBehaviour
         if (_newInteractable == currentInteractable)
         {
             currentInteractable = null;
-            GameManager.instance.ShowIneractUI(false);
+            GameManager.instance.interactAnimator.Play("Out");
+            StartCoroutine(CloseInteractUI());
         }
     }
+    public IEnumerator CloseInteractUI()
+    { yield return new WaitForSeconds(0.2f); GameManager.instance.ShowIneractUI(false); }
     
 
     ///////////////////////////////////// PauseUI \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\

@@ -54,4 +54,11 @@ public class AnimationEvent : MonoBehaviour
     }
     public void PlayerInput() { GameManager.instance.playerController.ActivateInput(); }
     public void PlayerPlaySitUp() { RuntimeManager.PlayOneShot("event:/SFX/Rosie/RosieFootsteps/Footstep_Capet"); }
+    
+    ///////////////////////////////////////// \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+    ///////////////////////////////////// Player \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+    public void Claps()
+    { RuntimeManager.PlayOneShot("event:/SFX/InnerChild/Claps"); }
+    public void Lachen()
+    { RuntimeManager.PlayOneShot("event:/SFX/InnerChild/Claps"); }
 }

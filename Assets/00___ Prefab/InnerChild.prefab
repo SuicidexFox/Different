@@ -331,7 +331,7 @@ MonoBehaviour:
         Data3: 0
         Data4: 0
       Path: 
-    character: {fileID: 21300000, guid: 07db7eab9fcf01e4e81cccd0760601e1, type: 3}
+    character: {fileID: 21300000, guid: 9320dbe0472ceab45950b5e466b3e194, type: 3}
     textBox: {fileID: 21300000, guid: 83bfec00a0c355048809136f10826b6b, type: 3}
     text: Where am I ?
     textNpc: 
@@ -361,7 +361,7 @@ MonoBehaviour:
         Data3: 0
         Data4: 0
       Path: 
-    character: {fileID: 21300000, guid: 8620e5d0e45a4e546b5d3fa813d93756, type: 3}
+    character: {fileID: 21300000, guid: 9320dbe0472ceab45950b5e466b3e194, type: 3}
     textBox: {fileID: 21300000, guid: 83bfec00a0c355048809136f10826b6b, type: 3}
     text: No!
     textNpc: 
@@ -388,11 +388,11 @@ MonoBehaviour:
     buttonLinesList: []
   - sound:
       Guid:
-        Data1: 0
-        Data2: 0
-        Data3: 0
-        Data4: 0
-      Path: 
+        Data1: 160201437
+        Data2: 1227116363
+        Data3: -5906753
+        Data4: -578987685
+      Path: event:/SFX/InnerChild/hahahaha
     character: {fileID: 21300000, guid: 854332e94d5cddb4aa77bb4cb5e6408a, type: 3}
     textBox: {fileID: 21300000, guid: 184b1a0d2dddbe848be3fc7cfcd1cf96, type: 3}
     text: 

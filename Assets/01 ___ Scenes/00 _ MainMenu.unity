@@ -1147,7 +1147,7 @@ MonoBehaviour:
     type: 3}
   m_TrackedDeviceOrientationAction: {fileID: -9141910972920583718, guid: d4fc18a8acdf38745a10f9e42e665dfe,
     type: 3}
-  m_DeselectOnBackgroundClick: 1
+  m_DeselectOnBackgroundClick: 0
   m_PointerBehavior: 0
   m_CursorLockBehavior: 0
 --- !u!114 &809867535
@@ -1997,6 +1997,10 @@ MonoBehaviour:
   sound: {fileID: 1636437441}
   controls: {fileID: 1646429120}
   fade: {fileID: 585451750}
+  tutorial: {fileID: 0}
+  tutorialButton: {fileID: 0}
+  fadePsychiatry: {fileID: 0}
+  fadeOutCam: {fileID: 0}
   buttonMain: {fileID: 2110423374210242370}
   buttonSettings: {fileID: 1245115916}
   buttonControls: {fileID: 287092479}
@@ -2394,7 +2398,7 @@ PrefabInstance:
     - target: {fileID: 7529941796101006886, guid: c7efb51054cc2e545b1289be244e9a20,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: AnimationEventQuit
+      value: QuitGame
       objectReference: {fileID: 0}
     - target: {fileID: 7529941796101006886, guid: c7efb51054cc2e545b1289be244e9a20,
         type: 3}

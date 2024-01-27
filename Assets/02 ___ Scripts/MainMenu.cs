@@ -46,9 +46,6 @@ public class MainMenu : MonoBehaviour
     ///////////////////////////////////// Events \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
     private void Start()  //Startet das Main Menu, nicht die Pause
     {
-        musicInstance = RuntimeManager.CreateInstance(musicReference);
-        musicInstance.setParameterByName("MusicStage", 0);
-        musicInstance.start();
         SetupSlider(master, "bus:/Master");
         SetupSlider(music, "bus:/Master/Music");
         SetupSlider(effects, "bus:/Master/SFX");
@@ -59,6 +56,12 @@ public class MainMenu : MonoBehaviour
             Cursor.lockState = CursorLockMode.Confined;
             Cursor.SetCursor(cursorPencil, Vector2.zero, CursorMode.ForceSoftware);
             StartCoroutine(StartMainMenu());
+        }
+        if (scenesManager != "SavePlace")
+        {
+            musicInstance = RuntimeManager.CreateInstance(musicReference);
+            musicInstance.setParameterByName("MusicStage", 0);
+            musicInstance.start();
         }
     } 
     IEnumerator StartMainMenu() 
@@ -185,37 +188,33 @@ public class MainMenu : MonoBehaviour
     ///////////////////////////////////// Scenenwechsel  \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
     public void ScenenManager()
     {
-        fade.SetActive(true);
-        animatorFade.Play("FadeOut");
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.SetCursor(cursorNull, Vector2.zero, CursorMode.ForceSoftware);
         if (scenesManager == "Kitchen")
         {
+            fade.SetActive(true);
+            animatorFade.Play("FadeOut");
             musicInstance.stop(STOP_MODE.IMMEDIATE);
             RuntimeManager.PlayOneShot("event:/SFX/Rosie/Voice/Schrei");
             StartCoroutine(CKitchen());
         }
-        if (scenesManager == "Psychiatry") { fade.SetActive(true); StartCoroutine(CPsychiatry()); }
+        if (scenesManager == "Psychiatry")
+        {
+            fade.SetActive(true); 
+            animatorFade.Play("FadeOut");
+            StartCoroutine(CPsychiatry());
+        }
         if (scenesManager == "SavePlace") 
         { 
             fadeOutCam.gameObject.SetActive(true);
             GameManager.instance.playerController.cinemachineBrain.m_DefaultBlend.m_Time = 4;
-            StartCoroutine(CFadeOutCam()); 
+            StartCoroutine(CSavePlace()); 
         }
     }
 
-    IEnumerator CKitchen()
-    {
-        yield return new WaitForSeconds(7);
-        StartCoroutine(CScenenwechsel());
-    }
-    IEnumerator CPsychiatry()
-    {
-        yield return new WaitForSeconds(10);
-        StartCoroutine(CScenenwechsel());
-    }
-    IEnumerator CFadeOutCam() { yield return new WaitForSeconds(3); fade.SetActive(true); StartCoroutine(CSavePlace()); }
-    IEnumerator CSavePlace(){ yield return new WaitForSeconds(5); StartCoroutine(CScenenwechsel()); }
+    IEnumerator CKitchen() { yield return new WaitForSeconds(7); StartCoroutine(CScenenwechsel()); }
+    IEnumerator CPsychiatry() { yield return new WaitForSeconds(10); StartCoroutine(CScenenwechsel()); }
+    IEnumerator CSavePlace() { yield return new WaitForSeconds(3); fade.SetActive(true); animatorFade.Play("FadeOut"); StartCoroutine(CScenenwechsel()); }
     
     IEnumerator CScenenwechsel() 
     { 

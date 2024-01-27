@@ -38,7 +38,11 @@ public class GameManager : MonoBehaviour
             playerController.animator.Play("Psychiatry");
             StartCoroutine(WaitPsychiatry());
         }
-        if (scenesManager == "SavePlace") { StartCoroutine(SavePlace()); }
+
+        if (scenesManager == "SavePlace")
+        {
+            StartCoroutine(SavePlace());
+        }
     }
     IEnumerator Kitchen()
     {
@@ -91,7 +95,8 @@ public class GameManager : MonoBehaviour
         textDialogNPC.SetText("");
         currentLines = dialog;
         currentLineIndex = 0;
-        ShowIneractUI(false);
+        interactAnimator.Play("Out");
+        StartCoroutine(CloseInteractUI());
         ShowCurrentLine();
     }
     private void ShowCurrentLine()
@@ -179,7 +184,8 @@ public class GameManager : MonoBehaviour
     public void ShowQuestUI(QuestManager questManager)
     {
         playerController.DeactivateInput();
-        ShowIneractUI(false);
+        interactAnimator.Play("Out");
+        StartCoroutine(CloseInteractUI());
         inUI = true;
         questUI.SetActive(true);
         textQuest.SetText(questManager.text);
@@ -203,6 +209,7 @@ public class GameManager : MonoBehaviour
     ///////////////////////////////////// InteractUI \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
     [Header("Interact")] 
     [SerializeField] private GameObject interactUI;
+    public Animator interactAnimator;
     
     public float dishes;
     public float rorschach;
@@ -214,9 +221,11 @@ public class GameManager : MonoBehaviour
     {
         interactUI.SetActive(show);
     }
+    public IEnumerator CloseInteractUI()
+    { yield return new WaitForSeconds(0.3f); ShowIneractUI(false); }
     public void QuestInteractables()
     {
-        ShowIneractUI(false);
+        StartCoroutine(CloseInteractUI());
         playerController.animator.SetTrigger("Take");
         playerController.Emote();
         if (playerController.currentInteractable.CompareTag("Dishes"))
